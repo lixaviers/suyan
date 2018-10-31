@@ -39,27 +39,27 @@ URMS做的时候没有在此父项目，先没有加进来，后面有时间一�
 
 登录页面：使用人人开源，地址：https://gitee.com/renrenio/renren-security
 
-<img src="https://github.com/lixaviers/suyan/tree/master/suyan_java/view/1.png" />
+<img src="https://github.com/lixaviers/suyan/blob/master/suyan_java/view/1.png" />
 
 
 <h2>首页</h2>
-<img src="https://github.com/lixaviers/suyan/tree/master/suyan_java/view/2.png" />
+<img src="https://github.com/lixaviers/suyan/blob/master/suyan_java/view/2.png" />
 
 
 用户管理
-<img src="https://github.com/lixaviers/suyan/tree/master/suyan_java/view/3.png" />
+<img src="https://github.com/lixaviers/suyan/blob/master/suyan_java/view/3.png" />
 
 
 角色管理
-<img src="https://github.com/lixaviers/suyan/tree/master/suyan_java/view/4.png" />
+<img src="https://github.com/lixaviers/suyan/blob/master/suyan_java/view/4.png" />
 
 
 资源管理
-<img src="https://github.com/lixaviers/suyan/tree/master/suyan_java/view/5.png" />
+<img src="https://github.com/lixaviers/suyan/blob/master/suyan_java/view/5.png" />
 
 
 系统管理
-<img src="https://github.com/lixaviers/suyan/tree/master/suyan_java/view/6.png" />
+<img src="https://github.com/lixaviers/suyan/blob/master/suyan_java/view/6.png" />
 <br>
 <br>
 <br>
@@ -67,11 +67,11 @@ URMS做的时候没有在此父项目，先没有加进来，后面有时间一�
 <h2>营销中心</h2>
 
 优惠券
-<img src="https://github.com/lixaviers/suyan/tree/master/suyan_java/view/7.png" />
+<img src="https://github.com/lixaviers/suyan/blob/master/suyan_java/view/7.png" />
 
 
 订单促销
-<img src="https://github.com/lixaviers/suyan/tree/master/suyan_java/view/8.png" />
+<img src="https://github.com/lixaviers/suyan/blob/master/suyan_java/view/8.png" />
 <br>
 <br>
 <br>
