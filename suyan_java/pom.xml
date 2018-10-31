@@ -23,6 +23,11 @@
         <mmc.dal.version>1.0.0.RELEASE</mmc.dal.version>
 
 
+        <user.server.version>1.0.0.RELEASE</user.server.version>
+        <user.service.version>1.0.0.RELEASE</user.service.version>
+        <user.rest.version>1.0.0.RELEASE</user.rest.version>
+
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -118,6 +123,38 @@
                 <version>0.7.0</version>
             </dependency>
 
+
+            <dependency>
+                <groupId>org.springframework.social</groupId>
+                <artifactId>spring-social-config</artifactId>
+                <version>1.1.4.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.social</groupId>
+                <artifactId>spring-social-core</artifactId>
+                <version>1.1.4.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.social</groupId>
+                <artifactId>spring-social-security</artifactId>
+                <version>1.1.4.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.social</groupId>
+                <artifactId>spring-social-web</artifactId>
+                <version>1.1.4.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security.oauth</groupId>
+                <artifactId>spring-security-oauth2</artifactId>
+                <version>2.0.14.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-jwt</artifactId>
+                <version>1.0.8.RELEASE</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -139,5 +176,6 @@
     <modules>
         <module>control_center</module>
         <module>suyan_mmc</module>
+        <module>suyan_user</module>
     </modules>
 </project>

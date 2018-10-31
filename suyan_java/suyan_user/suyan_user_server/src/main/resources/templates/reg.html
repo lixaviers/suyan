@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册页面</title>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <h3>demo注册页面</h3>
+    <form>
+        <table>
+            <tr>
+                <td>用户名：</td>
+                <td><input type="text" name="username" id="username" value="lixavier"/></td>
+            </tr>
+            <tr>
+                <td>密码：</td>
+                <td><input type="password" name="password" id="password" value="123456"/></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit" name="type" value="regist">注册</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <script>
+        $(function () {
+            $('form').submit(function () {
+                var data = {userName: $('#username').val(),userPwd: $('#password').val()}
+                $.ajax({
+                    type: 'POST',
+                    url: '/user/regist',
+                    data: JSON.stringify(data),
+                    contentType: 'application/json;charset=utf-8',
+                    dataType: 'json',
+                    beforeSend: function (request) {
+                        request.setRequestHeader("ajax", "true");
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        if (response.code != '200') {
+                            alert(response.message);
+                        } else {
+                            alert('注册成功');
+                            window.location.href = "/login.html";
+                        }
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录页面</title>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<h2>登录页面</h2>
+<form>
+    <table>
+        <tr>
+            <td>用户名：</td>
+            <td><input type="text" name="username" value="lixavier"/></td>
+        </tr>
+        <tr>
+            <td>密码：</td>
+            <td><input type="password" name="password" value="123456"/></td>
+        </tr>
+        <!--<tr>
+            <td>图形验证码:</td>
+            <td>
+                <input type="text" name="imageCode">
+                <img src="/code/image">
+            </td>
+        </tr>-->
+        <tr>
+            <td colspan="2">
+                <button type="submit">登录</button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><a href="/reg.html">注册</a></td>
+        </tr>
+    </table>
+</form>
+<script>
+    $(function () {
+        $('form').submit(function () {
+            var self = $(this);
+            $.ajax({
+                type: 'POST',
+                url: '/user/login',
+                data: self.serialize(),
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    if (data.code != '200') {
+                        alert(data.message);
+                    } else {
+                        window.location.href = data.dataMap;
+                    }
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

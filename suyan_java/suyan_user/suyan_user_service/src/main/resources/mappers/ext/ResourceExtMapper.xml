@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.suyan.user.dao.ext.ResourceExtMapper">
+
+    <resultMap id="recourceMap" type="com.suyan.user.model.Resource">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="resource_code" jdbcType="VARCHAR" property="resourceCode"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="type" jdbcType="TINYINT" property="type"/>
+        <result column="common_status" jdbcType="TINYINT" property="commonStatus"/>
+        <result column="system_id" jdbcType="INTEGER" property="systemId"/>
+        <result column="is_global" jdbcType="BIT" property="isGlobal"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+        <result column="sort_number" jdbcType="INTEGER" property="sortNumber"/>
+        <collection property="children" ofType="com.suyan.user.model.Resource">
+            <id column="rid" property="id"/>
+            <result column="rname" jdbcType="VARCHAR" property="name"/>
+            <result column="rresource_code" jdbcType="VARCHAR" property="resourceCode"/>
+            <result column="rparent_id" jdbcType="BIGINT" property="parentId"/>
+            <result column="rurl" jdbcType="VARCHAR" property="url"/>
+            <result column="rtype" jdbcType="TINYINT" property="type"/>
+            <result column="rcommon_status" jdbcType="TINYINT" property="commonStatus"/>
+            <result column="rsystem_id" jdbcType="INTEGER" property="systemId"/>
+            <result column="ris_global" jdbcType="BIT" property="isGlobal"/>
+            <result column="ricon" jdbcType="VARCHAR" property="icon"/>
+            <result column="rsort_number" jdbcType="INTEGER" property="sortNumber"/>
+        </collection>
+    </resultMap>
+
+    <select id="getResourcesByUserOpenId" resultMap="recourceMap">
+		SELECT
+			r.id,
+			r.name,
+			r.resource_code,
+			r.parent_id,
+			CONCAT_WS( '', s.link, r.url ) url,
+			r.type,
+			r.common_status,
+			r.system_id,
+			r.is_global,
+			r.icon,
+			r1.id rid,
+			r1.name rname,
+			r1.resource_code rresource_code,
+			r1.parent_id rparent_id,
+			CONCAT_WS( '', s.link, r1.url ) rurl,
+			r1.type rtype,
+			r1.common_status rcommon_status,
+			r1.system_id rsystem_id,
+			r1.is_global ris_global,
+			r1.icon ricon
+		FROM
+			tb_user_role ur
+			INNER JOIN tb_role_resource rr ON rr.role_id = ur.role_id
+			INNER JOIN tb_resource r ON r.id = rr.resource_id
+			LEFT JOIN tb_system s ON r.system_id = s.id
+			LEFT JOIN tb_resource r1 ON r1.parent_id = r.id
+				AND r1.is_deleted = 0
+				AND r1.type = #{type, jdbcType=TINYINT}
+		WHERE
+			r.is_deleted = 0
+			AND r.parent_id IS NULL
+			AND r.type = #{type, jdbcType=TINYINT}
+			AND ur.user_open_id = #{userOpenId, jdbcType=VARCHAR}
+		ORDER BY
+			r.sort_number,r.id,r1.sort_number,r1.id
+    </select>
+
+    <select id="getResourcesByAdmin" resultMap="recourceMap">
+		SELECT
+			r.id,
+			r.name,
+			r.resource_code,
+			r.parent_id,
+			CONCAT_WS( '', s.link, r.url ) url,
+			r.type,
+			r.common_status,
+			r.system_id,
+			r.is_global,
+			r.icon,
+			r1.id rid,
+			r1.name rname,
+			r1.resource_code rresource_code,
+			r1.parent_id rparent_id,
+			CONCAT_WS( '', s.link, r1.url ) rurl,
+			r1.type rtype,
+			r1.common_status rcommon_status,
+			r1.system_id rsystem_id,
+			r1.is_global ris_global,
+			r1.icon ricon
+		FROM
+			tb_resource r
+			LEFT JOIN tb_system s ON r.system_id = s.id
+			LEFT JOIN tb_resource r1 ON r1.parent_id = r.id
+				AND r1.is_deleted = 0
+				AND r1.type = 0
+		WHERE
+			r.is_deleted = 0
+			AND r.parent_id IS NULL
+			AND r.type = 0
+		ORDER BY
+			r.sort_number,r.id,r1.sort_number,r1.id
+    </select>
+
+    <select id="getUserPermissions" resultType="string">
+        SELECT
+        r.resource_code
+        FROM
+        tb_user_role ur
+        INNER JOIN tb_role_resource rr ON rr.role_id = ur.role_id
+        INNER JOIN tb_resource r ON r.id = rr.resource_id
+        WHERE
+        r.is_deleted = 0
+        <if test="userOpenId != null and userOpenId != ''">
+            AND ur.user_open_id = #{userOpenId, jdbcType=VARCHAR}
+        </if>
+        ORDER BY
+        r.sort_number,r.id
+    </select>
+
+    <select id="getTreeResource" resultMap="recourceMap">
+		SELECT
+		  r.id,
+		  r.name,
+		  r.resource_code,
+		  r.parent_id,
+		  r.url,
+		  r.type,
+		  r.common_status,
+		  r.system_id,
+		  r.is_global,
+		  r.icon,
+		  r.sort_number,
+		  r1.id rid,
+		  r1.name rname,
+		  r1.resource_code rresource_code,
+		  r1.parent_id rparent_id,
+		  r1.url rurl,
+		  r1.type rtype,
+		  r1.common_status rcommon_status,
+		  r1.system_id rsystem_id,
+		  r1.is_global ris_global,
+		  r1.icon ricon,
+		  r1.sort_number rsort_number
+		FROM
+		  tb_resource r
+		  LEFT JOIN tb_resource r1
+			ON r1.parent_id = r.id AND r1.is_deleted = 0
+		WHERE r.is_deleted = 0
+		  AND r.parent_id IS NULL
+		ORDER BY r.sort_number,r.id,r1.sort_number,r1.id
+    </select>
+
+    <select id="getResourcesByRoleId" resultType="com.suyan.user.model.Resource" parameterType="integer">
+		SELECT
+			r.id,
+			r.name,
+			r.resource_code,
+			r.parent_id,
+			r.url,
+			r.type,
+			r.common_status,
+			r.system_id,
+			r.is_global,
+			r.sort_number,
+			r.create_time,
+			r.create_user,
+			r.create_user_name,
+			r.update_time,
+			r.update_user,
+			r.update_user_name
+		FROM
+		  tb_role_resource rr
+		  INNER JOIN tb_resource r
+			ON rr.resource_id = r.id
+		WHERE
+			r.is_deleted=0
+		AND rr.role_id = #{roleId, jdbcType=INTEGER}
+    </select>
+
+    <select id="getResourceIdListByRoleId" resultType="long" parameterType="integer">
+		SELECT
+			resource_id
+		FROM
+			tb_role_resource
+		WHERE
+			role_id = #{roleId, jdbcType=INTEGER}
+    </select>
+
+
+    <select id="getResourceUrlByUserOpenId" resultType="string">
+		SELECT
+			CONCAT( '/', system.path, '/', resource.url )
+		FROM
+			tb_user_role user_role
+			INNER JOIN tb_role role ON role.id = user_role.role_id
+			INNER JOIN tb_system system ON system.id = role.system_id
+			INNER JOIN tb_role_resource role_resource ON user_role.role_id = role_resource.role_id
+			INNER JOIN tb_resource resource ON resource.id = role_resource.resource_id
+			AND resource.is_deleted = 0
+		WHERE
+			user_role.user_open_id = #{userOpenId, jdbcType=VARCHAR}
+			AND resource.url IS NOT NULL
+			AND resource.url != ''
+			AND resource.type = #{type, jdbcType=TINYINT}
+    </select>
+
+</mapper>

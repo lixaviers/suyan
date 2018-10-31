@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.suyan.user.dao.ResourceMapper">
+    <resultMap id="BaseResultMap" type="com.suyan.user.model.Resource">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="resource_code" jdbcType="VARCHAR" property="resourceCode" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="common_status" jdbcType="TINYINT" property="commonStatus" />
+    <result column="system_id" jdbcType="INTEGER" property="systemId" />
+    <result column="is_global" jdbcType="BIT" property="isGlobal" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="sort_number" jdbcType="INTEGER" property="sortNumber" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, resource_code, parent_id, url, type, common_status, system_id, is_global, 
+    icon, sort_number, create_time, create_user, create_user_name, update_time, update_user, 
+    update_user_name, is_deleted
+  </sql>
+  <select id="selectByExample" parameterType="com.suyan.user.model.ResourceExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tb_resource
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_resource
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_resource
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.suyan.user.model.ResourceExample">
+    delete from tb_resource
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.suyan.user.model.Resource">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      select LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_resource (name, resource_code, parent_id, 
+      url, type, common_status, 
+      system_id, is_global, icon, 
+      sort_number, create_time, create_user, 
+      create_user_name, update_time, update_user, 
+      update_user_name, is_deleted)
+    values (#{name,jdbcType=VARCHAR}, #{resourceCode,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, 
+      #{url,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{commonStatus,jdbcType=TINYINT}, 
+      #{systemId,jdbcType=INTEGER}, #{isGlobal,jdbcType=BIT}, #{icon,jdbcType=VARCHAR}, 
+      #{sortNumber,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}, 
+      #{createUserName,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, 
+      #{updateUserName,jdbcType=VARCHAR}, #{isDeleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.suyan.user.model.Resource">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      select LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_resource
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="resourceCode != null">
+        resource_code,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="commonStatus != null">
+        common_status,
+      </if>
+      <if test="systemId != null">
+        system_id,
+      </if>
+      <if test="isGlobal != null">
+        is_global,
+      </if>
+      <if test="icon != null">
+        icon,
+      </if>
+      <if test="sortNumber != null">
+        sort_number,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="createUserName != null">
+        create_user_name,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="updateUser != null">
+        update_user,
+      </if>
+      <if test="updateUserName != null">
+        update_user_name,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceCode != null">
+        #{resourceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="commonStatus != null">
+        #{commonStatus,jdbcType=TINYINT},
+      </if>
+      <if test="systemId != null">
+        #{systemId,jdbcType=INTEGER},
+      </if>
+      <if test="isGlobal != null">
+        #{isGlobal,jdbcType=BIT},
+      </if>
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNumber != null">
+        #{sortNumber,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserName != null">
+        #{updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.suyan.user.model.ResourceExample" resultType="java.lang.Long">
+    select count(*) from tb_resource
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_resource
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resourceCode != null">
+        resource_code = #{record.resourceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null">
+        parent_id = #{record.parentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.url != null">
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=TINYINT},
+      </if>
+      <if test="record.commonStatus != null">
+        common_status = #{record.commonStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.systemId != null">
+        system_id = #{record.systemId,jdbcType=INTEGER},
+      </if>
+      <if test="record.isGlobal != null">
+        is_global = #{record.isGlobal,jdbcType=BIT},
+      </if>
+      <if test="record.icon != null">
+        icon = #{record.icon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sortNumber != null">
+        sort_number = #{record.sortNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createUser != null">
+        create_user = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserName != null">
+        create_user_name = #{record.createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUser != null">
+        update_user = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateUserName != null">
+        update_user_name = #{record.updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDeleted != null">
+        is_deleted = #{record.isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_resource
+    set id = #{record.id,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      resource_code = #{record.resourceCode,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=BIGINT},
+      url = #{record.url,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=TINYINT},
+      common_status = #{record.commonStatus,jdbcType=TINYINT},
+      system_id = #{record.systemId,jdbcType=INTEGER},
+      is_global = #{record.isGlobal,jdbcType=BIT},
+      icon = #{record.icon,jdbcType=VARCHAR},
+      sort_number = #{record.sortNumber,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      create_user = #{record.createUser,jdbcType=VARCHAR},
+      create_user_name = #{record.createUserName,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      update_user = #{record.updateUser,jdbcType=VARCHAR},
+      update_user_name = #{record.updateUserName,jdbcType=VARCHAR},
+      is_deleted = #{record.isDeleted,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.suyan.user.model.Resource">
+    update tb_resource
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceCode != null">
+        resource_code = #{resourceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="commonStatus != null">
+        common_status = #{commonStatus,jdbcType=TINYINT},
+      </if>
+      <if test="systemId != null">
+        system_id = #{systemId,jdbcType=INTEGER},
+      </if>
+      <if test="isGlobal != null">
+        is_global = #{isGlobal,jdbcType=BIT},
+      </if>
+      <if test="icon != null">
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNumber != null">
+        sort_number = #{sortNumber,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserName != null">
+        update_user_name = #{updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.suyan.user.model.Resource">
+    update tb_resource
+    set name = #{name,jdbcType=VARCHAR},
+      resource_code = #{resourceCode,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      url = #{url,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      common_status = #{commonStatus,jdbcType=TINYINT},
+      system_id = #{systemId,jdbcType=INTEGER},
+      is_global = #{isGlobal,jdbcType=BIT},
+      icon = #{icon,jdbcType=VARCHAR},
+      sort_number = #{sortNumber,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      update_user_name = #{updateUserName,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+    <update id="logicalDeleteByPrimaryKey">
+        UPDATE tb_resource
+        SET
+            is_deleted=1
+        WHERE id = #{id,jdbcType=BIGINT} 
+    </update>
+
+    <select id="selectByPrimaryKeyForUpdate" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_resource
+        WHERE id = #{id,jdbcType=BIGINT} 
+        AND is_deleted=0
+        FOR UPDATE
+    </select>
+    
+    <select id="queryResource" resultMap="BaseResultMap" parameterType="com.suyan.user.req.ResourceQueryDTO">
+        SELECT
+         <choose>
+          <when test="returnFields!=null">${returnFields}</when>
+          <otherwise>
+            <include refid="Base_Column_List" />
+          </otherwise>
+        </choose>
+        FROM tb_resource
+        <where>
+            <if test="id!=null">AND id = #{id,jdbcType=BIGINT}</if>
+            <if test="idList != null and idList.size > 0">
+                <foreach item="item" separator="," open="AND id in (" close=")" collection="idList">#{item,jdbcType=BIGINT}</foreach>
+            </if>
+            <if test="name!=null and name!=''">AND name = #{name,jdbcType=VARCHAR}</if>
+            <if test="nameLike != null and nameLike != '' ">AND name LIKE concat(#{nameLike,jdbcType=VARCHAR},'%')</if>
+            <if test="resourceCode!=null and resourceCode!=''">AND resource_code = #{resourceCode,jdbcType=VARCHAR}</if>
+            <if test="resourceCodeLike != null and resourceCodeLike != '' ">AND resource_code LIKE concat(#{resourceCodeLike,jdbcType=VARCHAR},'%')</if>
+            <if test="parentId!=null">AND parent_id = #{parentId,jdbcType=BIGINT}</if>
+            <if test="parentIdList != null and parentIdList.size > 0">
+                <foreach item="item" separator="," open="AND parent_id in (" close=")" collection="parentIdList">#{item,jdbcType=BIGINT}</foreach>
+            </if>
+            <if test="type!=null">AND type = #{type,jdbcType=TINYINT}</if>
+            <if test="typeList != null and typeList.size > 0">
+                <foreach item="item" separator="," open="AND type in (" close=")" collection="typeList">#{item,jdbcType=TINYINT}</foreach>
+            </if>
+            <if test="commonStatus!=null">AND common_status = #{commonStatus,jdbcType=TINYINT}</if>
+            <if test="commonStatusList != null and commonStatusList.size > 0">
+                <foreach item="item" separator="," open="AND common_status in (" close=")" collection="commonStatusList">#{item,jdbcType=TINYINT}</foreach>
+            </if>
+            <if test="systemId!=null">AND system_id = #{systemId,jdbcType=INTEGER}</if>
+            <if test="systemIdList != null and systemIdList.size > 0">
+                <foreach item="item" separator="," open="AND system_id in (" close=")" collection="systemIdList">#{item,jdbcType=INTEGER}</foreach>
+            </if>
+            <if test="isGlobal!=null">AND is_global = #{isGlobal,jdbcType=BOOLEAN}</if>
+            <if test="isGlobalList != null and isGlobalList.size > 0">
+                <foreach item="item" separator="," open="AND is_global in (" close=")" collection="isGlobalList">#{item,jdbcType=BOOLEAN}</foreach>
+            </if>
+            <if test="sortNumber!=null">AND sort_number = #{sortNumber,jdbcType=INTEGER}</if>
+            <if test="sortNumberList != null and sortNumberList.size > 0">
+                <foreach item="item" separator="," open="AND sort_number in (" close=")" collection="sortNumberList">#{item,jdbcType=INTEGER}</foreach>
+            </if>
+            <if test="createTimeFrom != null"><![CDATA[AND create_time >= #{createTimeFrom,jdbcType=TIMESTAMP}]]></if>
+            <if test="createTimeTo != null"><![CDATA[AND create_time <= #{createTimeTo,jdbcType=TIMESTAMP}]]></if>
+            <if test="createUser!=null and createUser!=''">AND create_user = #{createUser,jdbcType=VARCHAR}</if>
+            <if test="createUserLike != null and createUserLike != '' ">AND create_user LIKE concat(#{createUserLike,jdbcType=VARCHAR},'%')</if>
+            <if test="createUserList != null and createUserList.size > 0">
+                <foreach item="item" separator="," open="AND create_user in (" close=")" collection="createUserList">#{item,jdbcType=VARCHAR}</foreach>
+            </if>
+            <if test="createUserName!=null and createUserName!=''">AND create_user_name = #{createUserName,jdbcType=VARCHAR}</if>
+            <if test="createUserNameLike != null and createUserNameLike != '' ">AND create_user_name LIKE concat(#{createUserNameLike,jdbcType=VARCHAR},'%')</if>
+            <if test="updateTimeFrom != null"><![CDATA[AND update_time >= #{updateTimeFrom,jdbcType=TIMESTAMP}]]></if>
+            <if test="updateTimeTo != null"><![CDATA[AND update_time <= #{updateTimeTo,jdbcType=TIMESTAMP}]]></if>
+            <if test="updateUser!=null and updateUser!=''">AND update_user = #{updateUser,jdbcType=VARCHAR}</if>
+            <if test="updateUserLike != null and updateUserLike != '' ">AND update_user LIKE concat(#{updateUserLike,jdbcType=VARCHAR},'%')</if>
+            <if test="updateUserList != null and updateUserList.size > 0">
+                <foreach item="item" separator="," open="AND update_user in (" close=")" collection="updateUserList">#{item,jdbcType=VARCHAR}</foreach>
+            </if>
+            <if test="updateUserName!=null and updateUserName!=''">AND update_user_name = #{updateUserName,jdbcType=VARCHAR}</if>
+            <if test="updateUserNameLike != null and updateUserNameLike != '' ">AND update_user_name LIKE concat(#{updateUserNameLike,jdbcType=VARCHAR},'%')</if>
+            <if test="updateUserNameList != null and updateUserNameList.size > 0">
+                <foreach item="item" separator="," open="AND update_user_name in (" close=")" collection="updateUserNameList">#{item,jdbcType=VARCHAR}</foreach>
+            </if>
+            <if test="isDeleted!=null">AND is_deleted = #{isDeleted,jdbcType=BOOLEAN}</if>
+            <if test="isDeletedList != null and isDeletedList.size > 0">
+                <foreach item="item" separator="," open="AND is_deleted in (" close=")" collection="isDeletedList">#{item,jdbcType=BOOLEAN}</foreach>
+            </if>
+        </where>
+        <choose>
+            <when test="order!=null and orderBy!=null and order!='' and orderBy!=''">order by ${orderBy} ${order}</when>
+            <otherwise>order by id desc</otherwise>
+        </choose>
+    </select>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into tb_resource (
+            name,
+            resource_code,
+            parent_id,
+            url,
+            type,
+            common_status,
+            system_id,
+            is_global,
+            icon,
+            sort_number,
+            create_time,
+            create_user,
+            create_user_name,
+            update_time,
+            update_user,
+            update_user_name,
+            is_deleted        )
+        values
+        <foreach collection="modelList" item="bean" index="index" separator=",">
+        (
+            #{bean.name,jdbcType=VARCHAR} ,
+            #{bean.resourceCode,jdbcType=VARCHAR} ,
+            #{bean.parentId,jdbcType=BIGINT} ,
+            #{bean.url,jdbcType=VARCHAR} ,
+            #{bean.type,jdbcType=TINYINT} ,
+            #{bean.commonStatus,jdbcType=TINYINT} ,
+            #{bean.systemId,jdbcType=INTEGER} ,
+            #{bean.isGlobal,jdbcType=BOOLEAN} ,
+            #{bean.icon,jdbcType=VARCHAR} ,
+            #{bean.sortNumber,jdbcType=INTEGER} ,
+            #{bean.createTime,jdbcType=TIMESTAMP} ,
+            #{bean.createUser,jdbcType=VARCHAR} ,
+            #{bean.createUserName,jdbcType=VARCHAR} ,
+            #{bean.updateTime,jdbcType=TIMESTAMP} ,
+            #{bean.updateUser,jdbcType=VARCHAR} ,
+            #{bean.updateUserName,jdbcType=VARCHAR} ,
+            #{bean.isDeleted,jdbcType=BOOLEAN}         )
+        </foreach>
+    </insert>
+
+        <select id="selectByResourceCode" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_resource
+        WHERE  resource_code = #{resourceCode,jdbcType=VARCHAR}
+            AND is_deleted = 0
+            </select>
+    
+</mapper>
