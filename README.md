@@ -9,9 +9,9 @@ control_center api_gateway：zuul 统一网关 10000端口
 
 control_center eureka：Spring Eureka 8761端口
 
-suyan_user suyan_user_server 登录 后续加进来 60000端口
+suyan_user suyan_user_server 登录 60000端口
 
-suyan_user suyan_user_rest urms系统 后续加进来 60001端口
+suyan_user suyan_user_rest urms系统 60001端口
 
 suyan_mmc suyan_mmc_job 营销中心job 60002端口
 
