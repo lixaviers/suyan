@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+	<context:property-placeholder/>
+
+    <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource">
+        <property name="driverClassName" value="${JDBC.mysql.Driver}"></property>
+        <property name="url" value="${JDBC.mysql.ConnectionURL_m}"></property>
+        <property name="username" value="${JDBC.mysql.Username_m}"></property>
+        <property name="password" value="${JDBC.mysql.Password_m}"></property>
+
+        <property name="jmxEnabled" value="${Tomcat.jdbc.pool.jmxEnabled}"></property>
+        <property name="testWhileIdle" value="${Tomcat.jdbc.pool.testWhileIdle}"></property>
+        <property name="testOnBorrow" value="${Tomcat.jdbc.pool.testOnBorrow}"></property>
+        <property name="validationQuery"
+                  value="${Tomcat.jdbc.pool.validationQuery.sqlserverOrmysql}"></property>
+        <property name="testOnReturn" value="${Tomcat.jdbc.pool.testOnReturn}"></property>
+        <property name="validationInterval"
+                  value="${Tomcat.jdbc.pool.validationInterval}"></property>
+        <property name="timeBetweenEvictionRunsMillis"
+                  value="${Tomcat.jdbc.pool.timeBetweenEvictionRunsMillis}"></property>
+        <property name="maxActive" value="${Tomcat.jdbc.pool.maxActive}"></property>
+        <property name="initialSize" value="${Tomcat.jdbc.pool.initialSize}"></property>
+        <property name="minIdle" value="${Tomcat.jdbc.pool.minIdle}"></property>
+        <property name="maxWait" value="${Tomcat.jdbc.pool.maxWait}"></property>
+        <property name="removeAbandoned" value="${Tomcat.jdbc.pool.removeAbandoned}"></property>
+        <property name="removeAbandonedTimeout"
+                  value="${Tomcat.jdbc.pool.removeAbandonedTimeout}"></property>
+        <property name="logAbandoned" value="${Tomcat.jdbc.pool.logAbandoned}"></property>
+        <property name="minEvictableIdleTimeMillis"
+                  value="${Tomcat.jdbc.pool.minEvictableIdleTimeMillis}"></property>
+        <property name="jdbcInterceptors" value="${Tomcat.jdbc.pool.jdbcInterceptors}"></property>
+    </bean>
+
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+	<context:annotation-config />
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath*:mappers/**/*.xml"/>
+		<property name="configLocation" value="classpath:mybatis-config.xml"/>
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.suyan.mmc.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="sqlSessionBatch" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+		<constructor-arg index="1" value="BATCH"/>
+	</bean>
+</beans>

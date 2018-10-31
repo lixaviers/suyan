@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: api-gateway
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.226.111:8761/eureka/
+server:
+  port: 10000
+
+feign:
+  hystrix:
+    enabled: false
+
+zuul:
+  routes:
+    user:
+      path: /user/**
+      serviceId: user-server
+      sensitiveHeaders: "*"
+    urms:
+      path: /urms/**
+      serviceId: urms
+      sensitiveHeaders: "*"
+    mmc:
+      path: /mmc/**
+      serviceId: mmc
+      sensitiveHeaders: "*"
+    order:
+      path: /order/**
+      serviceId: order
+      sensitiveHeaders: "*"
+    goods:
+      path: /goods/**
+      serviceId: goods
+      sensitiveHeaders: "*"
+  add-proxy-headers: true

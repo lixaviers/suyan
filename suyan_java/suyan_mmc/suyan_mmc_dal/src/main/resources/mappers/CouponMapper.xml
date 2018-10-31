@@ -1,0 +1,739 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.suyan.mmc.dao.CouponMapper">
+    <resultMap id="BaseResultMap" type="com.suyan.mmc.model.Coupon">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="coupon_name" jdbcType="VARCHAR" property="couponName" />
+    <result column="coupon_no" jdbcType="VARCHAR" property="couponNo" />
+    <result column="coupon_package_id" jdbcType="BIGINT" property="couponPackageId" />
+    <result column="use_type" jdbcType="TINYINT" property="useType" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="person_limit" jdbcType="INTEGER" property="personLimit" />
+    <result column="order_limit" jdbcType="INTEGER" property="orderLimit" />
+    <result column="type_id" jdbcType="TINYINT" property="typeId" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="pending_time" jdbcType="TIMESTAMP" property="pendingTime" />
+    <result column="issue_total_amount" jdbcType="INTEGER" property="issueTotalAmount" />
+    <result column="issue_start_time" jdbcType="TIMESTAMP" property="issueStartTime" />
+    <result column="issue_end_time" jdbcType="TIMESTAMP" property="issueEndTime" />
+    <result column="promotion_amount" jdbcType="DECIMAL" property="promotionAmount" />
+    <result column="order_full_amount" jdbcType="DECIMAL" property="orderFullAmount" />
+    <result column="promotion_max_amount" jdbcType="DECIMAL" property="promotionMaxAmount" />
+    <result column="discount_amount" jdbcType="DECIMAL" property="discountAmount" />
+    <result column="coupon_status" jdbcType="TINYINT" property="couponStatus" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, coupon_name, coupon_no, coupon_package_id, use_type, price, person_limit, order_limit, 
+    type_id, start_time, end_time, pending_time, issue_total_amount, issue_start_time, 
+    issue_end_time, promotion_amount, order_full_amount, promotion_max_amount, discount_amount, 
+    coupon_status, create_time, create_user, create_user_name, update_time, update_user, 
+    update_user_name, is_deleted
+  </sql>
+  <select id="selectByExample" parameterType="com.suyan.mmc.model.CouponExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tb_coupon
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_coupon
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_coupon
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.suyan.mmc.model.CouponExample">
+    delete from tb_coupon
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.suyan.mmc.model.Coupon">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      select LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_coupon (coupon_name, coupon_no, coupon_package_id, 
+      use_type, price, person_limit, 
+      order_limit, type_id, start_time, 
+      end_time, pending_time, issue_total_amount, 
+      issue_start_time, issue_end_time, promotion_amount, 
+      order_full_amount, promotion_max_amount, discount_amount, 
+      coupon_status, create_time, create_user, 
+      create_user_name, update_time, update_user, 
+      update_user_name, is_deleted)
+    values (#{couponName,jdbcType=VARCHAR}, #{couponNo,jdbcType=VARCHAR}, #{couponPackageId,jdbcType=BIGINT}, 
+      #{useType,jdbcType=TINYINT}, #{price,jdbcType=DECIMAL}, #{personLimit,jdbcType=INTEGER}, 
+      #{orderLimit,jdbcType=INTEGER}, #{typeId,jdbcType=TINYINT}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{pendingTime,jdbcType=TIMESTAMP}, #{issueTotalAmount,jdbcType=INTEGER}, 
+      #{issueStartTime,jdbcType=TIMESTAMP}, #{issueEndTime,jdbcType=TIMESTAMP}, #{promotionAmount,jdbcType=DECIMAL}, 
+      #{orderFullAmount,jdbcType=DECIMAL}, #{promotionMaxAmount,jdbcType=DECIMAL}, #{discountAmount,jdbcType=DECIMAL}, 
+      #{couponStatus,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}, 
+      #{createUserName,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, 
+      #{updateUserName,jdbcType=VARCHAR}, #{isDeleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.suyan.mmc.model.Coupon">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      select LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_coupon
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="couponName != null">
+        coupon_name,
+      </if>
+      <if test="couponNo != null">
+        coupon_no,
+      </if>
+      <if test="couponPackageId != null">
+        coupon_package_id,
+      </if>
+      <if test="useType != null">
+        use_type,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="personLimit != null">
+        person_limit,
+      </if>
+      <if test="orderLimit != null">
+        order_limit,
+      </if>
+      <if test="typeId != null">
+        type_id,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="pendingTime != null">
+        pending_time,
+      </if>
+      <if test="issueTotalAmount != null">
+        issue_total_amount,
+      </if>
+      <if test="issueStartTime != null">
+        issue_start_time,
+      </if>
+      <if test="issueEndTime != null">
+        issue_end_time,
+      </if>
+      <if test="promotionAmount != null">
+        promotion_amount,
+      </if>
+      <if test="orderFullAmount != null">
+        order_full_amount,
+      </if>
+      <if test="promotionMaxAmount != null">
+        promotion_max_amount,
+      </if>
+      <if test="discountAmount != null">
+        discount_amount,
+      </if>
+      <if test="couponStatus != null">
+        coupon_status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="createUserName != null">
+        create_user_name,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="updateUser != null">
+        update_user,
+      </if>
+      <if test="updateUserName != null">
+        update_user_name,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="couponName != null">
+        #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponNo != null">
+        #{couponNo,jdbcType=VARCHAR},
+      </if>
+      <if test="couponPackageId != null">
+        #{couponPackageId,jdbcType=BIGINT},
+      </if>
+      <if test="useType != null">
+        #{useType,jdbcType=TINYINT},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="personLimit != null">
+        #{personLimit,jdbcType=INTEGER},
+      </if>
+      <if test="orderLimit != null">
+        #{orderLimit,jdbcType=INTEGER},
+      </if>
+      <if test="typeId != null">
+        #{typeId,jdbcType=TINYINT},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pendingTime != null">
+        #{pendingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="issueTotalAmount != null">
+        #{issueTotalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="issueStartTime != null">
+        #{issueStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="issueEndTime != null">
+        #{issueEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="promotionAmount != null">
+        #{promotionAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="orderFullAmount != null">
+        #{orderFullAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="promotionMaxAmount != null">
+        #{promotionMaxAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="discountAmount != null">
+        #{discountAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="couponStatus != null">
+        #{couponStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserName != null">
+        #{updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.suyan.mmc.model.CouponExample" resultType="java.lang.Long">
+    select count(*) from tb_coupon
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_coupon
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.couponName != null">
+        coupon_name = #{record.couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.couponNo != null">
+        coupon_no = #{record.couponNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.couponPackageId != null">
+        coupon_package_id = #{record.couponPackageId,jdbcType=BIGINT},
+      </if>
+      <if test="record.useType != null">
+        use_type = #{record.useType,jdbcType=TINYINT},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.personLimit != null">
+        person_limit = #{record.personLimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderLimit != null">
+        order_limit = #{record.orderLimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.typeId != null">
+        type_id = #{record.typeId,jdbcType=TINYINT},
+      </if>
+      <if test="record.startTime != null">
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null">
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pendingTime != null">
+        pending_time = #{record.pendingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.issueTotalAmount != null">
+        issue_total_amount = #{record.issueTotalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.issueStartTime != null">
+        issue_start_time = #{record.issueStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.issueEndTime != null">
+        issue_end_time = #{record.issueEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.promotionAmount != null">
+        promotion_amount = #{record.promotionAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderFullAmount != null">
+        order_full_amount = #{record.orderFullAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.promotionMaxAmount != null">
+        promotion_max_amount = #{record.promotionMaxAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.discountAmount != null">
+        discount_amount = #{record.discountAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.couponStatus != null">
+        coupon_status = #{record.couponStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createUser != null">
+        create_user = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserName != null">
+        create_user_name = #{record.createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUser != null">
+        update_user = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateUserName != null">
+        update_user_name = #{record.updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDeleted != null">
+        is_deleted = #{record.isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_coupon
+    set id = #{record.id,jdbcType=BIGINT},
+      coupon_name = #{record.couponName,jdbcType=VARCHAR},
+      coupon_no = #{record.couponNo,jdbcType=VARCHAR},
+      coupon_package_id = #{record.couponPackageId,jdbcType=BIGINT},
+      use_type = #{record.useType,jdbcType=TINYINT},
+      price = #{record.price,jdbcType=DECIMAL},
+      person_limit = #{record.personLimit,jdbcType=INTEGER},
+      order_limit = #{record.orderLimit,jdbcType=INTEGER},
+      type_id = #{record.typeId,jdbcType=TINYINT},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      pending_time = #{record.pendingTime,jdbcType=TIMESTAMP},
+      issue_total_amount = #{record.issueTotalAmount,jdbcType=INTEGER},
+      issue_start_time = #{record.issueStartTime,jdbcType=TIMESTAMP},
+      issue_end_time = #{record.issueEndTime,jdbcType=TIMESTAMP},
+      promotion_amount = #{record.promotionAmount,jdbcType=DECIMAL},
+      order_full_amount = #{record.orderFullAmount,jdbcType=DECIMAL},
+      promotion_max_amount = #{record.promotionMaxAmount,jdbcType=DECIMAL},
+      discount_amount = #{record.discountAmount,jdbcType=DECIMAL},
+      coupon_status = #{record.couponStatus,jdbcType=TINYINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      create_user = #{record.createUser,jdbcType=VARCHAR},
+      create_user_name = #{record.createUserName,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      update_user = #{record.updateUser,jdbcType=VARCHAR},
+      update_user_name = #{record.updateUserName,jdbcType=VARCHAR},
+      is_deleted = #{record.isDeleted,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.suyan.mmc.model.Coupon">
+    update tb_coupon
+    <set>
+      <if test="couponName != null">
+        coupon_name = #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponNo != null">
+        coupon_no = #{couponNo,jdbcType=VARCHAR},
+      </if>
+      <if test="couponPackageId != null">
+        coupon_package_id = #{couponPackageId,jdbcType=BIGINT},
+      </if>
+      <if test="useType != null">
+        use_type = #{useType,jdbcType=TINYINT},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="personLimit != null">
+        person_limit = #{personLimit,jdbcType=INTEGER},
+      </if>
+      <if test="orderLimit != null">
+        order_limit = #{orderLimit,jdbcType=INTEGER},
+      </if>
+      <if test="typeId != null">
+        type_id = #{typeId,jdbcType=TINYINT},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pendingTime != null">
+        pending_time = #{pendingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="issueTotalAmount != null">
+        issue_total_amount = #{issueTotalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="issueStartTime != null">
+        issue_start_time = #{issueStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="issueEndTime != null">
+        issue_end_time = #{issueEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="promotionAmount != null">
+        promotion_amount = #{promotionAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="orderFullAmount != null">
+        order_full_amount = #{orderFullAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="promotionMaxAmount != null">
+        promotion_max_amount = #{promotionMaxAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="discountAmount != null">
+        discount_amount = #{discountAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="couponStatus != null">
+        coupon_status = #{couponStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserName != null">
+        update_user_name = #{updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.suyan.mmc.model.Coupon">
+    update tb_coupon
+    set coupon_name = #{couponName,jdbcType=VARCHAR},
+      coupon_no = #{couponNo,jdbcType=VARCHAR},
+      coupon_package_id = #{couponPackageId,jdbcType=BIGINT},
+      use_type = #{useType,jdbcType=TINYINT},
+      price = #{price,jdbcType=DECIMAL},
+      person_limit = #{personLimit,jdbcType=INTEGER},
+      order_limit = #{orderLimit,jdbcType=INTEGER},
+      type_id = #{typeId,jdbcType=TINYINT},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      pending_time = #{pendingTime,jdbcType=TIMESTAMP},
+      issue_total_amount = #{issueTotalAmount,jdbcType=INTEGER},
+      issue_start_time = #{issueStartTime,jdbcType=TIMESTAMP},
+      issue_end_time = #{issueEndTime,jdbcType=TIMESTAMP},
+      promotion_amount = #{promotionAmount,jdbcType=DECIMAL},
+      order_full_amount = #{orderFullAmount,jdbcType=DECIMAL},
+      promotion_max_amount = #{promotionMaxAmount,jdbcType=DECIMAL},
+      discount_amount = #{discountAmount,jdbcType=DECIMAL},
+      coupon_status = #{couponStatus,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      update_user_name = #{updateUserName,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+    <update id="logicalDeleteByPrimaryKey">
+        UPDATE tb_coupon
+        SET
+            is_deleted=1,
+            updateUser=#{updateUser,jdbcType=VARCHAR},
+            updateUserName=#{updateUserName,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=BIGINT} 
+    </update>
+
+    <select id="selectByPrimaryKeyForUpdate" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_coupon
+        WHERE id = #{id,jdbcType=BIGINT} 
+        AND is_deleted=0
+        FOR UPDATE
+    </select>
+    
+    <select id="queryCoupon" resultMap="BaseResultMap" parameterType="com.suyan.mmc.req.CouponQueryDTO">
+        SELECT
+         <choose>
+          <when test="returnFields!=null">${returnFields}</when>
+          <otherwise>
+            <include refid="Base_Column_List" />
+          </otherwise>
+        </choose>
+        FROM tb_coupon
+        <where>
+            <if test="id!=null">AND id = #{id,jdbcType=BIGINT}</if>
+            <if test="idList != null and idList.size > 0">
+                <foreach item="item" separator="," open="AND id in (" close=")" collection="idList">#{item,jdbcType=BIGINT}</foreach>
+            </if>
+            <if test="couponName!=null and couponName!=''">AND coupon_name = #{couponName,jdbcType=VARCHAR}</if>
+            <if test="couponNameLike != null and couponNameLike != '' ">AND coupon_name LIKE concat(#{couponNameLike,jdbcType=VARCHAR},'%')</if>
+            <if test="couponNo!=null and couponNo!=''">AND coupon_no = #{couponNo,jdbcType=VARCHAR}</if>
+            <if test="couponNoLike != null and couponNoLike != '' ">AND coupon_no LIKE concat(#{couponNoLike,jdbcType=VARCHAR},'%')</if>
+            <if test="couponNoList != null and couponNoList.size > 0">
+                <foreach item="item" separator="," open="AND coupon_no in (" close=")" collection="couponNoList">#{item,jdbcType=VARCHAR}</foreach>
+            </if>
+            <if test="couponPackageId!=null">AND coupon_package_id = #{couponPackageId,jdbcType=BIGINT}</if>
+            <if test="couponPackageIdList != null and couponPackageIdList.size > 0">
+                <foreach item="item" separator="," open="AND coupon_package_id in (" close=")" collection="couponPackageIdList">#{item,jdbcType=BIGINT}</foreach>
+            </if>
+            <if test="useType!=null">AND use_type = #{useType,jdbcType=TINYINT}</if>
+            <if test="useTypeList != null and useTypeList.size > 0">
+                <foreach item="item" separator="," open="AND use_type in (" close=")" collection="useTypeList">#{item,jdbcType=TINYINT}</foreach>
+            </if>
+            <if test="priceFrom != null"><![CDATA[AND price >= #{priceFrom,jdbcType=DECIMAL}]]></if>
+            <if test="priceTo != null"><![CDATA[AND price <= #{priceTo,jdbcType=DECIMAL}]]></if>
+            <if test="personLimit!=null">AND person_limit = #{personLimit,jdbcType=INTEGER}</if>
+            <if test="personLimitList != null and personLimitList.size > 0">
+                <foreach item="item" separator="," open="AND person_limit in (" close=")" collection="personLimitList">#{item,jdbcType=INTEGER}</foreach>
+            </if>
+            <if test="orderLimit!=null">AND order_limit = #{orderLimit,jdbcType=INTEGER}</if>
+            <if test="orderLimitList != null and orderLimitList.size > 0">
+                <foreach item="item" separator="," open="AND order_limit in (" close=")" collection="orderLimitList">#{item,jdbcType=INTEGER}</foreach>
+            </if>
+            <if test="typeId!=null">AND type_id = #{typeId,jdbcType=TINYINT}</if>
+            <if test="typeIdList != null and typeIdList.size > 0">
+                <foreach item="item" separator="," open="AND type_id in (" close=")" collection="typeIdList">#{item,jdbcType=TINYINT}</foreach>
+            </if>
+            <if test="startTimeFrom != null"><![CDATA[AND start_time >= #{startTimeFrom,jdbcType=TIMESTAMP}]]></if>
+            <if test="startTimeTo != null"><![CDATA[AND start_time <= #{startTimeTo,jdbcType=TIMESTAMP}]]></if>
+            <if test="endTimeFrom != null"><![CDATA[AND end_time >= #{endTimeFrom,jdbcType=TIMESTAMP}]]></if>
+            <if test="endTimeTo != null"><![CDATA[AND end_time <= #{endTimeTo,jdbcType=TIMESTAMP}]]></if>
+            <if test="pendingTimeFrom != null"><![CDATA[AND pending_time >= #{pendingTimeFrom,jdbcType=TIMESTAMP}]]></if>
+            <if test="pendingTimeTo != null"><![CDATA[AND pending_time <= #{pendingTimeTo,jdbcType=TIMESTAMP}]]></if>
+            <if test="issueTotalAmount!=null">AND issue_total_amount = #{issueTotalAmount,jdbcType=INTEGER}</if>
+            <if test="issueTotalAmountList != null and issueTotalAmountList.size > 0">
+                <foreach item="item" separator="," open="AND issue_total_amount in (" close=")" collection="issueTotalAmountList">#{item,jdbcType=INTEGER}</foreach>
+            </if>
+            <if test="issueStartTimeFrom != null"><![CDATA[AND issue_start_time >= #{issueStartTimeFrom,jdbcType=TIMESTAMP}]]></if>
+            <if test="issueStartTimeTo != null"><![CDATA[AND issue_start_time <= #{issueStartTimeTo,jdbcType=TIMESTAMP}]]></if>
+            <if test="issueEndTimeFrom != null"><![CDATA[AND issue_end_time >= #{issueEndTimeFrom,jdbcType=TIMESTAMP}]]></if>
+            <if test="issueEndTimeTo != null"><![CDATA[AND issue_end_time <= #{issueEndTimeTo,jdbcType=TIMESTAMP}]]></if>
+            <if test="promotionAmountFrom != null"><![CDATA[AND promotion_amount >= #{promotionAmountFrom,jdbcType=DECIMAL}]]></if>
+            <if test="promotionAmountTo != null"><![CDATA[AND promotion_amount <= #{promotionAmountTo,jdbcType=DECIMAL}]]></if>
+            <if test="orderFullAmountFrom != null"><![CDATA[AND order_full_amount >= #{orderFullAmountFrom,jdbcType=DECIMAL}]]></if>
+            <if test="orderFullAmountTo != null"><![CDATA[AND order_full_amount <= #{orderFullAmountTo,jdbcType=DECIMAL}]]></if>
+            <if test="promotionMaxAmountFrom != null"><![CDATA[AND promotion_max_amount >= #{promotionMaxAmountFrom,jdbcType=DECIMAL}]]></if>
+            <if test="promotionMaxAmountTo != null"><![CDATA[AND promotion_max_amount <= #{promotionMaxAmountTo,jdbcType=DECIMAL}]]></if>
+            <if test="discountAmountFrom != null"><![CDATA[AND discount_amount >= #{discountAmountFrom,jdbcType=DECIMAL}]]></if>
+            <if test="discountAmountTo != null"><![CDATA[AND discount_amount <= #{discountAmountTo,jdbcType=DECIMAL}]]></if>
+            <if test="couponStatus!=null">AND coupon_status = #{couponStatus,jdbcType=TINYINT}</if>
+            <if test="couponStatusList != null and couponStatusList.size > 0">
+                <foreach item="item" separator="," open="AND coupon_status in (" close=")" collection="couponStatusList">#{item,jdbcType=TINYINT}</foreach>
+            </if>
+            <if test="createTimeFrom != null"><![CDATA[AND create_time >= #{createTimeFrom,jdbcType=TIMESTAMP}]]></if>
+            <if test="createTimeTo != null"><![CDATA[AND create_time <= #{createTimeTo,jdbcType=TIMESTAMP}]]></if>
+            <if test="createUser!=null and createUser!=''">AND create_user = #{createUser,jdbcType=VARCHAR}</if>
+            <if test="createUserLike != null and createUserLike != '' ">AND create_user LIKE concat(#{createUserLike,jdbcType=VARCHAR},'%')</if>
+            <if test="createUserList != null and createUserList.size > 0">
+                <foreach item="item" separator="," open="AND create_user in (" close=")" collection="createUserList">#{item,jdbcType=VARCHAR}</foreach>
+            </if>
+            <if test="createUserName!=null and createUserName!=''">AND create_user_name = #{createUserName,jdbcType=VARCHAR}</if>
+            <if test="createUserNameLike != null and createUserNameLike != '' ">AND create_user_name LIKE concat(#{createUserNameLike,jdbcType=VARCHAR},'%')</if>
+            <if test="updateTimeFrom != null"><![CDATA[AND update_time >= #{updateTimeFrom,jdbcType=TIMESTAMP}]]></if>
+            <if test="updateTimeTo != null"><![CDATA[AND update_time <= #{updateTimeTo,jdbcType=TIMESTAMP}]]></if>
+            <if test="updateUser!=null and updateUser!=''">AND update_user = #{updateUser,jdbcType=VARCHAR}</if>
+            <if test="updateUserLike != null and updateUserLike != '' ">AND update_user LIKE concat(#{updateUserLike,jdbcType=VARCHAR},'%')</if>
+            <if test="updateUserList != null and updateUserList.size > 0">
+                <foreach item="item" separator="," open="AND update_user in (" close=")" collection="updateUserList">#{item,jdbcType=VARCHAR}</foreach>
+            </if>
+            <if test="updateUserName!=null and updateUserName!=''">AND update_user_name = #{updateUserName,jdbcType=VARCHAR}</if>
+            <if test="updateUserNameLike != null and updateUserNameLike != '' ">AND update_user_name LIKE concat(#{updateUserNameLike,jdbcType=VARCHAR},'%')</if>
+            <if test="isDeleted!=null">AND is_deleted = #{isDeleted,jdbcType=BOOLEAN}</if>
+            <if test="isDeletedList != null and isDeletedList.size > 0">
+                <foreach item="item" separator="," open="AND is_deleted in (" close=")" collection="isDeletedList">#{item,jdbcType=BOOLEAN}</foreach>
+            </if>
+        </where>
+        <choose>
+            <when test="order!=null and orderBy!=null and order!='' and orderBy!=''">order by ${orderBy} ${order}</when>
+            <otherwise>order by id desc</otherwise>
+        </choose>
+    </select>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into tb_coupon (
+            coupon_name,
+            coupon_no,
+            coupon_package_id,
+            use_type,
+            price,
+            person_limit,
+            order_limit,
+            type_id,
+            start_time,
+            end_time,
+            pending_time,
+            issue_total_amount,
+            issue_start_time,
+            issue_end_time,
+            promotion_amount,
+            order_full_amount,
+            promotion_max_amount,
+            discount_amount,
+            coupon_status,
+            create_time,
+            create_user,
+            create_user_name,
+            update_time,
+            update_user,
+            update_user_name,
+            is_deleted        )
+        values
+        <foreach collection="modelList" item="bean" index="index" separator=",">
+        (
+            #{bean.couponName,jdbcType=VARCHAR} ,
+            #{bean.couponNo,jdbcType=VARCHAR} ,
+            #{bean.couponPackageId,jdbcType=BIGINT} ,
+            #{bean.useType,jdbcType=TINYINT} ,
+            #{bean.price,jdbcType=DECIMAL} ,
+            #{bean.personLimit,jdbcType=INTEGER} ,
+            #{bean.orderLimit,jdbcType=INTEGER} ,
+            #{bean.typeId,jdbcType=TINYINT} ,
+            #{bean.startTime,jdbcType=TIMESTAMP} ,
+            #{bean.endTime,jdbcType=TIMESTAMP} ,
+            #{bean.pendingTime,jdbcType=TIMESTAMP} ,
+            #{bean.issueTotalAmount,jdbcType=INTEGER} ,
+            #{bean.issueStartTime,jdbcType=TIMESTAMP} ,
+            #{bean.issueEndTime,jdbcType=TIMESTAMP} ,
+            #{bean.promotionAmount,jdbcType=DECIMAL} ,
+            #{bean.orderFullAmount,jdbcType=DECIMAL} ,
+            #{bean.promotionMaxAmount,jdbcType=DECIMAL} ,
+            #{bean.discountAmount,jdbcType=DECIMAL} ,
+            #{bean.couponStatus,jdbcType=TINYINT} ,
+            #{bean.createTime,jdbcType=TIMESTAMP} ,
+            #{bean.createUser,jdbcType=VARCHAR} ,
+            #{bean.createUserName,jdbcType=VARCHAR} ,
+            #{bean.updateTime,jdbcType=TIMESTAMP} ,
+            #{bean.updateUser,jdbcType=VARCHAR} ,
+            #{bean.updateUserName,jdbcType=VARCHAR} ,
+            #{bean.isDeleted,jdbcType=BOOLEAN}         )
+        </foreach>
+    </insert>
+
+    
+</mapper>

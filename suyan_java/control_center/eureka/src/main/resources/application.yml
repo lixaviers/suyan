@@ -1,0 +1,13 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: false
+  # 生产必须打开
+  server:
+    enable-self-preservation: false
+server:
+  port: 8761
+spring:
+  application:
+    name: eureka

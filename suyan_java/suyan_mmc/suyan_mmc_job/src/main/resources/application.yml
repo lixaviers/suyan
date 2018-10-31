@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: mmc-job
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.226.111:8761/eureka/
+server:
+  port: 60002
+
+
+#数据库配置
+JDBC:
+  mysql:
+    Driver: com.mysql.jdbc.Driver
+    ConnectionURL_m: jdbc:mysql://192.168.226.111/suyan_mmc?useUnicode=true&characterEncoding=utf8
+    Username_m: root
+    Password_m: lixavier
+
+  #jdbc.pool配置
+Tomcat:
+  jdbc:
+    pool:
+      jmxEnabled: true
+      testWhileIdle: true
+      testOnBorrow: true
+      validationQuery.sqlserverOrmysql: select 1
+      testOnReturn: false
+      validationInterval: 30000
+      timeBetweenEvictionRunsMillis: 5000
+      maxActive: 100
+      initialSize: 10
+      minIdle: 10
+      maxWait: 15000
+      removeAbandoned: true
+      removeAbandonedTimeout: 60
+      logAbandoned: true
+      minEvictableIdleTimeMillis: 30000
+      jdbcInterceptors: ConnectionState;StatementFinalizer;StatementDecoratorInterceptor;ResetAbandonedTimer

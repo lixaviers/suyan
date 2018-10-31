@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.suyan.mmc.dao.StatusLogMapper">
+    <resultMap id="BaseResultMap" type="com.suyan.mmc.model.StatusLog">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="entity_id" jdbcType="BIGINT" property="entityId" />
+    <result column="old_status" jdbcType="TINYINT" property="oldStatus" />
+    <result column="new_status" jdbcType="TINYINT" property="newStatus" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="operation_user" jdbcType="VARCHAR" property="operationUser" />
+    <result column="operation_user_name" jdbcType="VARCHAR" property="operationUserName" />
+    <result column="comments" jdbcType="VARCHAR" property="comments" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, type, entity_id, old_status, new_status, create_time, update_time, operation_user, 
+    operation_user_name, comments
+  </sql>
+  <select id="selectByExample" parameterType="com.suyan.mmc.model.StatusLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tb_status_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_status_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_status_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.suyan.mmc.model.StatusLogExample">
+    delete from tb_status_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.suyan.mmc.model.StatusLog">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      select LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_status_log (type, entity_id, old_status, 
+      new_status, create_time, update_time, 
+      operation_user, operation_user_name, comments
+      )
+    values (#{type,jdbcType=TINYINT}, #{entityId,jdbcType=BIGINT}, #{oldStatus,jdbcType=TINYINT}, 
+      #{newStatus,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{operationUser,jdbcType=VARCHAR}, #{operationUserName,jdbcType=VARCHAR}, #{comments,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.suyan.mmc.model.StatusLog">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      select LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_status_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        type,
+      </if>
+      <if test="entityId != null">
+        entity_id,
+      </if>
+      <if test="oldStatus != null">
+        old_status,
+      </if>
+      <if test="newStatus != null">
+        new_status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="operationUser != null">
+        operation_user,
+      </if>
+      <if test="operationUserName != null">
+        operation_user_name,
+      </if>
+      <if test="comments != null">
+        comments,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="entityId != null">
+        #{entityId,jdbcType=BIGINT},
+      </if>
+      <if test="oldStatus != null">
+        #{oldStatus,jdbcType=TINYINT},
+      </if>
+      <if test="newStatus != null">
+        #{newStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operationUser != null">
+        #{operationUser,jdbcType=VARCHAR},
+      </if>
+      <if test="operationUserName != null">
+        #{operationUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="comments != null">
+        #{comments,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.suyan.mmc.model.StatusLogExample" resultType="java.lang.Long">
+    select count(*) from tb_status_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_status_log
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=TINYINT},
+      </if>
+      <if test="record.entityId != null">
+        entity_id = #{record.entityId,jdbcType=BIGINT},
+      </if>
+      <if test="record.oldStatus != null">
+        old_status = #{record.oldStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.newStatus != null">
+        new_status = #{record.newStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operationUser != null">
+        operation_user = #{record.operationUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operationUserName != null">
+        operation_user_name = #{record.operationUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comments != null">
+        comments = #{record.comments,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_status_log
+    set id = #{record.id,jdbcType=BIGINT},
+      type = #{record.type,jdbcType=TINYINT},
+      entity_id = #{record.entityId,jdbcType=BIGINT},
+      old_status = #{record.oldStatus,jdbcType=TINYINT},
+      new_status = #{record.newStatus,jdbcType=TINYINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      operation_user = #{record.operationUser,jdbcType=VARCHAR},
+      operation_user_name = #{record.operationUserName,jdbcType=VARCHAR},
+      comments = #{record.comments,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.suyan.mmc.model.StatusLog">
+    update tb_status_log
+    <set>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="entityId != null">
+        entity_id = #{entityId,jdbcType=BIGINT},
+      </if>
+      <if test="oldStatus != null">
+        old_status = #{oldStatus,jdbcType=TINYINT},
+      </if>
+      <if test="newStatus != null">
+        new_status = #{newStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operationUser != null">
+        operation_user = #{operationUser,jdbcType=VARCHAR},
+      </if>
+      <if test="operationUserName != null">
+        operation_user_name = #{operationUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="comments != null">
+        comments = #{comments,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.suyan.mmc.model.StatusLog">
+    update tb_status_log
+    set type = #{type,jdbcType=TINYINT},
+      entity_id = #{entityId,jdbcType=BIGINT},
+      old_status = #{oldStatus,jdbcType=TINYINT},
+      new_status = #{newStatus,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      operation_user = #{operationUser,jdbcType=VARCHAR},
+      operation_user_name = #{operationUserName,jdbcType=VARCHAR},
+      comments = #{comments,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+
+    <select id="selectByPrimaryKeyForUpdate" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_status_log
+        WHERE id = #{id,jdbcType=BIGINT} 
+        FOR UPDATE
+    </select>
+    
+    <select id="queryStatusLog" resultMap="BaseResultMap" parameterType="com.suyan.mmc.req.StatusLogQueryDTO">
+        SELECT
+         <choose>
+          <when test="returnFields!=null">${returnFields}</when>
+          <otherwise>
+            <include refid="Base_Column_List" />
+          </otherwise>
+        </choose>
+        FROM tb_status_log
+        <where>
+            <if test="id!=null">AND id = #{id,jdbcType=BIGINT}</if>
+            <if test="idList != null and idList.size > 0">
+                <foreach item="item" separator="," open="AND id in (" close=")" collection="idList">#{item,jdbcType=BIGINT}</foreach>
+            </if>
+            <if test="type!=null">AND type = #{type,jdbcType=TINYINT}</if>
+            <if test="typeList != null and typeList.size > 0">
+                <foreach item="item" separator="," open="AND type in (" close=")" collection="typeList">#{item,jdbcType=TINYINT}</foreach>
+            </if>
+            <if test="entityId!=null">AND entity_id = #{entityId,jdbcType=BIGINT}</if>
+            <if test="entityIdList != null and entityIdList.size > 0">
+                <foreach item="item" separator="," open="AND entity_id in (" close=")" collection="entityIdList">#{item,jdbcType=BIGINT}</foreach>
+            </if>
+            <if test="oldStatus!=null">AND old_status = #{oldStatus,jdbcType=TINYINT}</if>
+            <if test="oldStatusList != null and oldStatusList.size > 0">
+                <foreach item="item" separator="," open="AND old_status in (" close=")" collection="oldStatusList">#{item,jdbcType=TINYINT}</foreach>
+            </if>
+            <if test="newStatus!=null">AND new_status = #{newStatus,jdbcType=TINYINT}</if>
+            <if test="newStatusList != null and newStatusList.size > 0">
+                <foreach item="item" separator="," open="AND new_status in (" close=")" collection="newStatusList">#{item,jdbcType=TINYINT}</foreach>
+            </if>
+            <if test="createTimeFrom != null"><![CDATA[AND create_time >= #{createTimeFrom,jdbcType=TIMESTAMP}]]></if>
+            <if test="createTimeTo != null"><![CDATA[AND create_time <= #{createTimeTo,jdbcType=TIMESTAMP}]]></if>
+            <if test="updateTimeFrom != null"><![CDATA[AND update_time >= #{updateTimeFrom,jdbcType=TIMESTAMP}]]></if>
+            <if test="updateTimeTo != null"><![CDATA[AND update_time <= #{updateTimeTo,jdbcType=TIMESTAMP}]]></if>
+            <if test="operationUser!=null and operationUser!=''">AND operation_user = #{operationUser,jdbcType=VARCHAR}</if>
+            <if test="operationUserLike != null and operationUserLike != '' ">AND operation_user LIKE concat(#{operationUserLike,jdbcType=VARCHAR},'%')</if>
+            <if test="operationUserName!=null and operationUserName!=''">AND operation_user_name = #{operationUserName,jdbcType=VARCHAR}</if>
+            <if test="operationUserNameLike != null and operationUserNameLike != '' ">AND operation_user_name LIKE concat(#{operationUserNameLike,jdbcType=VARCHAR},'%')</if>
+        </where>
+        <choose>
+            <when test="order!=null and orderBy!=null and order!='' and orderBy!=''">order by ${orderBy} ${order}</when>
+            <otherwise>order by id desc</otherwise>
+        </choose>
+    </select>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into tb_status_log (
+            type,
+            entity_id,
+            old_status,
+            new_status,
+            create_time,
+            update_time,
+            operation_user,
+            operation_user_name,
+            comments        )
+        values
+        <foreach collection="modelList" item="bean" index="index" separator=",">
+        (
+            #{bean.type,jdbcType=TINYINT} ,
+            #{bean.entityId,jdbcType=BIGINT} ,
+            #{bean.oldStatus,jdbcType=TINYINT} ,
+            #{bean.newStatus,jdbcType=TINYINT} ,
+            #{bean.createTime,jdbcType=TIMESTAMP} ,
+            #{bean.updateTime,jdbcType=TIMESTAMP} ,
+            #{bean.operationUser,jdbcType=VARCHAR} ,
+            #{bean.operationUserName,jdbcType=VARCHAR} ,
+            #{bean.comments,jdbcType=VARCHAR}         )
+        </foreach>
+    </insert>
+
+    
+</mapper>
