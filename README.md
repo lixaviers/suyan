@@ -29,12 +29,11 @@ suyan_user_web 60002端口
 营销中心：vue iview
 <br>
 suyan_mmc_web 60004端口
-
-
-由于使用了统一网关，所有接口请走10000端口，实现了SSO，本地配了静态IP，需要演示的童鞋请修改Eureka地址
-
-URMS做的时候没有在此父项目，先没有加进来，后面有时间一点点加入进来
-
+<br>
+<br>
+由于使用了统一网关，所有接口请走10000端口，实现了SSO，本地配了静态IP，需要演示的童鞋请修改Eureka地址，我本机是http://192.168.226.111:8761/
+<br>
+<br>
 项目演示：
 
 登录页面：使用人人开源，地址：https://gitee.com/renrenio/renren-security
