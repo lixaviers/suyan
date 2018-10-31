@@ -4,10 +4,10 @@ import com.suyan.mmc.constant.CommonStatusEnum;
 import com.suyan.mmc.constant.PromotionTypeEnum;
 import com.suyan.mmc.dao.CouponMapper;
 import com.suyan.mmc.dao.StatusLogMapper;
+import com.suyan.mmc.dao.SubPromotionMapper;
 import com.suyan.mmc.dao.ext.CouponExtMapper;
-import com.suyan.mmc.model.Coupon;
-import com.suyan.mmc.model.CouponExample;
-import com.suyan.mmc.model.StatusLog;
+import com.suyan.mmc.dao.ext.SubPromotionExtMapper;
+import com.suyan.mmc.model.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,13 +20,13 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-public class CouponJob {
-    private final Logger logger = LoggerFactory.getLogger(CouponJob.class);
+public class SubPromotionJob {
+    private final Logger logger = LoggerFactory.getLogger(SubPromotionJob.class);
 
     @Autowired
-    private CouponMapper couponMapper;
+    private SubPromotionMapper subPromotionMapper;
     @Autowired
-    private CouponExtMapper couponExtMapper;
+    private SubPromotionExtMapper subPromotionExtMapper;
     @Autowired
     private StatusLogMapper statusLogMapper;
 
@@ -35,20 +35,19 @@ public class CouponJob {
      */
     @Scheduled(fixedRate = 60000)
     public void couponStart() {
-        CouponExample example = new CouponExample();
+        SubPromotionExample example = new SubPromotionExample();
         example.createCriteria().andIsDeletedEqualTo(false)
                 .andStartTimeLessThanOrEqualTo(new Date())
-                .andCouponStatusEqualTo(CommonStatusEnum.ONLINE.getValue())
-                .andCouponPackageIdEqualTo(0l);
-        List<Coupon> coupons = couponMapper.selectByExample(example);
-        if (CollectionUtils.isNotEmpty(coupons)) {
-            for (Coupon coupon : coupons) {
-                int count = couponExtMapper.updateCouponStatus(coupon.getId(), CommonStatusEnum.ONLINE.getValue(), CommonStatusEnum.ONGOING.getValue());
+                .andPromotionStatusEqualTo(CommonStatusEnum.ONLINE.getValue());
+        List<SubPromotion> subPromotionList = subPromotionMapper.selectByExample(example);
+        if (CollectionUtils.isNotEmpty(subPromotionList)) {
+            for (SubPromotion subPromotion : subPromotionList) {
+                int count = subPromotionExtMapper.updateCouponStatus(subPromotion.getId(), CommonStatusEnum.ONLINE.getValue(), CommonStatusEnum.ONGOING.getValue());
                 if (count > 0) {
                     // 添加状态变更记录
                     StatusLog statusLog = new StatusLog();
-                    statusLog.setType(PromotionTypeEnum.COUPON.getValue());
-                    statusLog.setEntityId(coupon.getId());
+                    statusLog.setType(PromotionTypeEnum.SUB_PROMOTION.getValue());
+                    statusLog.setEntityId(subPromotion.getId());
                     statusLog.setOldStatus(CommonStatusEnum.ONLINE.getValue());
                     statusLog.setNewStatus(CommonStatusEnum.ONGOING.getValue());
                     statusLog.setOperationUser("mmc-job");
@@ -70,21 +69,20 @@ public class CouponJob {
         statusList.add(CommonStatusEnum.STOPED.getValue());
         statusList.add(CommonStatusEnum.CANCELED.getValue());
 
-        CouponExample example = new CouponExample();
+        SubPromotionExample example = new SubPromotionExample();
         example.createCriteria().andIsDeletedEqualTo(false)
                 .andEndTimeLessThanOrEqualTo(new Date())
-                .andCouponStatusIn(statusList)
-                .andCouponPackageIdEqualTo(0l);
-        List<Coupon> coupons = couponMapper.selectByExample(example);
-        if (CollectionUtils.isNotEmpty(coupons)) {
-            for (Coupon coupon : coupons) {
-                int count = couponExtMapper.updateCouponStatus(coupon.getId(), coupon.getCouponStatus(), CommonStatusEnum.ENDED.getValue());
+                .andPromotionStatusIn(statusList);
+        List<SubPromotion> subPromotionList = subPromotionMapper.selectByExample(example);
+        if (CollectionUtils.isNotEmpty(subPromotionList)) {
+            for (SubPromotion subPromotion : subPromotionList) {
+                int count = subPromotionExtMapper.updateCouponStatus(subPromotion.getId(), subPromotion.getPromotionStatus(), CommonStatusEnum.ENDED.getValue());
                 if (count > 0) {
                     // 添加状态变更记录
                     StatusLog statusLog = new StatusLog();
-                    statusLog.setType(PromotionTypeEnum.COUPON.getValue());
-                    statusLog.setEntityId(coupon.getId());
-                    statusLog.setOldStatus(coupon.getCouponStatus());
+                    statusLog.setType(PromotionTypeEnum.SUB_PROMOTION.getValue());
+                    statusLog.setEntityId(subPromotion.getId());
+                    statusLog.setOldStatus(subPromotion.getPromotionStatus());
                     statusLog.setNewStatus(CommonStatusEnum.ENDED.getValue());
                     statusLog.setOperationUser("mmc-job");
                     statusLog.setOperationUserName("mmc定时任务");

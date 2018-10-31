@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.suyan.mmc.dao.ext.CouponExtMapper">
+<mapper namespace="com.suyan.mmc.dao.ext.SubPromotionExtMapper">
 
     <update id="updateCouponStatus">
 
-        UPDATE tb_coupon
-        SET coupon_status = #{newStatus, jdbcType=TINYINT}
+        UPDATE tb_sub_promotion
+        SET promotion_status = #{newStatus, jdbcType=TINYINT}
         WHERE
             id = #{id,jdbcType=BIGINT}
-        AND coupon_status = #{oldStatus, jdbcType=TINYINT}
+        AND promotion_status = #{oldStatus, jdbcType=TINYINT}
         AND is_deleted = 0
   </update>
 
