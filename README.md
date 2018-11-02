@@ -84,5 +84,9 @@ suyan_mmc_web 60004端口
 <br>
 <h2>商品管理</h2>
 <br>
+类目管理
+<br>
+<img src="https://github.com/lixaviers/suyan/blob/master/suyan_java/view/goods/category.png" />
+<br>
 <br>
 持续更新中，尽请期待。
