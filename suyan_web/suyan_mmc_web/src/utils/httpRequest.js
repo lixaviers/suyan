@@ -47,6 +47,10 @@ http.interceptors.response.use((response) => {
   console.log(error)
   if (403 === error.response.status) {
     console.log('forbidden')
+  } else if (500 === error.response.status) {
+    Notice.error({
+      title: '服务器异常，请稍后再试'
+    });
   } else {
     return Promise.reject(error);
   }
@@ -56,8 +60,12 @@ http.interceptors.response.use((response) => {
  * 请求地址处理
  * @param {*} actionName action方法名称
  */
-http.adornUrl = (actionName) => {
-  return '/api/mmc/' + actionName;
+http.adornUrl = (actionName, type = 1) => {
+  if (type == 1) {
+    return '/apiMmc/mmc/' + actionName;
+  } else if (type == 2) {
+    return '/apiGoods/goods/' + actionName;
+  }
 }
 
 http.adornParams = (params = {}, openDefultParams = true) => {

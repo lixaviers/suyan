@@ -11,37 +11,50 @@ export default new Router({
     {
       path: '/',
       name: 'main',
-      component : _import('coupon/index'),
-      redirect: {name: 'couponIndex'},
+      component : _import('mmc/coupon/index'),
+      redirect: {name: 'mmcCouponIndex'},
       children:[
-        {path: 'coupon/index', component: _import('coupon/index'), name: 'couponIndex'},
+        {path: 'mmc/coupon/index', component: _import('mmc/coupon/index'), name: 'mmcCouponIndex'},
       ]
     },
     {
-      path: '/coupon/create',
-      name: 'couponCreate',
-      component : _import('coupon/create')
+      path: '/mmc/coupon/create',
+      name: 'mmcCouponCreate',
+      component : _import('mmc/coupon/create')
     },
     {
-      path: '/coupon/show',
-      name: 'couponShow',
-      component : _import('coupon/show')
+      path: '/mmc/coupon/show',
+      name: 'mmcCouponShow',
+      component : _import('mmc/coupon/show')
     },
     {
-      path: '/subPromotion/index',
-      name: 'subPromotionIndex',
-      component : _import('subPromotion/index')
+      path: '/mmc/subPromotion/index',
+      name: 'mmcSubPromotionIndex',
+      component : _import('mmc/subPromotion/index')
     },
     {
-      path: '/subPromotion/show',
-      name: 'subPromotionShow',
-      component : _import('subPromotion/show')
+      path: '/mmc/subPromotion/show',
+      name: 'mmcSubPromotionShow',
+      component : _import('mmc/subPromotion/show')
     },
     {
-      path: '/subPromotion/create',
-      name: 'subPromotionCreate',
-      component : _import('subPromotion/create')
-    }
+      path: '/mmc/subPromotion/create',
+      name: 'mmcSubPromotionCreate',
+      component : _import('mmc/subPromotion/create')
+    },
+
+
+    {
+      path: '/goods/create',
+      name: 'goodsCreate',
+      component : _import('goods/create')
+    },
+    {
+      path: '/goods/category/index',
+      name: 'goodsCategoryIndex',
+      component : _import('goods/category/index')
+    },
   ]
 })
+
 

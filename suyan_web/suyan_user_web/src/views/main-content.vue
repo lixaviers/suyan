@@ -91,9 +91,9 @@
         var height = this.documentClientHeight - 60 - 30 - 2;
         if (this.$route.meta.isTab) {
           height -= 40
-          return isURL(this.$route.meta.iframeUrl) ? {height: height + 'px'} : {minHeight: height + 'px'}
+          return isURL(this.$route.meta.iframeUrl) ? {height: height + 'px', paddingRight: 0} : {minHeight: height + 'px', paddingRight: 0}
         }
-        return {minHeight: height + 'px'}
+        return {minHeight: height + 'px', paddingRight: 0}
       }
     },
     methods: {
