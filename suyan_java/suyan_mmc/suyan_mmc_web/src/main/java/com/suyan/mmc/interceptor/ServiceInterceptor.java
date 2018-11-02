@@ -1,9 +1,9 @@
 package com.suyan.mmc.interceptor;
 
 import com.alibaba.fastjson.JSON;
-import com.suyan.mmc.exception.CommonBizException;
-import com.suyan.mmc.result.MmcResult;
-import com.suyan.mmc.result.MmcResultCode;
+import com.suyan.common.exception.CommonBizException;
+import com.suyan.common.result.Result;
+import com.suyan.common.result.ResultCode;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -46,15 +46,15 @@ public class ServiceInterceptor {
         } catch (CommonBizException e) {
             logger.warn(e.getErrorMsg() + " Input parameters=" + JSON.toJSONString(args), e);
 
-            MmcResult<Object> r = MmcResult.newSuccess();
-            r.setErrorCode(e.getMmcResultCode());
+            Result<Object> r = Result.newSuccess();
+            r.setErrorCode(e.getResultCode());
             r.setMessage(e.getErrorMsg());
             ret = r;
         } catch (Exception e) {
             logger.error(e.getMessage() + " Input parameters=" + JSON.toJSONString(args), e);
 
-            MmcResult<Object> r = MmcResult.newSuccess();
-            r.setErrorCode(MmcResultCode.SYS_ERROR);
+            Result<Object> r = Result.newSuccess();
+            r.setErrorCode(ResultCode.SYS_ERROR);
             ret = r;
         }
 

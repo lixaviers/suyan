@@ -6,7 +6,7 @@ import com.suyan.mmc.constant.SubPromotionTypeEnum;
 import com.suyan.mmc.model.SubPromotion;
 import com.suyan.mmc.req.SubPromotionDTO;
 import com.suyan.mmc.resp.SubPromotionODTO;
-import com.suyan.mmc.resp.base.QueryResultODTO;
+import com.suyan.common.resp.QueryResultODTO;
 import org.springframework.cglib.beans.BeanCopier;
 
 import java.util.ArrayList;

@@ -3,8 +3,8 @@ package com.suyan.mmc.service;
 import com.suyan.mmc.req.SubPromotionDTO;
 import com.suyan.mmc.req.SubPromotionQueryDTO;
 import com.suyan.mmc.resp.SubPromotionODTO;
-import com.suyan.mmc.resp.base.QueryResultODTO;
-import com.suyan.mmc.result.MmcResult;
+import com.suyan.common.resp.QueryResultODTO;
+import com.suyan.common.result.Result;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public interface ISubPromotionService {
      * @param updateUserName
      * @return
      */
-    MmcResult<Integer> deleteSubPromotion(Long id, String updateUser, String updateUserName);
+    Result<Integer> deleteSubPromotion(Long id, String updateUser, String updateUserName);
     
     /**
      * 
@@ -43,7 +43,7 @@ public interface ISubPromotionService {
      * @param subPromotionDTO
      * @return
      */
-    MmcResult<Long> createSubPromotion(SubPromotionDTO subPromotionDTO);
+    Result<Long> createSubPromotion(SubPromotionDTO subPromotionDTO);
 
     /**
      *
@@ -54,7 +54,7 @@ public interface ISubPromotionService {
      * @param subPromotionDTOs
      * @return
      */
-    MmcResult<Integer> batchCreate(List<SubPromotionDTO> subPromotionDTOs);
+    Result<Integer> batchCreate(List<SubPromotionDTO> subPromotionDTOs);
 
     /**
      * 
@@ -65,7 +65,7 @@ public interface ISubPromotionService {
      * @param subPromotionDTO
      * @return
      */
-    MmcResult<Integer> updateSubPromotion(SubPromotionDTO subPromotionDTO);
+    Result<Integer> updateSubPromotion(SubPromotionDTO subPromotionDTO);
     
     /**
      * 
@@ -76,7 +76,7 @@ public interface ISubPromotionService {
      * @param id
      * @return
      */
-    MmcResult<SubPromotionODTO> getSubPromotion(Long id);
+    Result<SubPromotionODTO> getSubPromotion(Long id);
 
     /**
      * 
@@ -87,14 +87,14 @@ public interface ISubPromotionService {
      * @param subPromotionQueryDTO
      * @return
      */
-    MmcResult<QueryResultODTO<SubPromotionODTO>> querySubPromotion(SubPromotionQueryDTO subPromotionQueryDTO);
+    Result<QueryResultODTO<SubPromotionODTO>> querySubPromotion(SubPromotionQueryDTO subPromotionQueryDTO);
 
     /**
     * The following custom service interface about dubbo
     */
 
 
-    MmcResult<Integer> changeStatus(SubPromotionDTO subPromotionDTO);
+    Result<Integer> changeStatus(SubPromotionDTO subPromotionDTO);
 
 
 

@@ -6,8 +6,8 @@ import com.suyan.mmc.model.SubPromotion;
 import com.suyan.mmc.req.SubPromotionDTO;
 import com.suyan.mmc.req.SubPromotionQueryDTO;
 import com.suyan.mmc.resp.SubPromotionODTO;
-import com.suyan.mmc.resp.base.QueryResultODTO;
-import com.suyan.mmc.result.MmcResult;
+import com.suyan.common.resp.QueryResultODTO;
+import com.suyan.common.result.Result;
 import com.suyan.mmc.service.ISubPromotionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,8 +48,8 @@ public class SubPromotionServiceImpl implements ISubPromotionService {
      * @Version: <1.0>
      */
     @Override
-    public MmcResult<Integer> deleteSubPromotion(Long id, String updateUser, String updateUserName) {
-        MmcResult<Integer> result = MmcResult.newSuccess();
+    public Result<Integer> deleteSubPromotion(Long id, String updateUser, String updateUserName) {
+        Result<Integer> result = Result.newSuccess();
         result.setDataMap(subPromotionBiz.deleteSubPromotion(id, updateUser, updateUserName));
         return result;
     }
@@ -63,8 +63,8 @@ public class SubPromotionServiceImpl implements ISubPromotionService {
      * @Version: <1.0>
      */
     @Override
-    public MmcResult<Long> createSubPromotion(SubPromotionDTO subPromotionDTO) {
-        MmcResult<Long> result = MmcResult.newSuccess();
+    public Result<Long> createSubPromotion(SubPromotionDTO subPromotionDTO) {
+        Result<Long> result = Result.newSuccess();
         SubPromotion subPromotion = SubPromotionConvertor.toSubPromotion(subPromotionDTO);
         if (!validateForCreate(subPromotion, result)) {
             return result;
@@ -74,8 +74,8 @@ public class SubPromotionServiceImpl implements ISubPromotionService {
     }
 
     @Override
-    public MmcResult<Integer> batchCreate(List<SubPromotionDTO> subPromotionDTOs) {
-        MmcResult<Integer> result = MmcResult.newSuccess();
+    public Result<Integer> batchCreate(List<SubPromotionDTO> subPromotionDTOs) {
+        Result<Integer> result = Result.newSuccess();
         List<SubPromotion> items = SubPromotionConvertor.toSubPromotionList(subPromotionDTOs);
         result.setDataMap(subPromotionBiz.batchCreateSubPromotion(items));
         return result;
@@ -90,8 +90,8 @@ public class SubPromotionServiceImpl implements ISubPromotionService {
      * @Version: <1.0>
      */
     @Override
-    public MmcResult<Integer> updateSubPromotion(SubPromotionDTO subPromotionDTO) {
-        MmcResult<Integer> result = MmcResult.newSuccess();
+    public Result<Integer> updateSubPromotion(SubPromotionDTO subPromotionDTO) {
+        Result<Integer> result = Result.newSuccess();
         SubPromotion subPromotion = SubPromotionConvertor.toSubPromotion(subPromotionDTO);
         if (!validateForUpdate(subPromotion, result)) {
             return result;
@@ -109,8 +109,8 @@ public class SubPromotionServiceImpl implements ISubPromotionService {
      * @Version: <1.0>
      */
     @Override
-    public MmcResult<SubPromotionODTO> getSubPromotion(Long id) {
-        MmcResult<SubPromotionODTO> result = MmcResult.newSuccess();
+    public Result<SubPromotionODTO> getSubPromotion(Long id) {
+        Result<SubPromotionODTO> result = Result.newSuccess();
         SubPromotion subPromotion = subPromotionBiz.getSubPromotion(id);
         SubPromotionODTO subPromotionODTO = SubPromotionConvertor.toSubPromotionODTO(subPromotion);
         result.setDataMap(subPromotionODTO);
@@ -126,8 +126,8 @@ public class SubPromotionServiceImpl implements ISubPromotionService {
      * @Version: <1.0>
      */
     @Override
-    public MmcResult<QueryResultODTO<SubPromotionODTO>> querySubPromotion(SubPromotionQueryDTO subPromotionQueryDTO) {
-        MmcResult<QueryResultODTO<SubPromotionODTO>> result = MmcResult.newSuccess();
+    public Result<QueryResultODTO<SubPromotionODTO>> querySubPromotion(SubPromotionQueryDTO subPromotionQueryDTO) {
+        Result<QueryResultODTO<SubPromotionODTO>> result = Result.newSuccess();
 
         QueryResultODTO<SubPromotion> resultInfo = subPromotionBiz.querySubPromotion(subPromotionQueryDTO);
         result.setDataMap(SubPromotionConvertor.toQueryResult(resultInfo));
@@ -136,8 +136,8 @@ public class SubPromotionServiceImpl implements ISubPromotionService {
     }
 
     @Override
-    public MmcResult<Integer> changeStatus(SubPromotionDTO subPromotionDTO) {
-        MmcResult<Integer> result = MmcResult.newSuccess();
+    public Result<Integer> changeStatus(SubPromotionDTO subPromotionDTO) {
+        Result<Integer> result = Result.newSuccess();
         SubPromotion subPromotion = SubPromotionConvertor.toSubPromotion(subPromotionDTO);
         result.setDataMap(subPromotionBiz.changeStatus(subPromotion));
         return result;

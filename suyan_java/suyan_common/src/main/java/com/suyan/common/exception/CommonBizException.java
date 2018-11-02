@@ -34,7 +34,7 @@ public class CommonBizException extends BaseException {
         super(errorCode, caused);
     }
 
-    public ResultCode getMmcResultCode() {
+    public ResultCode getResultCode() {
         return resultCode;
     }
 

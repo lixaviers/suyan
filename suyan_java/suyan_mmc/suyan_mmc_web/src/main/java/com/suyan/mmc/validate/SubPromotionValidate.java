@@ -3,13 +3,12 @@ package com.suyan.mmc.validate;
 import com.suyan.mmc.constant.SubPromotionTypeEnum;
 import com.suyan.mmc.model.Coupon;
 import com.suyan.mmc.model.SubPromotion;
-import com.suyan.mmc.result.MmcResult;
-import com.suyan.mmc.result.MmcResultCode;
+import com.suyan.common.result.Result;
+import com.suyan.common.result.ResultCode;
 
 import java.math.BigDecimal;
 
-import static com.suyan.mmc.util.ValidationUtil.isMoreThan;
-import static com.suyan.mmc.util.ValidationUtil.isNull;
+import static com.suyan.common.util.ValidationUtil.*;
 
 /**
  * @CopyRright (c)2008-2017: <素焉信息技术有限公司>
@@ -24,7 +23,7 @@ import static com.suyan.mmc.util.ValidationUtil.isNull;
  */
 public class SubPromotionValidate {
 
-    public static boolean validateForCreate(SubPromotion subPromotion, MmcResult<?> message) {
+    public static boolean validateForCreate(SubPromotion subPromotion, Result<?> message) {
 
         if (isMoreThan(message, SubPromotion.NAME, subPromotion.getName(), 64)) {
             return false;
@@ -35,7 +34,7 @@ public class SubPromotionValidate {
                 return false;
             }
             if (subPromotion.getDiscountAmount().compareTo(BigDecimal.TEN) >= 0 || subPromotion.getDiscountAmount().compareTo(BigDecimal.ZERO) <= 0) {
-                message.setErrorCode(MmcResultCode.COMMON_MESSAGE, "折扣金额必须大于0小于10");
+                message.setErrorCode(ResultCode.COMMON_MESSAGE, "折扣金额必须大于0小于10");
                 return false;
             }
             subPromotion.setDiscountAmount(subPromotion.getDiscountAmount().divide(BigDecimal.TEN));
@@ -43,7 +42,7 @@ public class SubPromotionValidate {
         return true;
     }
     
-    public static boolean validateForUpdate(SubPromotion subPromotion, MmcResult<?> message) {
+    public static boolean validateForUpdate(SubPromotion subPromotion, Result<?> message) {
         if (isNull(message,SubPromotion.ID, subPromotion.getId())) {
             return false;
         }

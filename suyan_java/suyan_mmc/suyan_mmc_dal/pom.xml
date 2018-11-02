@@ -13,6 +13,10 @@
     <version>${mmc.dal.version}</version>
 
     <dependencies>
+        <dependency>
+            <groupId>com.suyan</groupId>
+            <artifactId>suyan_common</artifactId>
+        </dependency>
 
         <!-- 数据库 -->
         <dependency>

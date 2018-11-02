@@ -1,10 +1,9 @@
 package com.suyan.mmc.validate;
 
 import com.suyan.mmc.model.UserCoupon;
-import com.suyan.mmc.result.MmcResult;
+import com.suyan.common.result.Result;
 
-import static com.suyan.mmc.util.ValidationUtil.isEmptyOrMoreThan;
-import static com.suyan.mmc.util.ValidationUtil.isNull;
+import static com.suyan.common.util.ValidationUtil.*;
 
 /**
  * @CopyRright (c)2008-2017: <素焉信息技术有限公司>
@@ -19,7 +18,7 @@ import static com.suyan.mmc.util.ValidationUtil.isNull;
  */
 public class UserCouponValidate {
 
-    public static boolean validateForCreate(UserCoupon userCoupon, MmcResult<?> message) {
+    public static boolean validateForCreate(UserCoupon userCoupon, Result<?> message) {
 
         if (isNull(message,UserCoupon.COUPON_ID, userCoupon.getCouponId())) {
             return false;
@@ -49,7 +48,7 @@ public class UserCouponValidate {
         return true;
     }
     
-    public static boolean validateForUpdate(UserCoupon userCoupon, MmcResult<?> message) {
+    public static boolean validateForUpdate(UserCoupon userCoupon, Result<?> message) {
         if (isNull(message,UserCoupon.ID, userCoupon.getId())) {
             return false;
         }

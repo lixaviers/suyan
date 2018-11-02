@@ -5,7 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.suyan.mmc.dao.UserCouponMapper;
 import com.suyan.mmc.model.UserCoupon;
 import com.suyan.mmc.req.UserCouponQueryDTO;
-import com.suyan.mmc.resp.base.QueryResultODTO;
+import com.suyan.common.resp.QueryResultODTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

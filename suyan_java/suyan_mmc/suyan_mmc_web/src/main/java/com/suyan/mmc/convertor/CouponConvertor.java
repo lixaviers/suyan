@@ -5,7 +5,7 @@ import com.suyan.mmc.constant.CouponTypeEnum;
 import com.suyan.mmc.model.Coupon;
 import com.suyan.mmc.req.CouponDTO;
 import com.suyan.mmc.resp.CouponODTO;
-import com.suyan.mmc.resp.base.QueryResultODTO;
+import com.suyan.common.resp.QueryResultODTO;
 import org.springframework.cglib.beans.BeanCopier;
 
 import java.util.ArrayList;

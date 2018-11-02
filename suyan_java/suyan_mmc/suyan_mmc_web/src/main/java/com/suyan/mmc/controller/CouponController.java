@@ -4,12 +4,12 @@ import com.suyan.mmc.constant.CommonStatusEnum;
 import com.suyan.mmc.req.CouponDTO;
 import com.suyan.mmc.req.CouponQueryDTO;
 import com.suyan.mmc.resp.CouponODTO;
-import com.suyan.mmc.resp.base.QueryResultODTO;
-import com.suyan.mmc.result.MmcResult;
-import com.suyan.mmc.result.MmcResultCode;
-import com.suyan.mmc.result.ValidationResult;
+import com.suyan.common.resp.QueryResultODTO;
+import com.suyan.common.result.Result;
+import com.suyan.common.result.ResultCode;
+import com.suyan.common.result.ValidationResult;
 import com.suyan.mmc.service.ICouponService;
-import com.suyan.mmc.util.ValidationUtils;
+import com.suyan.common.util.ValidationUtils;
 import com.suyan.mmc.vo.UserVO;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -39,14 +39,14 @@ public class CouponController extends BaseController {
     })
     @ApiOperation(value = "deleteCoupon/{id}", notes = "删除优惠券")
     @RequestMapping(value = "deleteCoupon/{id}", method = {RequestMethod.POST})
-    public MmcResult<Integer> deleteCoupon(@PathVariable Long id) {
-        MmcResult<Integer> result = MmcResult.newSuccess();
+    public Result<Integer> deleteCoupon(@PathVariable Long id) {
+        Result<Integer> result = Result.newSuccess();
         try {
             UserVO user = getUser();
             result = couponService.deleteCoupon(id, user.getOpenId(), user.getNickName());
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            result.setErrorCode(MmcResultCode.SYS_ERROR);
+            result.setErrorCode(ResultCode.SYS_ERROR);
         }
         return result;
     }
@@ -59,12 +59,12 @@ public class CouponController extends BaseController {
     })
     @ApiOperation(value = "createCoupon", notes = "创建优惠券")
     @RequestMapping(value = "createCoupon", method = {RequestMethod.POST})
-    public MmcResult<Long> createCoupon(@Valid @RequestBody CouponDTO couponDTO) {
-        MmcResult<Long> result = MmcResult.newSuccess();
+    public Result<Long> createCoupon(@Valid @RequestBody CouponDTO couponDTO) {
+        Result<Long> result = Result.newSuccess();
         try {
             ValidationResult validateEntity = ValidationUtils.validateEntity(couponDTO);
             if (validateEntity.isHasErrors()) {
-                result.setCode(MmcResultCode.COMMON_PARAM_INVALID.getCode());
+                result.setCode(ResultCode.COMMON_PARAM_INVALID.getCode());
                 result.setMessage(validateEntity.getErrorMsg().toString());
                 return result;
             }
@@ -76,7 +76,7 @@ public class CouponController extends BaseController {
             result = couponService.createCoupon(couponDTO);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            result.setErrorCode(MmcResultCode.SYS_ERROR);
+            result.setErrorCode(ResultCode.SYS_ERROR);
         }
         return result;
     }
@@ -89,12 +89,12 @@ public class CouponController extends BaseController {
     })
     @ApiOperation(value = "updateCoupon", notes = "更新优惠券")
     @RequestMapping(value = "updateCoupon", method = {RequestMethod.POST})
-    public MmcResult<Integer> updateCoupon(@Valid @RequestBody CouponDTO couponDTO) {
-        MmcResult<Integer> result = MmcResult.newSuccess();
+    public Result<Integer> updateCoupon(@Valid @RequestBody CouponDTO couponDTO) {
+        Result<Integer> result = Result.newSuccess();
         try {
             ValidationResult validateEntity = ValidationUtils.validateEntity(couponDTO);
             if (validateEntity.isHasErrors()) {
-                result.setCode(MmcResultCode.COMMON_PARAM_INVALID.getCode());
+                result.setCode(ResultCode.COMMON_PARAM_INVALID.getCode());
                 result.setMessage(validateEntity.getErrorMsg().toString());
                 return result;
             }
@@ -106,7 +106,7 @@ public class CouponController extends BaseController {
             result = couponService.updateCoupon(couponDTO);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            result.setErrorCode(MmcResultCode.SYS_ERROR);
+            result.setErrorCode(ResultCode.SYS_ERROR);
         }
         return result;
     }
@@ -119,13 +119,13 @@ public class CouponController extends BaseController {
     })
     @ApiOperation(value = "getCoupon/{id}", notes = "根据优惠券ID获取优惠券信息")
     @RequestMapping(value = "getCoupon/{id}", method = {RequestMethod.GET})
-    public MmcResult<CouponODTO> getCoupon(@PathVariable Long id) {
-        MmcResult<CouponODTO> result = MmcResult.newSuccess();
+    public Result<CouponODTO> getCoupon(@PathVariable Long id) {
+        Result<CouponODTO> result = Result.newSuccess();
         try {
             result = couponService.getCoupon(id);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            result.setErrorCode(MmcResultCode.SYS_ERROR);
+            result.setErrorCode(ResultCode.SYS_ERROR);
         }
         return result;
     }
@@ -138,19 +138,19 @@ public class CouponController extends BaseController {
     })
     @ApiOperation(value = "queryCoupon", notes = "分页获取优惠券列表信息")
     @RequestMapping(value = "queryCoupon", method = {RequestMethod.POST})
-    MmcResult<QueryResultODTO<CouponODTO>> queryCoupon(@Valid @RequestBody CouponQueryDTO couponQueryDTO) {
-        MmcResult<QueryResultODTO<CouponODTO>> result = MmcResult.newSuccess();
+    Result<QueryResultODTO<CouponODTO>> queryCoupon(@Valid @RequestBody CouponQueryDTO couponQueryDTO) {
+        Result<QueryResultODTO<CouponODTO>> result = Result.newSuccess();
         try {
             ValidationResult validateEntity = ValidationUtils.validateEntity(couponQueryDTO);
             if (validateEntity.isHasErrors()) {
-                result.setCode(MmcResultCode.COMMON_PARAM_INVALID.getCode());
+                result.setCode(ResultCode.COMMON_PARAM_INVALID.getCode());
                 result.setMessage(validateEntity.getErrorMsg().toString());
                 return result;
             }
             result = couponService.queryCoupon(couponQueryDTO);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            result.setErrorCode(MmcResultCode.SYS_ERROR);
+            result.setErrorCode(ResultCode.SYS_ERROR);
         }
         return result;
     }
@@ -158,8 +158,8 @@ public class CouponController extends BaseController {
 
     @ApiOperation(value = "changeStatus/{id}/{opt}", notes = "修改优惠券状态")
     @RequestMapping(value = "changeStatus/{id}/{opt}", method = {RequestMethod.POST})
-    MmcResult<Integer> changeStatus(@PathVariable Long id, @PathVariable Integer opt) {
-        MmcResult<Integer> result = MmcResult.newSuccess();
+    Result<Integer> changeStatus(@PathVariable Long id, @PathVariable Integer opt) {
+        Result<Integer> result = Result.newSuccess();
         try {
             UserVO user = getUser();
             CouponDTO couponDTO = new CouponDTO();
@@ -184,7 +184,7 @@ public class CouponController extends BaseController {
             result = couponService.changeStatus(couponDTO);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            result.setErrorCode(MmcResultCode.SYS_ERROR);
+            result.setErrorCode(ResultCode.SYS_ERROR);
         }
         return result;
     }

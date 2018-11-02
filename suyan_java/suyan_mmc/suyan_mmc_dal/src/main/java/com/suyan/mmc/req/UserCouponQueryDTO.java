@@ -1,6 +1,6 @@
 package com.suyan.mmc.req;
 
-import com.suyan.mmc.req.base.QueryDTO;
+import com.suyan.common.req.QueryDTO;
 
 import java.util.Date;
 import java.util.List;

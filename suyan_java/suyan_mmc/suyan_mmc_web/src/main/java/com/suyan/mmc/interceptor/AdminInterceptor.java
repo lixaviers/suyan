@@ -1,8 +1,8 @@
 package com.suyan.mmc.interceptor;
 
 import com.alibaba.fastjson.JSON;
-import com.suyan.mmc.result.MmcResult;
-import com.suyan.mmc.result.MmcResultCode;
+import com.suyan.common.result.Result;
+import com.suyan.common.result.ResultCode;
 import com.suyan.mmc.vo.UserVO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -62,7 +62,7 @@ public class AdminInterceptor implements HandlerInterceptor {
 
 
         } catch (Exception e) {
-            returnErrorJson(response, JSON.toJSONString(MmcResult.newError(MmcResultCode.SYS_ERROR)));
+            returnErrorJson(response, JSON.toJSONString(Result.newError(ResultCode.SYS_ERROR)));
             return false;
         }
 

@@ -1,7 +1,7 @@
 
-package com.suyan.mmc.util;
+package com.suyan.common.util;
 
-import com.suyan.mmc.result.ValidationResult;
+import com.suyan.common.result.ValidationResult;
 import org.apache.commons.collections4.CollectionUtils;
 
 import javax.validation.ConstraintViolation;

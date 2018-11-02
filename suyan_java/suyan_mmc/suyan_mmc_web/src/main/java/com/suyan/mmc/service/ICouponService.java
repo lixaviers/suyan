@@ -1,10 +1,11 @@
 package com.suyan.mmc.service;
 
+import com.suyan.common.resp.QueryResultODTO;
 import com.suyan.mmc.req.CouponDTO;
 import com.suyan.mmc.req.CouponQueryDTO;
 import com.suyan.mmc.resp.CouponODTO;
-import com.suyan.mmc.resp.base.QueryResultODTO;
-import com.suyan.mmc.result.MmcResult;
+import com.suyan.common.req.QueryDTO;
+import com.suyan.common.result.Result;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public interface ICouponService {
      * @param updateUserName
      * @return
      */
-    MmcResult<Integer> deleteCoupon(Long id, String updateUser, String updateUserName);
+    Result<Integer> deleteCoupon(Long id, String updateUser, String updateUserName);
     
     /**
      * 
@@ -43,7 +44,7 @@ public interface ICouponService {
      * @param couponDTO
      * @return
      */
-    MmcResult<Long> createCoupon(CouponDTO couponDTO);
+    Result<Long> createCoupon(CouponDTO couponDTO);
 
     /**
      *
@@ -54,7 +55,7 @@ public interface ICouponService {
      * @param couponDTOs
      * @return
      */
-    MmcResult<Integer> batchCreate(List<CouponDTO> couponDTOs);
+    Result<Integer> batchCreate(List<CouponDTO> couponDTOs);
 
     /**
      * 
@@ -65,7 +66,7 @@ public interface ICouponService {
      * @param couponDTO
      * @return
      */
-    MmcResult<Integer> updateCoupon(CouponDTO couponDTO);
+    Result<Integer> updateCoupon(CouponDTO couponDTO);
     
     /**
      * 
@@ -76,7 +77,7 @@ public interface ICouponService {
      * @param id
      * @return
      */
-    MmcResult<CouponODTO> getCoupon(Long id);
+    Result<CouponODTO> getCoupon(Long id);
 
     /**
      * 
@@ -87,7 +88,7 @@ public interface ICouponService {
      * @param couponQueryDTO
      * @return
      */
-    MmcResult<QueryResultODTO<CouponODTO>> queryCoupon(CouponQueryDTO couponQueryDTO);
+    Result<QueryResultODTO<CouponODTO>> queryCoupon(CouponQueryDTO couponQueryDTO);
 
 
     /**
@@ -95,5 +96,5 @@ public interface ICouponService {
      * @param couponDTO
      * @return
      */
-    MmcResult<Integer> changeStatus(CouponDTO couponDTO);
+    Result<Integer> changeStatus(CouponDTO couponDTO);
 }

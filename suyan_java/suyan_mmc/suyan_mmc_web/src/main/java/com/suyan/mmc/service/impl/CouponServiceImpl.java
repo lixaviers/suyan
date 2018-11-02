@@ -6,8 +6,8 @@ import com.suyan.mmc.model.Coupon;
 import com.suyan.mmc.req.CouponDTO;
 import com.suyan.mmc.req.CouponQueryDTO;
 import com.suyan.mmc.resp.CouponODTO;
-import com.suyan.mmc.resp.base.QueryResultODTO;
-import com.suyan.mmc.result.MmcResult;
+import com.suyan.common.resp.QueryResultODTO;
+import com.suyan.common.result.Result;
 import com.suyan.mmc.service.ICouponService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,8 +48,8 @@ public class CouponServiceImpl implements ICouponService {
      * @Version: <1.0>
      */
     @Override
-    public MmcResult<Integer> deleteCoupon(Long id, String updateUser, String updateUserName) {
-        MmcResult<Integer> result = MmcResult.newSuccess();
+    public Result<Integer> deleteCoupon(Long id, String updateUser, String updateUserName) {
+        Result<Integer> result = Result.newSuccess();
         result.setDataMap(couponBiz.deleteCoupon(id, updateUser, updateUserName));
         return result;
     }
@@ -63,8 +63,8 @@ public class CouponServiceImpl implements ICouponService {
      * @Version: <1.0>
      */
     @Override
-    public MmcResult<Long> createCoupon(CouponDTO couponDTO) {
-        MmcResult<Long> result = MmcResult.newSuccess();
+    public Result<Long> createCoupon(CouponDTO couponDTO) {
+        Result<Long> result = Result.newSuccess();
         Coupon coupon = CouponConvertor.toCoupon(couponDTO);
         if (!validateForCreate(coupon, result)) {
             return result;
@@ -74,8 +74,8 @@ public class CouponServiceImpl implements ICouponService {
     }
 
     @Override
-    public MmcResult<Integer> batchCreate(List<CouponDTO> couponDTOs) {
-        MmcResult<Integer> result = MmcResult.newSuccess();
+    public Result<Integer> batchCreate(List<CouponDTO> couponDTOs) {
+        Result<Integer> result = Result.newSuccess();
         List<Coupon> items = CouponConvertor.toCouponList(couponDTOs);
         result.setDataMap(couponBiz.batchCreateCoupon(items));
         return result;
@@ -90,8 +90,8 @@ public class CouponServiceImpl implements ICouponService {
      * @Version: <1.0>
      */
     @Override
-    public MmcResult<Integer> updateCoupon(CouponDTO couponDTO) {
-        MmcResult<Integer> result = MmcResult.newSuccess();
+    public Result<Integer> updateCoupon(CouponDTO couponDTO) {
+        Result<Integer> result = Result.newSuccess();
         Coupon coupon = CouponConvertor.toCoupon(couponDTO);
         if (!validateForUpdate(coupon, result)) {
             return result;
@@ -109,8 +109,8 @@ public class CouponServiceImpl implements ICouponService {
      * @Version: <1.0>
      */
     @Override
-    public MmcResult<CouponODTO> getCoupon(Long id) {
-        MmcResult<CouponODTO> result = MmcResult.newSuccess();
+    public Result<CouponODTO> getCoupon(Long id) {
+        Result<CouponODTO> result = Result.newSuccess();
         Coupon coupon = couponBiz.getCoupon(id);
         CouponODTO couponODTO = CouponConvertor.toCouponODTO(coupon);
         result.setDataMap(couponODTO);
@@ -126,8 +126,8 @@ public class CouponServiceImpl implements ICouponService {
      * @Version: <1.0>
      */
     @Override
-    public MmcResult<QueryResultODTO<CouponODTO>> queryCoupon(CouponQueryDTO couponQueryDTO) {
-        MmcResult<QueryResultODTO<CouponODTO>> result = MmcResult.newSuccess();
+    public Result<QueryResultODTO<CouponODTO>> queryCoupon(CouponQueryDTO couponQueryDTO) {
+        Result<QueryResultODTO<CouponODTO>> result = Result.newSuccess();
 
         QueryResultODTO<Coupon> resultInfo = couponBiz.queryCoupon(couponQueryDTO);
         result.setDataMap(CouponConvertor.toQueryResult(resultInfo));
@@ -136,8 +136,8 @@ public class CouponServiceImpl implements ICouponService {
     }
 
     @Override
-    public MmcResult<Integer> changeStatus(CouponDTO couponDTO) {
-        MmcResult<Integer> result = MmcResult.newSuccess();
+    public Result<Integer> changeStatus(CouponDTO couponDTO) {
+        Result<Integer> result = Result.newSuccess();
         Coupon coupon = CouponConvertor.toCoupon(couponDTO);
         result.setDataMap(couponBiz.changeStatus(coupon));
         return result;

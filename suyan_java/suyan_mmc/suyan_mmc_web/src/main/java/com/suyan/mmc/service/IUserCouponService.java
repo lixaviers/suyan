@@ -3,8 +3,8 @@ package com.suyan.mmc.service;
 import com.suyan.mmc.req.UserCouponDTO;
 import com.suyan.mmc.req.UserCouponQueryDTO;
 import com.suyan.mmc.resp.UserCouponODTO;
-import com.suyan.mmc.resp.base.QueryResultODTO;
-import com.suyan.mmc.result.MmcResult;
+import com.suyan.common.resp.QueryResultODTO;
+import com.suyan.common.result.Result;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public interface IUserCouponService {
     * @param id
      * @return
      */
-    MmcResult<Integer> deleteUserCoupon(Long id);
+    Result<Integer> deleteUserCoupon(Long id);
     
     /**
      * 
@@ -41,7 +41,7 @@ public interface IUserCouponService {
      * @param userCouponDTO
      * @return
      */
-    MmcResult<Long> createUserCoupon(UserCouponDTO userCouponDTO);
+    Result<Long> createUserCoupon(UserCouponDTO userCouponDTO);
 
     /**
      *
@@ -52,7 +52,7 @@ public interface IUserCouponService {
      * @param userCouponDTOs
      * @return
      */
-    MmcResult<Integer> batchCreate(List<UserCouponDTO> userCouponDTOs);
+    Result<Integer> batchCreate(List<UserCouponDTO> userCouponDTOs);
 
     /**
      * 
@@ -63,7 +63,7 @@ public interface IUserCouponService {
      * @param userCouponDTO
      * @return
      */
-    MmcResult<Integer> updateUserCoupon(UserCouponDTO userCouponDTO);
+    Result<Integer> updateUserCoupon(UserCouponDTO userCouponDTO);
     
     /**
      * 
@@ -74,7 +74,7 @@ public interface IUserCouponService {
      * @param id
      * @return
      */
-    MmcResult<UserCouponODTO> getUserCoupon(Long id);
+    Result<UserCouponODTO> getUserCoupon(Long id);
 
     /**
      * 
@@ -85,7 +85,7 @@ public interface IUserCouponService {
      * @param userCouponQueryDTO
      * @return
      */
-    MmcResult<QueryResultODTO<UserCouponODTO>> queryUserCoupon(UserCouponQueryDTO userCouponQueryDTO);
+    Result<QueryResultODTO<UserCouponODTO>> queryUserCoupon(UserCouponQueryDTO userCouponQueryDTO);
 
     /**
     * The following custom service interface about dubbo

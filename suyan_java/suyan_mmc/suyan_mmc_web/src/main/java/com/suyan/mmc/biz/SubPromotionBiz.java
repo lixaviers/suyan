@@ -2,16 +2,16 @@ package com.suyan.mmc.biz;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.suyan.common.exception.CommonBizException;
 import com.suyan.mmc.constant.CommonStatusEnum;
 import com.suyan.mmc.constant.PromotionTypeEnum;
 import com.suyan.mmc.dao.StatusLogMapper;
 import com.suyan.mmc.dao.SubPromotionMapper;
-import com.suyan.mmc.exception.CommonBizException;
 import com.suyan.mmc.model.StatusLog;
 import com.suyan.mmc.model.SubPromotion;
 import com.suyan.mmc.req.SubPromotionQueryDTO;
-import com.suyan.mmc.resp.base.QueryResultODTO;
-import com.suyan.mmc.result.MmcResultCode;
+import com.suyan.common.resp.QueryResultODTO;
+import com.suyan.common.result.ResultCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,7 +103,7 @@ public class SubPromotionBiz {
         Integer result = null;
         SubPromotion subPromotionLast = subPromotionMapper.selectByPrimaryKeyForUpdate(subPromotion.getId());
         if (subPromotionLast == null) {
-            throw new CommonBizException(MmcResultCode.DATA_NOT_EXIST, "订单促销");
+            throw new CommonBizException(ResultCode.DATA_NOT_EXIST, "订单促销");
         }
         // TODO: Describe business logic and implement it
         result = subPromotionMapper.updateByPrimaryKeySelective(subPromotion);
@@ -122,7 +122,7 @@ public class SubPromotionBiz {
     public SubPromotion getSubPromotion(Long id) {
         SubPromotion subPromotion = subPromotionMapper.selectByPrimaryKey(id);
         if (subPromotion == null || subPromotion.getIsDeleted()) {
-            throw new CommonBizException(MmcResultCode.DATA_NOT_EXIST, "订单促销");
+            throw new CommonBizException(ResultCode.DATA_NOT_EXIST, "订单促销");
         }
         return subPromotion;
     }
@@ -155,30 +155,30 @@ public class SubPromotionBiz {
     public Integer changeStatus(SubPromotion subPromotion) {
         SubPromotion subPromotionLast = subPromotionMapper.selectByPrimaryKeyForUpdate(subPromotion.getId());
         if (subPromotionLast == null) {
-            throw new CommonBizException(MmcResultCode.DATA_NOT_EXIST, "订单促销");
+            throw new CommonBizException(ResultCode.DATA_NOT_EXIST, "订单促销");
         }
         if (CommonStatusEnum.ONLINE.equal(subPromotion.getPromotionStatus())) {
             // 上线
             if (!CommonStatusEnum.SAVED.equal(subPromotionLast.getPromotionStatus())) {
-                throw new CommonBizException(MmcResultCode.INVALID_CHANGE_STATUS, "订单促销");
+                throw new CommonBizException(ResultCode.INVALID_CHANGE_STATUS, "订单促销");
             }
         } else if (CommonStatusEnum.SAVED.equal(subPromotion.getPromotionStatus())) {
             // 下线
             if (!CommonStatusEnum.ONLINE.equal(subPromotionLast.getPromotionStatus())) {
-                throw new CommonBizException(MmcResultCode.INVALID_CHANGE_STATUS, "订单促销");
+                throw new CommonBizException(ResultCode.INVALID_CHANGE_STATUS, "订单促销");
             }
         } else if (CommonStatusEnum.STOPED.equal(subPromotion.getPromotionStatus())) {
             // 中止
             if (!CommonStatusEnum.ONLINE.equal(subPromotionLast.getPromotionStatus())
                     && !CommonStatusEnum.ONGOING.equal(subPromotionLast.getPromotionStatus())) {
-                throw new CommonBizException(MmcResultCode.INVALID_CHANGE_STATUS, "订单促销");
+                throw new CommonBizException(ResultCode.INVALID_CHANGE_STATUS, "订单促销");
             }
         } else if (CommonStatusEnum.CANCELED.equal(subPromotion.getPromotionStatus())) {
             // 取消
             if (!CommonStatusEnum.ONLINE.equal(subPromotionLast.getPromotionStatus())
                     && !CommonStatusEnum.ONGOING.equal(subPromotionLast.getPromotionStatus())
                     && !CommonStatusEnum.STOPED.equal(subPromotionLast.getPromotionStatus())) {
-                throw new CommonBizException(MmcResultCode.INVALID_CHANGE_STATUS, "订单促销");
+                throw new CommonBizException(ResultCode.INVALID_CHANGE_STATUS, "订单促销");
             }
         }
         Integer result = subPromotionMapper.updateByPrimaryKeySelective(subPromotion);

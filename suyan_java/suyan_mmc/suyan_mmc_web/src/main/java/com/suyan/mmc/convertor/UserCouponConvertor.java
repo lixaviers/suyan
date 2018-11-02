@@ -3,7 +3,7 @@ package com.suyan.mmc.convertor;
 import com.suyan.mmc.model.UserCoupon;
 import com.suyan.mmc.req.UserCouponDTO;
 import com.suyan.mmc.resp.UserCouponODTO;
-import com.suyan.mmc.resp.base.QueryResultODTO;
+import com.suyan.common.resp.QueryResultODTO;
 import org.springframework.cglib.beans.BeanCopier;
 
 import java.util.ArrayList;

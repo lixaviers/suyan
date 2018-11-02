@@ -6,8 +6,8 @@ import com.suyan.mmc.model.UserCoupon;
 import com.suyan.mmc.req.UserCouponDTO;
 import com.suyan.mmc.req.UserCouponQueryDTO;
 import com.suyan.mmc.resp.UserCouponODTO;
-import com.suyan.mmc.resp.base.QueryResultODTO;
-import com.suyan.mmc.result.MmcResult;
+import com.suyan.common.resp.QueryResultODTO;
+import com.suyan.common.result.Result;
 import com.suyan.mmc.service.IUserCouponService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,8 +46,8 @@ public class UserCouponServiceImpl implements IUserCouponService {
      * @Version: <1.0>
      */
     @Override
-    public MmcResult<Integer> deleteUserCoupon(Long id) {
-        MmcResult<Integer> result = MmcResult.newSuccess();
+    public Result<Integer> deleteUserCoupon(Long id) {
+        Result<Integer> result = Result.newSuccess();
         result.setDataMap(userCouponBiz.deleteUserCoupon(id));
         return result;
     }
@@ -61,8 +61,8 @@ public class UserCouponServiceImpl implements IUserCouponService {
      * @Version: <1.0>
      */
     @Override
-    public MmcResult<Long> createUserCoupon(UserCouponDTO userCouponDTO) {
-        MmcResult<Long> result = MmcResult.newSuccess();
+    public Result<Long> createUserCoupon(UserCouponDTO userCouponDTO) {
+        Result<Long> result = Result.newSuccess();
         UserCoupon userCoupon = UserCouponConvertor.toUserCoupon(userCouponDTO);
         if (!validateForCreate(userCoupon, result)) {
             return result;
@@ -72,8 +72,8 @@ public class UserCouponServiceImpl implements IUserCouponService {
     }
 
     @Override
-    public MmcResult<Integer> batchCreate(List<UserCouponDTO> userCouponDTOs) {
-        MmcResult<Integer> result = MmcResult.newSuccess();
+    public Result<Integer> batchCreate(List<UserCouponDTO> userCouponDTOs) {
+        Result<Integer> result = Result.newSuccess();
         List<UserCoupon> items = UserCouponConvertor.toUserCouponList(userCouponDTOs);
         result.setDataMap(userCouponBiz.batchCreateUserCoupon(items));
         return result;
@@ -88,10 +88,9 @@ public class UserCouponServiceImpl implements IUserCouponService {
      * @Version: <1.0>
      */
     @Override
-    public MmcResult<Integer> updateUserCoupon(UserCouponDTO userCouponDTO) {
-        MmcResult<Integer> result = MmcResult.newSuccess();
-        UserCoupon userCoupon = null;
-        userCoupon = UserCouponConvertor.toUserCoupon(userCouponDTO);
+    public Result<Integer> updateUserCoupon(UserCouponDTO userCouponDTO) {
+        Result<Integer> result = Result.newSuccess();
+        UserCoupon userCoupon = UserCouponConvertor.toUserCoupon(userCouponDTO);
         if (!validateForUpdate(userCoupon, result)) {
             return result;
         }
@@ -108,8 +107,8 @@ public class UserCouponServiceImpl implements IUserCouponService {
      * @Version: <1.0>
      */
     @Override
-    public MmcResult<UserCouponODTO> getUserCoupon(Long id) {
-        MmcResult<UserCouponODTO> result = MmcResult.newSuccess();
+    public Result<UserCouponODTO> getUserCoupon(Long id) {
+        Result<UserCouponODTO> result = Result.newSuccess();
         UserCoupon userCoupon = userCouponBiz.getUserCoupon(id);
         UserCouponODTO userCouponODTO = UserCouponConvertor.toUserCouponODTO(userCoupon);
         result.setDataMap(userCouponODTO);
@@ -125,8 +124,8 @@ public class UserCouponServiceImpl implements IUserCouponService {
      * @Version: <1.0>
      */
     @Override
-    public MmcResult<QueryResultODTO<UserCouponODTO>> queryUserCoupon(UserCouponQueryDTO userCouponQueryDTO) {
-        MmcResult<QueryResultODTO<UserCouponODTO>> result = MmcResult.newSuccess();
+    public Result<QueryResultODTO<UserCouponODTO>> queryUserCoupon(UserCouponQueryDTO userCouponQueryDTO) {
+        Result<QueryResultODTO<UserCouponODTO>> result = Result.newSuccess();
 
         QueryResultODTO<UserCoupon> resultInfo = userCouponBiz.queryUserCoupon(userCouponQueryDTO);
         result.setDataMap(UserCouponConvertor.toQueryResult(resultInfo));

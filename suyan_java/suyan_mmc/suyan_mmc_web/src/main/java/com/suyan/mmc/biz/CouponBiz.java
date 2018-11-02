@@ -2,16 +2,16 @@ package com.suyan.mmc.biz;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.suyan.common.exception.CommonBizException;
 import com.suyan.mmc.constant.CommonStatusEnum;
 import com.suyan.mmc.constant.PromotionTypeEnum;
 import com.suyan.mmc.dao.CouponMapper;
 import com.suyan.mmc.dao.StatusLogMapper;
-import com.suyan.mmc.exception.CommonBizException;
 import com.suyan.mmc.model.Coupon;
 import com.suyan.mmc.model.StatusLog;
 import com.suyan.mmc.req.CouponQueryDTO;
-import com.suyan.mmc.resp.base.QueryResultODTO;
-import com.suyan.mmc.result.MmcResultCode;
+import com.suyan.common.resp.QueryResultODTO;
+import com.suyan.common.result.ResultCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,7 +109,7 @@ public class CouponBiz {
         Integer result = null;
         Coupon couponLast = couponMapper.selectByPrimaryKeyForUpdate(coupon.getId());
         if (couponLast == null) {
-            throw new CommonBizException(MmcResultCode.DATA_NOT_EXIST, "优惠券");
+            throw new CommonBizException(ResultCode.DATA_NOT_EXIST, "优惠券");
         }
         // TODO: Describe business logic and implement it
         result = couponMapper.updateByPrimaryKeySelective(coupon);
@@ -128,7 +128,7 @@ public class CouponBiz {
     public Coupon getCoupon(Long id) {
         Coupon coupon = couponMapper.selectByPrimaryKey(id);
         if (coupon == null || coupon.getIsDeleted()) {
-            throw new CommonBizException(MmcResultCode.DATA_NOT_EXIST, "优惠券");
+            throw new CommonBizException(ResultCode.DATA_NOT_EXIST, "优惠券");
         }
         return coupon;
     }
@@ -161,30 +161,30 @@ public class CouponBiz {
     public Integer changeStatus(Coupon coupon) {
         Coupon couponLast = couponMapper.selectByPrimaryKeyForUpdate(coupon.getId());
         if (couponLast == null) {
-            throw new CommonBizException(MmcResultCode.DATA_NOT_EXIST, "优惠券");
+            throw new CommonBizException(ResultCode.DATA_NOT_EXIST, "优惠券");
         }
         if (CommonStatusEnum.ONLINE.equal(coupon.getCouponStatus())) {
             // 上线
             if (!CommonStatusEnum.SAVED.equal(couponLast.getCouponStatus())) {
-                throw new CommonBizException(MmcResultCode.INVALID_CHANGE_STATUS, "优惠券");
+                throw new CommonBizException(ResultCode.INVALID_CHANGE_STATUS, "优惠券");
             }
         } else if (CommonStatusEnum.SAVED.equal(coupon.getCouponStatus())) {
             // 下线
             if (!CommonStatusEnum.ONLINE.equal(couponLast.getCouponStatus())) {
-                throw new CommonBizException(MmcResultCode.INVALID_CHANGE_STATUS, "优惠券");
+                throw new CommonBizException(ResultCode.INVALID_CHANGE_STATUS, "优惠券");
             }
         } else if (CommonStatusEnum.STOPED.equal(coupon.getCouponStatus())) {
             // 中止
             if (!CommonStatusEnum.ONLINE.equal(couponLast.getCouponStatus())
                     && !CommonStatusEnum.ONGOING.equal(couponLast.getCouponStatus())) {
-                throw new CommonBizException(MmcResultCode.INVALID_CHANGE_STATUS, "优惠券");
+                throw new CommonBizException(ResultCode.INVALID_CHANGE_STATUS, "优惠券");
             }
         } else if (CommonStatusEnum.CANCELED.equal(coupon.getCouponStatus())) {
             // 取消
             if (!CommonStatusEnum.ONLINE.equal(couponLast.getCouponStatus())
                     && !CommonStatusEnum.ONGOING.equal(couponLast.getCouponStatus())
                     && !CommonStatusEnum.STOPED.equal(couponLast.getCouponStatus())) {
-                throw new CommonBizException(MmcResultCode.INVALID_CHANGE_STATUS, "优惠券");
+                throw new CommonBizException(ResultCode.INVALID_CHANGE_STATUS, "优惠券");
             }
         }
         Integer result = couponMapper.updateByPrimaryKeySelective(coupon);

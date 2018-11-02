@@ -5,12 +5,12 @@ import com.suyan.mmc.req.CouponDTO;
 import com.suyan.mmc.req.SubPromotionDTO;
 import com.suyan.mmc.req.SubPromotionQueryDTO;
 import com.suyan.mmc.resp.SubPromotionODTO;
-import com.suyan.mmc.resp.base.QueryResultODTO;
-import com.suyan.mmc.result.MmcResult;
-import com.suyan.mmc.result.MmcResultCode;
-import com.suyan.mmc.result.ValidationResult;
+import com.suyan.common.resp.QueryResultODTO;
+import com.suyan.common.result.Result;
+import com.suyan.common.result.ResultCode;
+import com.suyan.common.result.ValidationResult;
 import com.suyan.mmc.service.ISubPromotionService;
-import com.suyan.mmc.util.ValidationUtils;
+import com.suyan.common.util.ValidationUtils;
 import com.suyan.mmc.vo.UserVO;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -40,14 +40,14 @@ public class SubPromotionController extends BaseController {
     })
     @ApiOperation(value = "deleteSubPromotion/{id}", notes = "删除订单促销")
     @RequestMapping(value = "deleteSubPromotion/{id}", method = {RequestMethod.POST})
-    public MmcResult<Integer> deleteSubPromotion(@PathVariable Long id) {
-        MmcResult<Integer> result = MmcResult.newSuccess();
+    public Result<Integer> deleteSubPromotion(@PathVariable Long id) {
+        Result<Integer> result = Result.newSuccess();
         try {
             UserVO user = getUser();
             result = subPromotionService.deleteSubPromotion(id, user.getOpenId(), user.getNickName());
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            result.setErrorCode(MmcResultCode.SYS_ERROR);
+            result.setErrorCode(ResultCode.SYS_ERROR);
         }
         return result;
     }
@@ -60,12 +60,12 @@ public class SubPromotionController extends BaseController {
     })
     @ApiOperation(value = "createSubPromotion", notes = "创建订单促销")
     @RequestMapping(value = "createSubPromotion", method = {RequestMethod.POST})
-    public MmcResult<Long> createSubPromotion(@Valid @RequestBody SubPromotionDTO subPromotionDTO) {
-        MmcResult<Long> result = MmcResult.newSuccess();
+    public Result<Long> createSubPromotion(@Valid @RequestBody SubPromotionDTO subPromotionDTO) {
+        Result<Long> result = Result.newSuccess();
         try {
             ValidationResult validateEntity = ValidationUtils.validateEntity(subPromotionDTO);
             if (validateEntity.isHasErrors()) {
-                result.setCode(MmcResultCode.COMMON_PARAM_INVALID.getCode());
+                result.setCode(ResultCode.COMMON_PARAM_INVALID.getCode());
                 result.setMessage(validateEntity.getErrorMsg().toString());
                 return result;
             }
@@ -77,7 +77,7 @@ public class SubPromotionController extends BaseController {
             result = subPromotionService.createSubPromotion(subPromotionDTO);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            result.setErrorCode(MmcResultCode.SYS_ERROR);
+            result.setErrorCode(ResultCode.SYS_ERROR);
         }
         return result;
     }
@@ -90,12 +90,12 @@ public class SubPromotionController extends BaseController {
     })
     @ApiOperation(value = "updateSubPromotion", notes = "更新订单促销")
     @RequestMapping(value = "updateSubPromotion", method = {RequestMethod.POST})
-    public MmcResult<Integer> updateSubPromotion(@Valid @RequestBody SubPromotionDTO subPromotionDTO) {
-        MmcResult<Integer> result = MmcResult.newSuccess();
+    public Result<Integer> updateSubPromotion(@Valid @RequestBody SubPromotionDTO subPromotionDTO) {
+        Result<Integer> result = Result.newSuccess();
         try {
             ValidationResult validateEntity = ValidationUtils.validateEntity(subPromotionDTO);
             if (validateEntity.isHasErrors()) {
-                result.setCode(MmcResultCode.COMMON_PARAM_INVALID.getCode());
+                result.setCode(ResultCode.COMMON_PARAM_INVALID.getCode());
                 result.setMessage(validateEntity.getErrorMsg().toString());
                 return result;
             }
@@ -107,7 +107,7 @@ public class SubPromotionController extends BaseController {
             result = subPromotionService.updateSubPromotion(subPromotionDTO);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            result.setErrorCode(MmcResultCode.SYS_ERROR);
+            result.setErrorCode(ResultCode.SYS_ERROR);
         }
         return result;
     }
@@ -120,13 +120,13 @@ public class SubPromotionController extends BaseController {
     })
     @ApiOperation(value = "getSubPromotion/{id}", notes = "根据订单促销ID获取订单促销信息")
     @RequestMapping(value = "getSubPromotion/{id}", method = {RequestMethod.GET})
-    public MmcResult<SubPromotionODTO> getSubPromotion(@PathVariable Long id) {
-        MmcResult<SubPromotionODTO> result = MmcResult.newSuccess();
+    public Result<SubPromotionODTO> getSubPromotion(@PathVariable Long id) {
+        Result<SubPromotionODTO> result = Result.newSuccess();
         try {
             result = subPromotionService.getSubPromotion(id);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            result.setErrorCode(MmcResultCode.SYS_ERROR);
+            result.setErrorCode(ResultCode.SYS_ERROR);
         }
         return result;
     }
@@ -139,19 +139,19 @@ public class SubPromotionController extends BaseController {
     })
     @ApiOperation(value = "querySubPromotion", notes = "分页获取订单促销列表信息")
     @RequestMapping(value = "querySubPromotion", method = {RequestMethod.POST})
-    MmcResult<QueryResultODTO<SubPromotionODTO>> querySubPromotion(@Valid @RequestBody SubPromotionQueryDTO subPromotionQueryDTO) {
-        MmcResult<QueryResultODTO<SubPromotionODTO>> result = MmcResult.newSuccess();
+    Result<QueryResultODTO<SubPromotionODTO>> querySubPromotion(@Valid @RequestBody SubPromotionQueryDTO subPromotionQueryDTO) {
+        Result<QueryResultODTO<SubPromotionODTO>> result = Result.newSuccess();
         try {
             ValidationResult validateEntity = ValidationUtils.validateEntity(subPromotionQueryDTO);
             if (validateEntity.isHasErrors()) {
-                result.setCode(MmcResultCode.COMMON_PARAM_INVALID.getCode());
+                result.setCode(ResultCode.COMMON_PARAM_INVALID.getCode());
                 result.setMessage(validateEntity.getErrorMsg().toString());
                 return result;
             }
             result = subPromotionService.querySubPromotion(subPromotionQueryDTO);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            result.setErrorCode(MmcResultCode.SYS_ERROR);
+            result.setErrorCode(ResultCode.SYS_ERROR);
         }
         return result;
     }
@@ -160,8 +160,8 @@ public class SubPromotionController extends BaseController {
 
     @ApiOperation(value = "changeStatus/{id}/{opt}", notes = "修改商品促销状态")
     @RequestMapping(value = "changeStatus/{id}/{opt}", method = {RequestMethod.POST})
-    MmcResult<Integer> changeStatus(@PathVariable Long id, @PathVariable Integer opt) {
-        MmcResult<Integer> result = MmcResult.newSuccess();
+    Result<Integer> changeStatus(@PathVariable Long id, @PathVariable Integer opt) {
+        Result<Integer> result = Result.newSuccess();
         try {
             UserVO user = getUser();
             SubPromotionDTO subPromotionDTO = new SubPromotionDTO();
@@ -186,7 +186,7 @@ public class SubPromotionController extends BaseController {
             result = subPromotionService.changeStatus(subPromotionDTO);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            result.setErrorCode(MmcResultCode.SYS_ERROR);
+            result.setErrorCode(ResultCode.SYS_ERROR);
         }
         return result;
     }
