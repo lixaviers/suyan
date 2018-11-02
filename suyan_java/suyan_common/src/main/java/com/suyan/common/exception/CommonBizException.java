@@ -1,12 +1,12 @@
-package com.suyan.mmc.exception;
+package com.suyan.common.exception;
 
 
-import com.suyan.mmc.result.MmcResultCode;
+import com.suyan.common.result.ResultCode;
 
 public class CommonBizException extends BaseException {
     private static final long serialVersionUID = 1L;
 
-    private MmcResultCode mmcResultCode;
+    private ResultCode resultCode;
 
     public CommonBizException(Integer errorCode, String errorMsg, Throwable caused) {
         super(errorCode, errorMsg, caused);
@@ -20,26 +20,23 @@ public class CommonBizException extends BaseException {
         super(errorCode, errorMsg, args);
     }
 
-    public CommonBizException(MmcResultCode resultCode) {
+    public CommonBizException(ResultCode resultCode) {
         this(resultCode.getCode(), resultCode.getMessage());
-        this.mmcResultCode = resultCode;
+        this.resultCode = resultCode;
     }
 
-    public CommonBizException(MmcResultCode resultCode, Object... args) {
+    public CommonBizException(ResultCode resultCode, Object... args) {
         this(resultCode.getCode(), resultCode.getMessage(), args);
-        this.mmcResultCode = resultCode;
+        this.resultCode = resultCode;
     }
 
     public CommonBizException(Integer errorCode, Throwable caused) {
         super(errorCode, caused);
     }
 
-    public MmcResultCode getMmcResultCode() {
-        return mmcResultCode;
+    public ResultCode getMmcResultCode() {
+        return resultCode;
     }
 
-//	public void setMmcResultCode(MmcResultCode MmcResultCode) {
-//		this.mmcResultCode = MmcResultCode;
-//	}
 
 }

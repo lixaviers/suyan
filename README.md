@@ -1,21 +1,23 @@
 # 素焉SpringCloud完整项目
-
+<br>
 所用技术：
 Spring Cloud、Spring Security JWT SSO
-
+<br>
 模块划分：
-
+<br>
 control_center api_gateway：zuul 统一网关 10000端口
-
+<br>
 control_center eureka：Spring Eureka 8761端口
-
+<br>
 suyan_user suyan_user_server 登录 60000端口
-
+<br>
 suyan_user suyan_user_rest urms系统 60001端口
-
+<br>
 suyan_mmc suyan_mmc_job 营销中心job 60002端口
-
+<br>
 suyan_mmc suyan_mmc_web 营销中心web 60003端口
+<br>
+suyan_goods suyan_goods_web 商品中心web 60005端口
 <br>
 <br>
 <br>

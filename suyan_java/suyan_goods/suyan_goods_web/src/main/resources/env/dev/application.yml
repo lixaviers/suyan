@@ -1,0 +1,11 @@
+server:
+  port: 60005
+
+spring:
+  application:
+    name: goods
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.226.111:8761/eureka/

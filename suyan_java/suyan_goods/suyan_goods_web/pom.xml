@@ -3,45 +3,19 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>suyan_mmc</artifactId>
+        <artifactId>suyan_goods</artifactId>
         <groupId>com.suyan</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>suyan_mmc_web</artifactId>
-    <version>${mmc.web.version}</version>
-
-    <profiles>
-        <!-- dev -->
-        <profile>
-            <id>dev</id>
-            <properties>
-                <env>dev</env>
-                <jvmSettings.initialMemorySize>512M</jvmSettings.initialMemorySize>
-                <jvmSettings.maxMemorySize>512M</jvmSettings.maxMemorySize>
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-        <!-- prd -->
-        <profile>
-            <id>prd</id>
-            <properties>
-                <env>prd</env>
-                <jvmSettings.initialMemorySize>3072M</jvmSettings.initialMemorySize>
-                <jvmSettings.maxMemorySize>4096M</jvmSettings.maxMemorySize>
-            </properties>
-        </profile>
-    </profiles>
+    <artifactId>suyan_goods_web</artifactId>
+    <version>${goods.web.version}</version>
 
     <dependencies>
-
         <dependency>
             <groupId>com.suyan</groupId>
-            <artifactId>suyan_mmc_dal</artifactId>
-            <version>${mmc.dal.version}</version>
+            <artifactId>suyan_common</artifactId>
         </dependency>
 
         <dependency>
@@ -53,7 +27,14 @@
             <artifactId>jjwt</artifactId>
         </dependency>
 
-        <!-- this project -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -63,11 +44,38 @@
             <artifactId>spring-context</artifactId>
         </dependency>
 
+
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jdbc</artifactId>
         </dependency>
 
+        <!-- 数据库 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <!-- MyBatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
+        </dependency>
+
+        <!-- mybatis/spring整合包 -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+        </dependency>
 
 
         <!-- Jackson Json处理工具包 -->
@@ -93,6 +101,32 @@
         </dependency>
 
     </dependencies>
+
+
+    <profiles>
+        <!-- dev -->
+        <profile>
+            <id>dev</id>
+            <properties>
+                <env>dev</env>
+                <jvmSettings.initialMemorySize>512M</jvmSettings.initialMemorySize>
+                <jvmSettings.maxMemorySize>512M</jvmSettings.maxMemorySize>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!-- prd -->
+        <profile>
+            <id>prd</id>
+            <properties>
+                <env>prd</env>
+                <jvmSettings.initialMemorySize>3072M</jvmSettings.initialMemorySize>
+                <jvmSettings.maxMemorySize>4096M</jvmSettings.maxMemorySize>
+            </properties>
+        </profile>
+    </profiles>
+
 
     <build>
         <resources>
@@ -135,7 +169,7 @@
                     <daemons>
                         <daemon>
                             <id>${project.name}</id>
-                            <mainClass>com.suyan.mmc.MmcWebApplication</mainClass>
+                            <mainClass>com.suyan.goods.GoodsWebApplication</mainClass>
                             <platforms>
                                 <platform>jsw</platform>
                             </platforms>
@@ -213,5 +247,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>
