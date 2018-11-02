@@ -18,12 +18,7 @@ public class QueryDTO implements Serializable {
     private int pageSize = 10;
 
     /**
-     * @Fields order : 哪个字段排序
-     */
-    private String order;
-
-    /**
-     * @Fields orderBy : 升序or降序
+     * @Fields orderBy : 哪个字段排序
      */
     private String orderBy;
 
@@ -47,14 +42,6 @@ public class QueryDTO implements Serializable {
 
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
-    }
-
-    public String getOrder() {
-        return order;
-    }
-
-    public void setOrder(String order) {
-        this.order = order;
     }
 
     public String getOrderBy() {

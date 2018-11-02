@@ -47,7 +47,7 @@ public class ServiceInterceptor {
             logger.warn(e.getErrorMsg() + " Input parameters=" + JSON.toJSONString(args), e);
 
             Result<Object> r = Result.newSuccess();
-            r.setErrorCode(e.getMmcResultCode());
+            r.setErrorCode(e.getResultCode());
             r.setMessage(e.getErrorMsg());
             ret = r;
         } catch (Exception e) {
