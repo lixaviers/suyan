@@ -107,7 +107,7 @@
               } else {
                 url += "&";
               }
-              url += 'token=' + sessionStorage.getItem('access_token')
+              url += 'token=' + sessionStorage.getItem('access_token') + '&token_type=' + sessionStorage.getItem('token_type')
             }
             tab = {
               id: route.meta.id || route.name,

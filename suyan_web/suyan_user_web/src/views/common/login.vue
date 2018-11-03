@@ -99,7 +99,7 @@
                 }
               }).then(({data}) => {
 
-                sessionStorage.setItem('access_token', data.token_type + ' ' + data.access_token);
+                sessionStorage.setItem('access_token', data.access_token);
                 sessionStorage.setItem('token_type', data.token_type);
                 this.$router.replace({name: 'home'});
 

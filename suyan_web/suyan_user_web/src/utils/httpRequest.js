@@ -22,8 +22,9 @@ http.interceptors.request.use(config => {
 
   // config.headers['ajax'] = true;
   var token = sessionStorage.getItem('access_token');
+  var token_type = sessionStorage.getItem('token_type');
   if (token) {
-    config.headers['Authorization'] = token;
+    config.headers['Authorization'] = token_type + ' ' +token;
   }
 
   return config

@@ -1,4 +1,4 @@
-package com.suyan.goods.Controller;
+package com.suyan.goods.controller;
 
 import com.suyan.common.result.ValidationResult;
 import com.suyan.common.util.ValidationUtils;
@@ -143,4 +143,18 @@ public class CategoryController extends BaseController {
         }
         return result;
     }
+
+    @ApiOperation(value = "queryCategoryCascader", notes = "获取类目列表信息")
+    @RequestMapping(value = "queryCategoryCascader", method = {RequestMethod.GET})
+    Result<List<CategoryCascaderODTO>> queryCategoryCascader() {
+        Result<List<CategoryCascaderODTO>> result = Result.newSuccess();
+        try {
+            result = categoryService.queryCategoryCascader();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            result.setErrorCode(ResultCode.SYS_ERROR);
+        }
+        return result;
+    }
+
 }

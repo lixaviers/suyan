@@ -1,4 +1,4 @@
-package com.suyan.goods.Controller;
+package com.suyan.goods.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.suyan.goods.vo.UserVO;

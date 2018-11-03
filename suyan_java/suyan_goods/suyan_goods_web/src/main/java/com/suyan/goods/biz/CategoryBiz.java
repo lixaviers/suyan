@@ -175,4 +175,13 @@ public class CategoryBiz {
         return true;
     }
 
+
+    @Transactional(readOnly = true)
+    public List<Category> queryCategoryCascader() {
+        CategoryExample example = new CategoryExample();
+        example.setOrderByClause("sort_number asc, id asc");
+        return categoryMapper.selectByExample(example);
+    }
+
+
 }

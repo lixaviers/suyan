@@ -92,4 +92,6 @@ public interface ICategoryService {
 
     Result<Boolean> sort(List<CategoryDTO> categoryList);
 
+    Result<List<CategoryCascaderODTO>> queryCategoryCascader();
+
 }

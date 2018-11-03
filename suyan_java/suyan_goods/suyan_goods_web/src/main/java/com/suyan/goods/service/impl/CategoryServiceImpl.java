@@ -143,4 +143,12 @@ public class CategoryServiceImpl implements ICategoryService {
         result.setDataMap(categoryBiz.sort(CategoryConvertor.toCategoryList(categoryList)));
         return result;
     }
+
+    @Override
+    public Result<List<CategoryCascaderODTO>> queryCategoryCascader() {
+        Result<List<CategoryCascaderODTO>> result = Result.newSuccess();
+        result.setDataMap(CategoryConvertor.toCategoryCascaderODTOList(categoryBiz.queryCategoryCascader()));
+        return result;
+    }
+
 }

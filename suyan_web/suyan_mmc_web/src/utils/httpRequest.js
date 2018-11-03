@@ -18,8 +18,9 @@ const http = axios.create({
  */
 http.interceptors.request.use(config => {
   var token = sessionStorage.getItem('access_token');
+  var token_type = sessionStorage.getItem('token_type');
   if (token) {
-    config.headers['Authorization'] = token;
+    config.headers['Authorization'] = token_type + ' ' + token;
   }
 
   return config
@@ -59,12 +60,15 @@ http.interceptors.response.use((response) => {
 /**
  * 请求地址处理
  * @param {*} actionName action方法名称
+ * @param {*} type 类型 0.权限中心 1.营销中心 2.商品中心
  */
 http.adornUrl = (actionName, type = 1) => {
   if (type == 1) {
     return '/apiMmc/mmc/' + actionName;
   } else if (type == 2) {
     return '/apiGoods/goods/' + actionName;
+  } else if (type == 0) {
+    return '/apiUrms/urms/' + actionName;
   }
 }
 

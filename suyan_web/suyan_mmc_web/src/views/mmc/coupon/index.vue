@@ -232,10 +232,6 @@
       }
     },
     mounted () {
-      let token = this.$route.query.token;
-      if (token) {
-        sessionStorage.setItem('access_token', token);
-      }
       this.getDataList();
     },
     methods: {

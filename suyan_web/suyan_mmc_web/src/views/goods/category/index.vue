@@ -28,7 +28,7 @@
     </Modal>
     <div class="drag-box-card">
       <Row>
-        <Button @click="showAdd(null)" style="margin-left: 10px;">新增类目</Button>
+        <Button v-if="isAuth('goods:category:add:button')" @click="showAdd(null)" style="margin-left: 10px;">新增类目</Button>
         <b>这儿只是随便写写，方便一开始录入数据，主要的重心不在这儿，设置一次万年不变，三个类目直接不能相互拖拽，修改数据也不会自动刷新，有兴趣的可以自己去实现</b>
       </Row>
       <Row>
@@ -39,7 +39,7 @@
           <div class="drag-list-item" v-for="(item, index) in dataList" :key="`drag_li1_${index}`">
             <Card class="drag-item">{{ item.name}}
               <a @click="chooseFirst(item.id)" style="float:right;">选择</a>
-              <a @click="showAdd(item.id)" style="float:right;margin-right: 10px;">修改</a>
+              <a v-if="isAuth('goods:category:edit:button')" @click="showAdd(item.id)" style="float:right;margin-right: 10px;">修改</a>
             </Card>
           </div>
         </draggable>
@@ -52,7 +52,7 @@
           <div class="drag-list-item" v-for="(item, index) in dataListSecond" :key="`drag_li1_${index}`">
             <Card class="drag-item" slot="left">{{ item.name}}
               <a @click="chooseSencod(item.id)" style="float:right;">选择</a>
-              <a @click="showAdd(item.id)" style="float:right;margin-right: 10px;">修改</a>
+              <a v-if="isAuth('goods:category:edit:button')" @click="showAdd(item.id)" style="float:right;margin-right: 10px;">修改</a>
             </Card>
           </div>
         </draggable>
@@ -64,7 +64,7 @@
                    @end="handleEnd2($event)">
           <div class="drag-list-item" v-for="(item, index) in dataListThird" :key="`drag_li1_${index}`">
             <Card class="drag-item" slot="left">{{ item.name}}
-              <a @click="showAdd(item.id)" style="float:right;margin-right: 10px;">修改</a></Card>
+              <a v-if="isAuth('goods:category:edit:button')" @click="showAdd(item.id)" style="float:right;margin-right: 10px;">修改</a></Card>
           </div>
         </draggable>
         </Col>
@@ -74,7 +74,6 @@
 </template>
 <script>
   import draggable from 'vuedraggable';
-  import {treeDataTranslate} from '@/utils';
   export default {
     name: 'drag_list_page',
     components: {
@@ -292,10 +291,6 @@
       },
     },
     mounted () {
-      let token = this.$route.query.token;
-      if (token) {
-        sessionStorage.setItem('access_token', token);
-      }
       this.getDataList();
     }
   }

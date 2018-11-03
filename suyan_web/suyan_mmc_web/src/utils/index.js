@@ -7,6 +7,20 @@ export function dateFormat(date,fmt = "YYYY-MM-DD HH:mm:ss") {
 
 }
 
+
+/**
+ * 是否有权限
+ * @param {*} key
+ */
+export function isAuth(key) {
+  var isAdmin = sessionStorage.getItem('isAdmin');
+  if (isAdmin && isAdmin === 'true') {
+    return true;
+  }
+  return JSON.parse(sessionStorage.getItem('permissions') || '[]').indexOf(key) !== -1 || false
+}
+
+
 /**
  * 树形数据转换
  * @param {*} data
@@ -14,7 +28,6 @@ export function dateFormat(date,fmt = "YYYY-MM-DD HH:mm:ss") {
  * @param {*} pid
  */
 export function treeDataTranslate(data, id = 'id', pid = 'parentId') {
-  console.log(data)
   var res = []
   var temp = {}
   for (var i = 0; i < data.length; i++) {
