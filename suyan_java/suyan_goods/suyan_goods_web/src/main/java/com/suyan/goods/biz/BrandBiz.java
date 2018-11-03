@@ -1,6 +1,9 @@
 package com.suyan.goods.biz;
 
+import com.suyan.common.exception.CommonBizException;
+import com.suyan.common.result.ResultCode;
 import com.suyan.goods.dao.BrandMapper;
+import com.suyan.goods.dao.ext.BrandExtMapper;
 import com.suyan.goods.model.Brand;
 import com.suyan.goods.req.BrandQueryDTO;
 import com.suyan.common.resp.QueryResultODTO;
@@ -33,102 +36,100 @@ public class BrandBiz {
     private final Logger logger = LoggerFactory.getLogger(BrandBiz.class);
 
     @Autowired
-    BrandMapper brandMapper;
+    private BrandMapper brandMapper;
+    @Autowired
+    private BrandExtMapper brandExtMapper;
 
     /**
-    *
-    * 逻辑删除品牌
-    *
-    * @author lixavier
-    * @version 1.0.0
-    * @param id
-    * @param updateUser
-    * @param updateUserName
-    * @return
-    */
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
-    public Integer deleteBrand(Long id, String updateUser, String updateUserName){
-        // TODO: Describe business logic and implement it
-        int result = brandMapper.logicalDeleteByPrimaryKey(id,updateUser,updateUserName);
-        return result;
-    }
-    
-    /**
-     * 
-     * 创建品牌
-     * 
+     * 逻辑删除品牌
+     *
+     * @param id
+     * @param updateUser
+     * @param updateUserName
+     * @return
      * @author lixavier
      * @version 1.0.0
-     * @param brand
-     * @return
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
-    public Long createBrand(Brand brand){
+    public Integer deleteBrand(Long id, String updateUser, String updateUserName) {
         // TODO: Describe business logic and implement it
-        brandMapper.insertSelective( brand );
+        int result = brandMapper.logicalDeleteByPrimaryKey(id, updateUser, updateUserName);
+        return result;
+    }
+
+    /**
+     * 创建品牌
+     *
+     * @param brand
+     * @return
+     * @author lixavier
+     * @version 1.0.0
+     */
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
+    public Long createBrand(Brand brand) {
+        // TODO: Describe business logic and implement it
+        brandMapper.insertSelective(brand);
         return brand.getId();
     }
 
     /**
-    *
-    * 批量创建
-    *
-    * @author lixavier
-    * @version 1.0.0
-    * @param brandList
-    * @return
-    */
+     * 批量创建
+     *
+     * @param brandList
+     * @return
+     * @author lixavier
+     * @version 1.0.0
+     */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
-    public int batchCreateBrand(List<Brand> brandList){
+    public int batchCreateBrand(List<Brand> brandList) {
         // TODO: Describe business logic and implement it
-        return brandMapper.insertBatch( brandList );
+        return brandMapper.insertBatch(brandList);
     }
 
     /**
-     * 
      * 更新品牌
-     * 
-     * @author lixavier
-     * @version 1.0.0
+     *
      * @param brand
      * @return
+     * @author lixavier
+     * @version 1.0.0
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
-    public Integer updateBrand(Brand brand){
+    public Integer updateBrand(Brand brand) {
         Integer result = null;
-        Brand brandLast = brandMapper.selectByPrimaryKeyForUpdate( brand.getId() );
-        if( brandLast == null){
+        Brand brandLast = brandMapper.selectByPrimaryKeyForUpdate(brand.getId());
+        if (brandLast == null) {
             // TODO：这里请写清楚
         }
         // TODO: Describe business logic and implement it
-        result = brandMapper.updateByPrimaryKeySelective( brand );
-        return result;    
+        result = brandMapper.updateByPrimaryKeySelective(brand);
+        return result;
     }
-    
+
     /**
-     * 
      * 根据ID获取品牌信息
-     * 
-     * @author lixavier
-     * @version 1.0.0
+     *
      * @param id
      * @return
+     * @author lixavier
+     * @version 1.0.0
      */
     @Transactional(readOnly = true)
-    public Brand getBrand( Long id ){
-        // TODO: Describe business logic and implement it
-        Brand brand = brandMapper.selectByPrimaryKey( id );
+    public Brand getBrand(Long id) {
+        Brand brand = brandExtMapper.getBrandById(id);
+        if (brand == null) {
+            throw new CommonBizException(ResultCode.DATA_NOT_EXIST, "品牌");
+        }
         return brand;
     }
 
     /**
-     * 
      * 分页查询品牌信息
-     * 
-     * @author lixavier
-     * @version 1.0.0
+     *
      * @param brandQuery
      * @return
+     * @author lixavier
+     * @version 1.0.0
      */
     @Transactional(readOnly = true)
     public QueryResultODTO<Brand> queryBrand(BrandQueryDTO brandQuery) {

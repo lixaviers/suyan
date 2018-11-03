@@ -8,7 +8,7 @@
       <Input v-model="formBrand.nameEn" placeholder="品牌英文名称" style="width: 320px"/>
     </FormItem>
     <FormItem label="所属类目">
-      <Cascader :data="data" v-model="formBrand.categoryId" style="width: 320px"></Cascader>
+      <Cascader :data="data" v-model="formBrand.categoryIds" style="width: 320px"></Cascader>
     </FormItem>
     <FormItem label="品牌描述" prop="description">
       <Input v-model="formBrand.description" type="textarea" :autosize="{minRows: 3,maxRows: 5}" placeholder="品牌描述"/>
@@ -28,7 +28,8 @@
         loading: false,
         formBrand: {
           id: null,
-          categoryId: [],
+          categoryId: null,
+          categoryIds: [],
           name: '',
           nameEn: '',
           description: '',
@@ -41,7 +42,7 @@
       }
     },
     created () {
-      let id = this.$route.params.id;
+      let id = this.$route.params.id, t = this;
       this.$http({
         url: this.$http.adornUrl('category/queryCategoryCascader', 2),
         method: 'get',
@@ -52,29 +53,35 @@
           this.data = treeDataTranslate(data);
           console.log(this.data)
         }
+      }).then(function () {
+        if (id) {
+          t.$http({
+            url: t.$http.adornUrl('brand/getBrand/' + id, 2),
+            method: 'get',
+            data: t.$http.adornData()
+          }).then(({data}) => {
+            if (data && data.code === 200 && data.dataMap) {
+              t.formBrand.id = id;
+              t.formBrand = data.dataMap;
+              t.formBrand.categoryIds = data.dataMap.categoryIds.split('-');
+            }
+          });
+        }
       });
 
 
-      if (id) {
-        this.$http({
-          url: this.$http.adornUrl('brand/getBrand/' + id, 2),
-          method: 'get',
-          data: this.$http.adornData()
-        }).then(({data}) => {
-          if (data && data.code === 200 && data.dataMap) {
-            this.formBrand.id = id;
-            this.formBrand = data.dataMap;
-            console.log(this.formBrand)
-          }
-        });
-      }
     },
     methods: {
       handleSubmit (name) {
         let t = this;
         this.$refs[name].validate((valid) => {
           if (valid) {
+            if (!this.formBrand.categoryIds || this.formBrand.categoryIds.length == 0) {
+              this.$Message.error({content: '请选择所属类目', duration: 2});
+              return;
+            }
             this.loading = true;
+            this.formBrand.categoryId = this.formBrand.categoryIds[this.formBrand.categoryIds.length - 1];
             this.$http({
               url: this.$http.adornUrl(`brand/${!this.formBrand.id ? 'createBrand' : 'updateBrand'}`, 2),
               method: 'post',

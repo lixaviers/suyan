@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.suyan.goods.dao.ext.BrandExtMapper">
+
+    <select id="getBrandById" parameterType="java.lang.Long"
+            resultType="com.suyan.goods.model.Brand">
+        SELECT
+            brand.id,
+            concat( c2.id, '-', c1.id, '-', brand.category_id ) AS category_ids,
+            brand.`name`,
+            brand.name_en
+        FROM
+            tb_brand brand
+        INNER JOIN tb_category c ON brand.category_id = c.id
+        INNER JOIN tb_category c1 ON c.parent_id = c1.id
+        INNER JOIN tb_category c2 ON c1.parent_id = c2.id
+        WHERE brand.id = #{id, jdbcType=BIGINT}
+        AND   brand.is_deleted = 0
+    </select>
+
+</mapper>

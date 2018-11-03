@@ -201,4 +201,17 @@ public class BrandODTO implements Serializable {
     /**
     * The following custom property definition
     */
+
+
+    private String categoryIds;
+
+    public String getCategoryIds() {
+        return categoryIds;
+    }
+
+    public void setCategoryIds(String categoryIds) {
+        this.categoryIds = categoryIds;
+    }
+
+
 }

@@ -11,7 +11,8 @@
       </FormItem>
       <FormItem>
         <Button @click="getDataList()">查询</Button>
-        <Button v-if="isAuth('goods:brand:add:button')" type="primary" @click="$router.push({name: 'goodsBrandCreate'});" style="margin-left: 10px;">创建品牌
+        <Button v-if="isAuth('goods:brand:add:button')" type="primary"
+                @click="$router.push({name: 'goodsBrandCreate'});" style="margin-left: 10px;">创建品牌
         </Button>
       </FormItem>
     </Form>
@@ -47,6 +48,13 @@
             title: '英文名称', key: 'nameEn'
           },
           {
+            title: '创建时间', key: 'createTime', width: 180, render: (h, params) => {
+            return h('div',
+              dateFormat(params.row.createTime)
+            )
+          }
+          },
+          {
             title: '操作',
             key: 'action',
             fixed: 'right',
@@ -63,7 +71,7 @@
                   }
                 }
               }, '查看')];
-              if(this.isAuth('goods:brand:edit:button')) {
+              if (this.isAuth('goods:brand:edit:button')) {
                 actionButtons.push(h('Button', {
                   style: {
                     marginLeft: '10px'
