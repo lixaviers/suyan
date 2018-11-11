@@ -67,7 +67,7 @@
                 },
                 on: {
                   click: () => {
-                    this.$router.push({name: 'mmcSubPromotionShow', params: {id: params.row.id}});
+                    this.$router.push({name: 'goodsBrandShow', params: {id: params.row.id}});
                   }
                 }
               }, '查看')];

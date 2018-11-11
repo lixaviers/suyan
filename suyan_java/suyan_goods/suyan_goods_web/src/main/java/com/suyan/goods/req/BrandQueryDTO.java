@@ -45,6 +45,78 @@ public class BrandQueryDTO extends QueryDTO {
     public void setCategoryIdList(List<Long> categoryIdList){
         this.categoryIdList = categoryIdList;
     }
+    private String name;
+            
+    public String getName(){
+        return name;
+    }
+    public void setName(String name){
+        this.name = name;
+    }
+    private List<String> nameList;
+
+    public List<String> getNameList(){
+        return nameList;
+    }
+    public void setNameList(List<String> nameList){
+        this.nameList = nameList;
+    }
+    private String nameLike;
+
+    public String getNameLike(){
+        return nameLike;
+    }
+    public void setNameLike(String nameLike){
+        this.nameLike = nameLike;
+    }
+    private String nameEn;
+            
+    public String getNameEn(){
+        return nameEn;
+    }
+    public void setNameEn(String nameEn){
+        this.nameEn = nameEn;
+    }
+    private List<String> nameEnList;
+
+    public List<String> getNameEnList(){
+        return nameEnList;
+    }
+    public void setNameEnList(List<String> nameEnList){
+        this.nameEnList = nameEnList;
+    }
+    private String nameEnLike;
+
+    public String getNameEnLike(){
+        return nameEnLike;
+    }
+    public void setNameEnLike(String nameEnLike){
+        this.nameEnLike = nameEnLike;
+    }
+    private String logo;
+            
+    public String getLogo(){
+        return logo;
+    }
+    public void setLogo(String logo){
+        this.logo = logo;
+    }
+    private List<String> logoList;
+
+    public List<String> getLogoList(){
+        return logoList;
+    }
+    public void setLogoList(List<String> logoList){
+        this.logoList = logoList;
+    }
+    private String logoLike;
+
+    public String getLogoLike(){
+        return logoLike;
+    }
+    public void setLogoLike(String logoLike){
+        this.logoLike = logoLike;
+    }
     private Byte commonStatus;
             
     public Byte getCommonStatus(){
@@ -92,6 +164,14 @@ public class BrandQueryDTO extends QueryDTO {
     }
     public void setCreateUserName(String createUserName){
         this.createUserName = createUserName;
+    }
+    private List<String> createUserNameList;
+
+    public List<String> getCreateUserNameList(){
+        return createUserNameList;
+    }
+    public void setCreateUserNameList(List<String> createUserNameList){
+        this.createUserNameList = createUserNameList;
     }
     private String createUserNameLike;
 
@@ -149,6 +229,14 @@ public class BrandQueryDTO extends QueryDTO {
     }
     public void setUpdateUserName(String updateUserName){
         this.updateUserName = updateUserName;
+    }
+    private List<String> updateUserNameList;
+
+    public List<String> getUpdateUserNameList(){
+        return updateUserNameList;
+    }
+    public void setUpdateUserNameList(List<String> updateUserNameList){
+        this.updateUserNameList = updateUserNameList;
     }
     private String updateUserNameLike;
 

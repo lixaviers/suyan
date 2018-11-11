@@ -389,6 +389,21 @@
             <if test="categoryIdList != null and categoryIdList.size > 0">
                 <foreach item="item" separator="," open="AND category_id in (" close=")" collection="categoryIdList">#{item,jdbcType=BIGINT}</foreach>
             </if>
+            <if test="name!=null and name!=''">AND name = #{name,jdbcType=VARCHAR}</if>
+            <if test="nameLike != null and nameLike != '' ">AND name LIKE concat(#{nameLike,jdbcType=VARCHAR},'%')</if>
+            <if test="nameList != null and nameList.size > 0">
+                <foreach item="item" separator="," open="AND name in (" close=")" collection="nameList">#{item,jdbcType=VARCHAR}</foreach>
+            </if>
+            <if test="nameEn!=null and nameEn!=''">AND name_en = #{nameEn,jdbcType=VARCHAR}</if>
+            <if test="nameEnLike != null and nameEnLike != '' ">AND name_en LIKE concat(#{nameEnLike,jdbcType=VARCHAR},'%')</if>
+            <if test="nameEnList != null and nameEnList.size > 0">
+                <foreach item="item" separator="," open="AND name_en in (" close=")" collection="nameEnList">#{item,jdbcType=VARCHAR}</foreach>
+            </if>
+            <if test="logo!=null and logo!=''">AND logo = #{logo,jdbcType=VARCHAR}</if>
+            <if test="logoLike != null and logoLike != '' ">AND logo LIKE concat(#{logoLike,jdbcType=VARCHAR},'%')</if>
+            <if test="logoList != null and logoList.size > 0">
+                <foreach item="item" separator="," open="AND logo in (" close=")" collection="logoList">#{item,jdbcType=VARCHAR}</foreach>
+            </if>
             <if test="commonStatus!=null">AND common_status = #{commonStatus,jdbcType=TINYINT}</if>
             <if test="commonStatusList != null and commonStatusList.size > 0">
                 <foreach item="item" separator="," open="AND common_status in (" close=")" collection="commonStatusList">#{item,jdbcType=TINYINT}</foreach>
@@ -400,6 +415,9 @@
             </if>
             <if test="createUserName!=null and createUserName!=''">AND create_user_name = #{createUserName,jdbcType=VARCHAR}</if>
             <if test="createUserNameLike != null and createUserNameLike != '' ">AND create_user_name LIKE concat(#{createUserNameLike,jdbcType=VARCHAR},'%')</if>
+            <if test="createUserNameList != null and createUserNameList.size > 0">
+                <foreach item="item" separator="," open="AND create_user_name in (" close=")" collection="createUserNameList">#{item,jdbcType=VARCHAR}</foreach>
+            </if>
             <if test="createTimeFrom != null"><![CDATA[AND create_time >= #{createTimeFrom,jdbcType=TIMESTAMP}]]></if>
             <if test="createTimeTo != null"><![CDATA[AND create_time <= #{createTimeTo,jdbcType=TIMESTAMP}]]></if>
             <if test="updateUser!=null and updateUser!=''">AND update_user = #{updateUser,jdbcType=VARCHAR}</if>
@@ -409,6 +427,9 @@
             </if>
             <if test="updateUserName!=null and updateUserName!=''">AND update_user_name = #{updateUserName,jdbcType=VARCHAR}</if>
             <if test="updateUserNameLike != null and updateUserNameLike != '' ">AND update_user_name LIKE concat(#{updateUserNameLike,jdbcType=VARCHAR},'%')</if>
+            <if test="updateUserNameList != null and updateUserNameList.size > 0">
+                <foreach item="item" separator="," open="AND update_user_name in (" close=")" collection="updateUserNameList">#{item,jdbcType=VARCHAR}</foreach>
+            </if>
             <if test="updateTimeFrom != null"><![CDATA[AND update_time >= #{updateTimeFrom,jdbcType=TIMESTAMP}]]></if>
             <if test="updateTimeTo != null"><![CDATA[AND update_time <= #{updateTimeTo,jdbcType=TIMESTAMP}]]></if>
             <if test="isDeleted!=null">AND is_deleted = #{isDeleted,jdbcType=BOOLEAN}</if>

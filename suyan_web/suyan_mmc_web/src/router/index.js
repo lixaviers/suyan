@@ -66,6 +66,11 @@ const router = new Router({
       name: 'goodsBrandCreate',
       component: _import('goods/brand/create')
     },
+    {
+      path: '/goods/brand/show',
+      name: 'goodsBrandShow',
+      component: _import('goods/brand/show')
+    },
   ]
 });
 
