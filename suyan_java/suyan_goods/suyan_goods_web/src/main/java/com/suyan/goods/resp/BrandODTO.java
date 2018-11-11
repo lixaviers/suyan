@@ -205,6 +205,8 @@ public class BrandODTO implements Serializable {
 
     private String categoryIds;
 
+    private String categoryNames;
+
     public String getCategoryIds() {
         return categoryIds;
     }
@@ -213,5 +215,11 @@ public class BrandODTO implements Serializable {
         this.categoryIds = categoryIds;
     }
 
+    public String getCategoryNames() {
+        return categoryNames;
+    }
 
+    public void setCategoryNames(String categoryNames) {
+        this.categoryNames = categoryNames;
+    }
 }

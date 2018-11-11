@@ -210,11 +210,21 @@ public class Brand {
 
     private String categoryIds;
 
+    private String categoryNames;
+
     public String getCategoryIds() {
         return categoryIds;
     }
 
     public void setCategoryIds(String categoryIds) {
         this.categoryIds = categoryIds;
+    }
+
+    public String getCategoryNames() {
+        return categoryNames;
+    }
+
+    public void setCategoryNames(String categoryNames) {
+        this.categoryNames = categoryNames;
     }
 }

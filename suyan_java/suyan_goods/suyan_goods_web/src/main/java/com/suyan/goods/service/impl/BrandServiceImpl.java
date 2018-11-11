@@ -38,98 +38,93 @@ public class BrandServiceImpl implements IBrandService {
     private BrandBiz brandBiz;
 
     /**
-     * 
      * 删除品牌
-     * 
+     *
+     * @param id
+     * @param updateUser
+     * @param updateUserName
+     * @return
      * @Author: <lixavier@163.com>
      * @Version: <1.0>
-     * @param id
-    * @param updateUser
-    * @param updateUserName
-     * @return
      */
     @Override
-    public Result<Integer> deleteBrand(Long id , String updateUser, String updateUserName ){
+    public Result<Integer> deleteBrand(Long id, String updateUser, String updateUserName) {
         Result<Integer> result = Result.newSuccess();
-        result.setDataMap(brandBiz.deleteBrand(id , updateUser, updateUserName ));
+        result.setDataMap(brandBiz.deleteBrand(id, updateUser, updateUserName));
         return result;
     }
-    
+
     /**
-     * 
      * 创建品牌
-     * 
-     * @Author: <lixavier@163.com>
-     * @Version: <1.0>
+     *
      * @param brandDTO
      * @return
+     * @Author: <lixavier@163.com>
+     * @Version: <1.0>
      */
     @Override
-    public Result<Long> createBrand(BrandDTO brandDTO){
+    public Result<Long> createBrand(BrandDTO brandDTO) {
         Result<Long> result = Result.newSuccess();
         Brand brand = BrandConvertor.toBrand(brandDTO);
         if (!validateForCreate(brand, result)) {
             return result;
         }
-        result.setDataMap(brandBiz.createBrand( brand ));
-        return  result;
+        result.setDataMap(brandBiz.createBrand(brand));
+        return result;
     }
 
     @Override
-    public Result<Integer> batchCreate(List<BrandDTO> brandDTOs ) {
-            Result<Integer> result = Result.newSuccess();
+    public Result<Integer> batchCreate(List<BrandDTO> brandDTOs) {
+        Result<Integer> result = Result.newSuccess();
         List<Brand> items = BrandConvertor.toBrandList(brandDTOs);
         result.setDataMap(brandBiz.batchCreateBrand(items));
         return result;
     }
 
     /**
-     * 
      * 更新品牌
-     * 
-     * @Author: <lixavier@163.com>
-     * @Version: <1.0>
+     *
      * @param brandDTO
      * @return
+     * @Author: <lixavier@163.com>
+     * @Version: <1.0>
      */
     @Override
-    public Result<Integer> updateBrand(BrandDTO brandDTO){
+    public Result<Integer> updateBrand(BrandDTO brandDTO) {
         Result<Integer> result = Result.newSuccess();
         Brand brand = null;
         brand = BrandConvertor.toBrand(brandDTO);
         if (!validateForUpdate(brand, result)) {
             return result;
         }
-        result.setDataMap(brandBiz.updateBrand( brand ));
+        result.setDataMap(brandBiz.updateBrand(brand));
         return result;
     }
-    
+
     /**
-     * 
      * 根据ID获取品牌信息
-     * 
-     * @Author: <lixavier@163.com>
-     * @Version: <1.0>
+     *
      * @param id
      * @return
+     * @Author: <lixavier@163.com>
+     * @Version: <1.0>
      */
     @Override
-    public Result<BrandODTO> getBrand( Long id ){
-        Result<BrandODTO> result  = Result.newSuccess();
-        Brand brand = brandBiz.getBrand( id );
+    public Result<BrandODTO> getBrand(Long id) {
+        Result<BrandODTO> result = Result.newSuccess();
+        Brand brand = brandBiz.getBrand(id);
         BrandODTO brandODTO = BrandConvertor.toBrandODTO(brand);
         result.setDataMap(brandODTO);
         return result;
     }
 
     /**
-     * 
      * 分页查询品牌信息
-     * 
-     * @Author: <lixavier@163.com>
-     * @Version: <1.0>
+     *
      * @param brandQueryDTO
      * @return
+     * @Author: <lixavier@163.com>
+     * @Version: <1.0>
      */
     @Override
     public Result<QueryResultODTO<BrandODTO>> queryBrand(BrandQueryDTO brandQueryDTO) {
