@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.suyan.goods.dao.PropertyNameMapper">
+    <resultMap id="BaseResultMap" type="com.suyan.goods.model.PropertyName">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="category_id" jdbcType="BIGINT" property="categoryId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="is_allow_alias" jdbcType="BIT" property="isAllowAlias" />
+    <result column="is_color_attribute" jdbcType="BIT" property="isColorAttribute" />
+    <result column="is_enum_attribute" jdbcType="BIT" property="isEnumAttribute" />
+    <result column="is_input_attribute" jdbcType="BIT" property="isInputAttribute" />
+    <result column="is_sales_property" jdbcType="BIT" property="isSalesProperty" />
+    <result column="is_search_field" jdbcType="BIT" property="isSearchField" />
+    <result column="is_will_choose" jdbcType="BIT" property="isWillChoose" />
+    <result column="is_multi_select" jdbcType="BIT" property="isMultiSelect" />
+    <result column="common_status" jdbcType="TINYINT" property="commonStatus" />
+    <result column="sort_number" jdbcType="INTEGER" property="sortNumber" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, category_id, name, is_allow_alias, is_color_attribute, is_enum_attribute, is_input_attribute, 
+    is_sales_property, is_search_field, is_will_choose, is_multi_select, common_status, 
+    sort_number, create_user, create_user_name, create_time, update_user, update_user_name, 
+    update_time, is_deleted
+  </sql>
+  <select id="selectByExample" parameterType="com.suyan.goods.model.PropertyNameExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tb_property_name
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_property_name
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_property_name
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.suyan.goods.model.PropertyNameExample">
+    delete from tb_property_name
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.suyan.goods.model.PropertyName">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      select LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_property_name (category_id, name, is_allow_alias, 
+      is_color_attribute, is_enum_attribute, is_input_attribute, 
+      is_sales_property, is_search_field, is_will_choose, 
+      is_multi_select, common_status, sort_number, 
+      create_user, create_user_name, create_time, 
+      update_user, update_user_name, update_time, 
+      is_deleted)
+    values (#{categoryId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{isAllowAlias,jdbcType=BIT}, 
+      #{isColorAttribute,jdbcType=BIT}, #{isEnumAttribute,jdbcType=BIT}, #{isInputAttribute,jdbcType=BIT}, 
+      #{isSalesProperty,jdbcType=BIT}, #{isSearchField,jdbcType=BIT}, #{isWillChoose,jdbcType=BIT}, 
+      #{isMultiSelect,jdbcType=BIT}, #{commonStatus,jdbcType=TINYINT}, #{sortNumber,jdbcType=INTEGER}, 
+      #{createUser,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateUser,jdbcType=VARCHAR}, #{updateUserName,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{isDeleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.suyan.goods.model.PropertyName">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      select LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_property_name
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="categoryId != null">
+        category_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="isAllowAlias != null">
+        is_allow_alias,
+      </if>
+      <if test="isColorAttribute != null">
+        is_color_attribute,
+      </if>
+      <if test="isEnumAttribute != null">
+        is_enum_attribute,
+      </if>
+      <if test="isInputAttribute != null">
+        is_input_attribute,
+      </if>
+      <if test="isSalesProperty != null">
+        is_sales_property,
+      </if>
+      <if test="isSearchField != null">
+        is_search_field,
+      </if>
+      <if test="isWillChoose != null">
+        is_will_choose,
+      </if>
+      <if test="isMultiSelect != null">
+        is_multi_select,
+      </if>
+      <if test="commonStatus != null">
+        common_status,
+      </if>
+      <if test="sortNumber != null">
+        sort_number,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="createUserName != null">
+        create_user_name,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateUser != null">
+        update_user,
+      </if>
+      <if test="updateUserName != null">
+        update_user_name,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="categoryId != null">
+        #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isAllowAlias != null">
+        #{isAllowAlias,jdbcType=BIT},
+      </if>
+      <if test="isColorAttribute != null">
+        #{isColorAttribute,jdbcType=BIT},
+      </if>
+      <if test="isEnumAttribute != null">
+        #{isEnumAttribute,jdbcType=BIT},
+      </if>
+      <if test="isInputAttribute != null">
+        #{isInputAttribute,jdbcType=BIT},
+      </if>
+      <if test="isSalesProperty != null">
+        #{isSalesProperty,jdbcType=BIT},
+      </if>
+      <if test="isSearchField != null">
+        #{isSearchField,jdbcType=BIT},
+      </if>
+      <if test="isWillChoose != null">
+        #{isWillChoose,jdbcType=BIT},
+      </if>
+      <if test="isMultiSelect != null">
+        #{isMultiSelect,jdbcType=BIT},
+      </if>
+      <if test="commonStatus != null">
+        #{commonStatus,jdbcType=TINYINT},
+      </if>
+      <if test="sortNumber != null">
+        #{sortNumber,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserName != null">
+        #{updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.suyan.goods.model.PropertyNameExample" resultType="java.lang.Long">
+    select count(*) from tb_property_name
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_property_name
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.categoryId != null">
+        category_id = #{record.categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isAllowAlias != null">
+        is_allow_alias = #{record.isAllowAlias,jdbcType=BIT},
+      </if>
+      <if test="record.isColorAttribute != null">
+        is_color_attribute = #{record.isColorAttribute,jdbcType=BIT},
+      </if>
+      <if test="record.isEnumAttribute != null">
+        is_enum_attribute = #{record.isEnumAttribute,jdbcType=BIT},
+      </if>
+      <if test="record.isInputAttribute != null">
+        is_input_attribute = #{record.isInputAttribute,jdbcType=BIT},
+      </if>
+      <if test="record.isSalesProperty != null">
+        is_sales_property = #{record.isSalesProperty,jdbcType=BIT},
+      </if>
+      <if test="record.isSearchField != null">
+        is_search_field = #{record.isSearchField,jdbcType=BIT},
+      </if>
+      <if test="record.isWillChoose != null">
+        is_will_choose = #{record.isWillChoose,jdbcType=BIT},
+      </if>
+      <if test="record.isMultiSelect != null">
+        is_multi_select = #{record.isMultiSelect,jdbcType=BIT},
+      </if>
+      <if test="record.commonStatus != null">
+        common_status = #{record.commonStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.sortNumber != null">
+        sort_number = #{record.sortNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.createUser != null">
+        create_user = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserName != null">
+        create_user_name = #{record.createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUser != null">
+        update_user = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateUserName != null">
+        update_user_name = #{record.updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDeleted != null">
+        is_deleted = #{record.isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_property_name
+    set id = #{record.id,jdbcType=BIGINT},
+      category_id = #{record.categoryId,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      is_allow_alias = #{record.isAllowAlias,jdbcType=BIT},
+      is_color_attribute = #{record.isColorAttribute,jdbcType=BIT},
+      is_enum_attribute = #{record.isEnumAttribute,jdbcType=BIT},
+      is_input_attribute = #{record.isInputAttribute,jdbcType=BIT},
+      is_sales_property = #{record.isSalesProperty,jdbcType=BIT},
+      is_search_field = #{record.isSearchField,jdbcType=BIT},
+      is_will_choose = #{record.isWillChoose,jdbcType=BIT},
+      is_multi_select = #{record.isMultiSelect,jdbcType=BIT},
+      common_status = #{record.commonStatus,jdbcType=TINYINT},
+      sort_number = #{record.sortNumber,jdbcType=INTEGER},
+      create_user = #{record.createUser,jdbcType=VARCHAR},
+      create_user_name = #{record.createUserName,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_user = #{record.updateUser,jdbcType=VARCHAR},
+      update_user_name = #{record.updateUserName,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{record.isDeleted,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.suyan.goods.model.PropertyName">
+    update tb_property_name
+    <set>
+      <if test="categoryId != null">
+        category_id = #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isAllowAlias != null">
+        is_allow_alias = #{isAllowAlias,jdbcType=BIT},
+      </if>
+      <if test="isColorAttribute != null">
+        is_color_attribute = #{isColorAttribute,jdbcType=BIT},
+      </if>
+      <if test="isEnumAttribute != null">
+        is_enum_attribute = #{isEnumAttribute,jdbcType=BIT},
+      </if>
+      <if test="isInputAttribute != null">
+        is_input_attribute = #{isInputAttribute,jdbcType=BIT},
+      </if>
+      <if test="isSalesProperty != null">
+        is_sales_property = #{isSalesProperty,jdbcType=BIT},
+      </if>
+      <if test="isSearchField != null">
+        is_search_field = #{isSearchField,jdbcType=BIT},
+      </if>
+      <if test="isWillChoose != null">
+        is_will_choose = #{isWillChoose,jdbcType=BIT},
+      </if>
+      <if test="isMultiSelect != null">
+        is_multi_select = #{isMultiSelect,jdbcType=BIT},
+      </if>
+      <if test="commonStatus != null">
+        common_status = #{commonStatus,jdbcType=TINYINT},
+      </if>
+      <if test="sortNumber != null">
+        sort_number = #{sortNumber,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserName != null">
+        update_user_name = #{updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.suyan.goods.model.PropertyName">
+    update tb_property_name
+    set category_id = #{categoryId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      is_allow_alias = #{isAllowAlias,jdbcType=BIT},
+      is_color_attribute = #{isColorAttribute,jdbcType=BIT},
+      is_enum_attribute = #{isEnumAttribute,jdbcType=BIT},
+      is_input_attribute = #{isInputAttribute,jdbcType=BIT},
+      is_sales_property = #{isSalesProperty,jdbcType=BIT},
+      is_search_field = #{isSearchField,jdbcType=BIT},
+      is_will_choose = #{isWillChoose,jdbcType=BIT},
+      is_multi_select = #{isMultiSelect,jdbcType=BIT},
+      common_status = #{commonStatus,jdbcType=TINYINT},
+      sort_number = #{sortNumber,jdbcType=INTEGER},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      update_user_name = #{updateUserName,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+    <update id="logicalDeleteByPrimaryKey">
+        UPDATE tb_property_name
+        SET
+            is_deleted=1,
+            updateUser=#{updateUser,jdbcType=VARCHAR},
+            updateUserName=#{updateUserName,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=BIGINT} 
+    </update>
+
+    <select id="selectByPrimaryKeyForUpdate" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_property_name
+        WHERE id = #{id,jdbcType=BIGINT} 
+        AND is_deleted=0
+        FOR UPDATE
+    </select>
+    
+    <select id="queryPropertyName" resultMap="BaseResultMap" parameterType="com.suyan.goods.req.PropertyNameQueryDTO">
+        SELECT
+         <choose>
+          <when test="returnFields!=null">${returnFields}</when>
+          <otherwise>
+            <include refid="Base_Column_List" />
+          </otherwise>
+        </choose>
+        FROM tb_property_name
+        <where>
+            <if test="id!=null">AND id = #{id,jdbcType=BIGINT}</if>
+            <if test="idList != null and idList.size > 0">
+                <foreach item="item" separator="," open="AND id in (" close=")" collection="idList">#{item,jdbcType=BIGINT}</foreach>
+            </if>
+            <if test="categoryId!=null">AND category_id = #{categoryId,jdbcType=BIGINT}</if>
+            <if test="categoryIdList != null and categoryIdList.size > 0">
+                <foreach item="item" separator="," open="AND category_id in (" close=")" collection="categoryIdList">#{item,jdbcType=BIGINT}</foreach>
+            </if>
+            <if test="name!=null and name!=''">AND name = #{name,jdbcType=VARCHAR}</if>
+            <if test="nameLike != null and nameLike != '' ">AND name LIKE concat(#{nameLike,jdbcType=VARCHAR},'%')</if>
+            <if test="nameList != null and nameList.size > 0">
+                <foreach item="item" separator="," open="AND name in (" close=")" collection="nameList">#{item,jdbcType=VARCHAR}</foreach>
+            </if>
+            <if test="isAllowAlias!=null">AND is_allow_alias = #{isAllowAlias,jdbcType=BOOLEAN}</if>
+            <if test="isAllowAliasList != null and isAllowAliasList.size > 0">
+                <foreach item="item" separator="," open="AND is_allow_alias in (" close=")" collection="isAllowAliasList">#{item,jdbcType=BOOLEAN}</foreach>
+            </if>
+            <if test="isColorAttribute!=null">AND is_color_attribute = #{isColorAttribute,jdbcType=BOOLEAN}</if>
+            <if test="isColorAttributeList != null and isColorAttributeList.size > 0">
+                <foreach item="item" separator="," open="AND is_color_attribute in (" close=")" collection="isColorAttributeList">#{item,jdbcType=BOOLEAN}</foreach>
+            </if>
+            <if test="isEnumAttribute!=null">AND is_enum_attribute = #{isEnumAttribute,jdbcType=BOOLEAN}</if>
+            <if test="isEnumAttributeList != null and isEnumAttributeList.size > 0">
+                <foreach item="item" separator="," open="AND is_enum_attribute in (" close=")" collection="isEnumAttributeList">#{item,jdbcType=BOOLEAN}</foreach>
+            </if>
+            <if test="isInputAttribute!=null">AND is_input_attribute = #{isInputAttribute,jdbcType=BOOLEAN}</if>
+            <if test="isInputAttributeList != null and isInputAttributeList.size > 0">
+                <foreach item="item" separator="," open="AND is_input_attribute in (" close=")" collection="isInputAttributeList">#{item,jdbcType=BOOLEAN}</foreach>
+            </if>
+            <if test="isSalesProperty!=null">AND is_sales_property = #{isSalesProperty,jdbcType=BOOLEAN}</if>
+            <if test="isSalesPropertyList != null and isSalesPropertyList.size > 0">
+                <foreach item="item" separator="," open="AND is_sales_property in (" close=")" collection="isSalesPropertyList">#{item,jdbcType=BOOLEAN}</foreach>
+            </if>
+            <if test="isSearchField!=null">AND is_search_field = #{isSearchField,jdbcType=BOOLEAN}</if>
+            <if test="isSearchFieldList != null and isSearchFieldList.size > 0">
+                <foreach item="item" separator="," open="AND is_search_field in (" close=")" collection="isSearchFieldList">#{item,jdbcType=BOOLEAN}</foreach>
+            </if>
+            <if test="isWillChoose!=null">AND is_will_choose = #{isWillChoose,jdbcType=BOOLEAN}</if>
+            <if test="isWillChooseList != null and isWillChooseList.size > 0">
+                <foreach item="item" separator="," open="AND is_will_choose in (" close=")" collection="isWillChooseList">#{item,jdbcType=BOOLEAN}</foreach>
+            </if>
+            <if test="isMultiSelect!=null">AND is_multi_select = #{isMultiSelect,jdbcType=BOOLEAN}</if>
+            <if test="isMultiSelectList != null and isMultiSelectList.size > 0">
+                <foreach item="item" separator="," open="AND is_multi_select in (" close=")" collection="isMultiSelectList">#{item,jdbcType=BOOLEAN}</foreach>
+            </if>
+            <if test="commonStatus!=null">AND common_status = #{commonStatus,jdbcType=TINYINT}</if>
+            <if test="commonStatusList != null and commonStatusList.size > 0">
+                <foreach item="item" separator="," open="AND common_status in (" close=")" collection="commonStatusList">#{item,jdbcType=TINYINT}</foreach>
+            </if>
+            <if test="sortNumber!=null">AND sort_number = #{sortNumber,jdbcType=INTEGER}</if>
+            <if test="sortNumberList != null and sortNumberList.size > 0">
+                <foreach item="item" separator="," open="AND sort_number in (" close=")" collection="sortNumberList">#{item,jdbcType=INTEGER}</foreach>
+            </if>
+            <if test="createUser!=null and createUser!=''">AND create_user = #{createUser,jdbcType=VARCHAR}</if>
+            <if test="createUserLike != null and createUserLike != '' ">AND create_user LIKE concat(#{createUserLike,jdbcType=VARCHAR},'%')</if>
+            <if test="createUserList != null and createUserList.size > 0">
+                <foreach item="item" separator="," open="AND create_user in (" close=")" collection="createUserList">#{item,jdbcType=VARCHAR}</foreach>
+            </if>
+            <if test="createUserName!=null and createUserName!=''">AND create_user_name = #{createUserName,jdbcType=VARCHAR}</if>
+            <if test="createUserNameLike != null and createUserNameLike != '' ">AND create_user_name LIKE concat(#{createUserNameLike,jdbcType=VARCHAR},'%')</if>
+            <if test="createUserNameList != null and createUserNameList.size > 0">
+                <foreach item="item" separator="," open="AND create_user_name in (" close=")" collection="createUserNameList">#{item,jdbcType=VARCHAR}</foreach>
+            </if>
+            <if test="createTimeFrom != null"><![CDATA[AND create_time >= #{createTimeFrom,jdbcType=TIMESTAMP}]]></if>
+            <if test="createTimeTo != null"><![CDATA[AND create_time <= #{createTimeTo,jdbcType=TIMESTAMP}]]></if>
+            <if test="updateUser!=null and updateUser!=''">AND update_user = #{updateUser,jdbcType=VARCHAR}</if>
+            <if test="updateUserLike != null and updateUserLike != '' ">AND update_user LIKE concat(#{updateUserLike,jdbcType=VARCHAR},'%')</if>
+            <if test="updateUserList != null and updateUserList.size > 0">
+                <foreach item="item" separator="," open="AND update_user in (" close=")" collection="updateUserList">#{item,jdbcType=VARCHAR}</foreach>
+            </if>
+            <if test="updateUserName!=null and updateUserName!=''">AND update_user_name = #{updateUserName,jdbcType=VARCHAR}</if>
+            <if test="updateUserNameLike != null and updateUserNameLike != '' ">AND update_user_name LIKE concat(#{updateUserNameLike,jdbcType=VARCHAR},'%')</if>
+            <if test="updateUserNameList != null and updateUserNameList.size > 0">
+                <foreach item="item" separator="," open="AND update_user_name in (" close=")" collection="updateUserNameList">#{item,jdbcType=VARCHAR}</foreach>
+            </if>
+            <if test="updateTimeFrom != null"><![CDATA[AND update_time >= #{updateTimeFrom,jdbcType=TIMESTAMP}]]></if>
+            <if test="updateTimeTo != null"><![CDATA[AND update_time <= #{updateTimeTo,jdbcType=TIMESTAMP}]]></if>
+            <if test="isDeleted!=null">AND is_deleted = #{isDeleted,jdbcType=BOOLEAN}</if>
+            <if test="isDeletedList != null and isDeletedList.size > 0">
+                <foreach item="item" separator="," open="AND is_deleted in (" close=")" collection="isDeletedList">#{item,jdbcType=BOOLEAN}</foreach>
+            </if>
+        </where>
+        <choose>
+            <when test="orderBy!=null and orderBy!=''">order by ${orderBy}</when>
+            <otherwise>order by id desc</otherwise>
+        </choose>
+    </select>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into tb_property_name (
+            category_id,
+            name,
+            is_allow_alias,
+            is_color_attribute,
+            is_enum_attribute,
+            is_input_attribute,
+            is_sales_property,
+            is_search_field,
+            is_will_choose,
+            is_multi_select,
+            common_status,
+            sort_number,
+            create_user,
+            create_user_name,
+            create_time,
+            update_user,
+            update_user_name,
+            update_time,
+            is_deleted        )
+        values
+        <foreach collection="modelList" item="bean" index="index" separator=",">
+        (
+            #{bean.categoryId,jdbcType=BIGINT} ,
+            #{bean.name,jdbcType=VARCHAR} ,
+            #{bean.isAllowAlias,jdbcType=BOOLEAN} ,
+            #{bean.isColorAttribute,jdbcType=BOOLEAN} ,
+            #{bean.isEnumAttribute,jdbcType=BOOLEAN} ,
+            #{bean.isInputAttribute,jdbcType=BOOLEAN} ,
+            #{bean.isSalesProperty,jdbcType=BOOLEAN} ,
+            #{bean.isSearchField,jdbcType=BOOLEAN} ,
+            #{bean.isWillChoose,jdbcType=BOOLEAN} ,
+            #{bean.isMultiSelect,jdbcType=BOOLEAN} ,
+            #{bean.commonStatus,jdbcType=TINYINT} ,
+            #{bean.sortNumber,jdbcType=INTEGER} ,
+            #{bean.createUser,jdbcType=VARCHAR} ,
+            #{bean.createUserName,jdbcType=VARCHAR} ,
+            #{bean.createTime,jdbcType=TIMESTAMP} ,
+            #{bean.updateUser,jdbcType=VARCHAR} ,
+            #{bean.updateUserName,jdbcType=VARCHAR} ,
+            #{bean.updateTime,jdbcType=TIMESTAMP} ,
+            #{bean.isDeleted,jdbcType=BOOLEAN}         )
+        </foreach>
+    </insert>
+
+    
+</mapper>

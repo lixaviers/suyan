@@ -104,8 +104,7 @@
           data: this.$http.adornData({
             'pageSize': 10000,
             'isDeleted': false,
-            'orderBy': 'id',
-            'order': 'asc',
+            'orderBy': 'parent_id asc, sort_number asc, id asc',
           })
         }).then(({data}) => {
           this.dataList = treeDataTranslate(data.dataMap.records);
