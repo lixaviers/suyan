@@ -79,6 +79,8 @@ public interface ICategoryService {
      */
     Result<CategoryODTO> getCategory(Long id);
 
+    Result<String> getCategoryNames(Long id);
+
     /**
      * 
      * 分页查询类目信息

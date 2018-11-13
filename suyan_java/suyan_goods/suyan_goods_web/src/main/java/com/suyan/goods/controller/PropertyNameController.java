@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RequestMapping("propertyName")
 @RestController
@@ -115,6 +116,19 @@ public class PropertyNameController extends BaseController {
                 return result;
             }
             result = propertyNameService.queryPropertyName(propertyNameQueryDTO);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            result.setErrorCode(ResultCode.SYS_ERROR);
+        }
+        return result;
+    }
+
+    @ApiOperation(value = "getPropertysByCategoryId/{categoryId}", notes = "根据类目查询属性")
+    @RequestMapping(value = "getPropertysByCategoryId/{categoryId}", method = {RequestMethod.GET})
+    Result<List<PropertyNameODTO>> getPropertysByCategoryId(@PathVariable Long categoryId) {
+        Result<List<PropertyNameODTO>> result = Result.newSuccess();
+        try {
+            result = propertyNameService.getPropertysByCategoryId(categoryId);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             result.setErrorCode(ResultCode.SYS_ERROR);

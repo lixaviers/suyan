@@ -48,8 +48,13 @@ const router = new Router({
 
     {
       path: '/goods/create',
-      name: 'goodsCreate',
-      component: _import('goods/create')
+      name: 'goodCreate',
+      component: _import('goods/good/create')
+    },
+    {
+      path: '/goods/good/publish',
+      name: 'goodsGoodPublish',
+      component: _import('goods/good/publish')
     },
     {
       path: '/goods/category/index',
@@ -70,6 +75,11 @@ const router = new Router({
       path: '/goods/brand/show',
       name: 'goodsBrandShow',
       component: _import('goods/brand/show')
+    },
+    {
+      path: '/goods/property/index',
+      name: 'goodsPropertyIndex',
+      component: _import('goods/property/index')
     },
   ]
 });

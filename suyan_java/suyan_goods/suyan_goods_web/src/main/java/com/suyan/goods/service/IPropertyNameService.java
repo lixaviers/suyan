@@ -22,74 +22,76 @@ import java.util.List;
 public interface IPropertyNameService {
 
     /**
-     * 
      * 删除属性名
-     * 
-     * @author lixavier
-     * @version 1.0.0
+     *
      * @param id
      * @param updateUser
      * @param updateUserName
      * @return
-     */
-    Result<Integer> deletePropertyName(Long id, String updateUser, String updateUserName);
-    
-    /**
-     * 
-     * 创建属性名
-     * 
      * @author lixavier
      * @version 1.0.0
+     */
+    Result<Integer> deletePropertyName(Long id, String updateUser, String updateUserName);
+
+    /**
+     * 创建属性名
+     *
      * @param propertyNameDTO
      * @return
+     * @author lixavier
+     * @version 1.0.0
      */
     Result<Long> createPropertyName(PropertyNameDTO propertyNameDTO);
 
     /**
-     *
      * 批量创建属性名
      *
-     * @author lixavier
-     * @version 1.0.0
      * @param propertyNameDTOs
      * @return
+     * @author lixavier
+     * @version 1.0.0
      */
     Result<Integer> batchCreate(List<PropertyNameDTO> propertyNameDTOs);
 
     /**
-     * 
      * 更新属性名
-     * 
-     * @author lixavier
-     * @version 1.0.0
+     *
      * @param propertyNameDTO
      * @return
-     */
-    Result<Integer> updatePropertyName(PropertyNameDTO propertyNameDTO);
-    
-    /**
-     * 
-     * 根据ID获取属性名信息
-     * 
      * @author lixavier
      * @version 1.0.0
+     */
+    Result<Integer> updatePropertyName(PropertyNameDTO propertyNameDTO);
+
+    /**
+     * 根据ID获取属性名信息
+     *
      * @param id
      * @return
+     * @author lixavier
+     * @version 1.0.0
      */
     Result<PropertyNameODTO> getPropertyName(Long id);
 
     /**
-     * 
      * 分页查询属性名信息
-     * 
-     * @author lixavier
-     * @version 1.0.0
+     *
      * @param propertyNameQueryDTO
      * @return
+     * @author lixavier
+     * @version 1.0.0
      */
     Result<QueryResultODTO<PropertyNameODTO>> queryPropertyName(PropertyNameQueryDTO propertyNameQueryDTO);
 
     /**
-    * The following custom service interface about dubbo
-    */
+     * 根据类目查询属性
+     *
+     * @param categoryId
+     * @return
+     * @author lixavier
+     * @version 1.0.0
+     */
+
+    Result<List<PropertyNameODTO>> getPropertysByCategoryId(Long categoryId);
+
 }

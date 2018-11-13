@@ -1,6 +1,7 @@
 package com.suyan.goods.biz;
 
 import com.suyan.goods.dao.PropertyValuesMapper;
+import com.suyan.goods.dao.ext.PropertyExtMapper;
 import com.suyan.goods.model.PropertyValues;
 import com.suyan.goods.req.PropertyValuesQueryDTO;
 import com.suyan.common.resp.QueryResultODTO;
@@ -34,101 +35,98 @@ public class PropertyValuesBiz {
 
     @Autowired
     PropertyValuesMapper propertyValuesMapper;
+    @Autowired
+    PropertyExtMapper propertyExtMapper;
 
     /**
-    *
-    * 逻辑删除属性值
-    *
-    * @author lixavier
-    * @version 1.0.0
-    * @param id
-    * @param updateUser
-    * @param updateUserName
-    * @return
-    */
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
-    public Integer deletePropertyValues(Long id, String updateUser, String updateUserName){
-        // TODO: Describe business logic and implement it
-        int result = propertyValuesMapper.logicalDeleteByPrimaryKey(id,updateUser,updateUserName);
-        return result;
-    }
-    
-    /**
-     * 
-     * 创建属性值
-     * 
+     * 逻辑删除属性值
+     *
+     * @param id
+     * @param updateUser
+     * @param updateUserName
+     * @return
      * @author lixavier
      * @version 1.0.0
-     * @param propertyValues
-     * @return
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
-    public Long createPropertyValues(PropertyValues propertyValues){
+    public Integer deletePropertyValues(Long id, String updateUser, String updateUserName) {
         // TODO: Describe business logic and implement it
-        propertyValuesMapper.insertSelective( propertyValues );
+        int result = propertyValuesMapper.logicalDeleteByPrimaryKey(id, updateUser, updateUserName);
+        return result;
+    }
+
+    /**
+     * 创建属性值
+     *
+     * @param propertyValues
+     * @return
+     * @author lixavier
+     * @version 1.0.0
+     */
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
+    public Long createPropertyValues(PropertyValues propertyValues) {
+        propertyValues.setSortNumber(propertyExtMapper.getPropertyNameMaxSortNumberByPropertyNameId(
+                propertyValues.getCategoryId(), propertyValues.getPropertyNameId()) + 1);
+        propertyValuesMapper.insertSelective(propertyValues);
         return propertyValues.getId();
     }
 
     /**
-    *
-    * 批量创建
-    *
-    * @author lixavier
-    * @version 1.0.0
-    * @param propertyValuesList
-    * @return
-    */
+     * 批量创建
+     *
+     * @param propertyValuesList
+     * @return
+     * @author lixavier
+     * @version 1.0.0
+     */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
-    public int batchCreatePropertyValues(List<PropertyValues> propertyValuesList){
+    public int batchCreatePropertyValues(List<PropertyValues> propertyValuesList) {
         // TODO: Describe business logic and implement it
-        return propertyValuesMapper.insertBatch( propertyValuesList );
+        return propertyValuesMapper.insertBatch(propertyValuesList);
     }
 
     /**
-     * 
      * 更新属性值
-     * 
-     * @author lixavier
-     * @version 1.0.0
+     *
      * @param propertyValues
      * @return
+     * @author lixavier
+     * @version 1.0.0
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
-    public Integer updatePropertyValues(PropertyValues propertyValues){
+    public Integer updatePropertyValues(PropertyValues propertyValues) {
         Integer result = null;
-        PropertyValues propertyValuesLast = propertyValuesMapper.selectByPrimaryKeyForUpdate( propertyValues.getId() );
-        if( propertyValuesLast == null){
+        PropertyValues propertyValuesLast = propertyValuesMapper.selectByPrimaryKeyForUpdate(propertyValues.getId());
+        if (propertyValuesLast == null) {
             // TODO：这里请写清楚
         }
         // TODO: Describe business logic and implement it
-        result = propertyValuesMapper.updateByPrimaryKeySelective( propertyValues );
-        return result;    
+        result = propertyValuesMapper.updateByPrimaryKeySelective(propertyValues);
+        return result;
     }
-    
+
     /**
-     * 
      * 根据ID获取属性值信息
-     * 
-     * @author lixavier
-     * @version 1.0.0
+     *
      * @param id
      * @return
+     * @author lixavier
+     * @version 1.0.0
      */
     @Transactional(readOnly = true)
-    public PropertyValues getPropertyValues( Long id ){
+    public PropertyValues getPropertyValues(Long id) {
         // TODO: Describe business logic and implement it
-        PropertyValues propertyValues = propertyValuesMapper.selectByPrimaryKey( id );
+        PropertyValues propertyValues = propertyValuesMapper.selectByPrimaryKey(id);
         return propertyValues;
     }
 
     /**
-     * 
      * 分页查询属性值信息
-     * 
-     * @author lixavier
-     * @version 1.0.0
+     *
      * @param propertyValuesQuery
      * @return
+     * @author lixavier
+     * @version 1.0.0
      */
     @Transactional(readOnly = true)
     public QueryResultODTO<PropertyValues> queryPropertyValues(PropertyValuesQueryDTO propertyValuesQuery) {

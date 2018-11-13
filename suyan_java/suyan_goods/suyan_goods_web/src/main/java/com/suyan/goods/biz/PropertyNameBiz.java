@@ -1,6 +1,7 @@
 package com.suyan.goods.biz;
 
 import com.suyan.goods.dao.PropertyNameMapper;
+import com.suyan.goods.dao.ext.PropertyExtMapper;
 import com.suyan.goods.model.PropertyName;
 import com.suyan.goods.req.PropertyNameQueryDTO;
 import com.suyan.common.resp.QueryResultODTO;
@@ -34,101 +35,98 @@ public class PropertyNameBiz {
 
     @Autowired
     PropertyNameMapper propertyNameMapper;
+    @Autowired
+    PropertyExtMapper propertyExtMapper;
 
     /**
-    *
-    * 逻辑删除属性名
-    *
-    * @author lixavier
-    * @version 1.0.0
-    * @param id
-    * @param updateUser
-    * @param updateUserName
-    * @return
-    */
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
-    public Integer deletePropertyName(Long id, String updateUser, String updateUserName){
-        // TODO: Describe business logic and implement it
-        int result = propertyNameMapper.logicalDeleteByPrimaryKey(id,updateUser,updateUserName);
-        return result;
-    }
-    
-    /**
-     * 
-     * 创建属性名
-     * 
+     * 逻辑删除属性名
+     *
+     * @param id
+     * @param updateUser
+     * @param updateUserName
+     * @return
      * @author lixavier
      * @version 1.0.0
-     * @param propertyName
-     * @return
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
-    public Long createPropertyName(PropertyName propertyName){
+    public Integer deletePropertyName(Long id, String updateUser, String updateUserName) {
         // TODO: Describe business logic and implement it
-        propertyNameMapper.insertSelective( propertyName );
+        int result = propertyNameMapper.logicalDeleteByPrimaryKey(id, updateUser, updateUserName);
+        return result;
+    }
+
+    /**
+     * 创建属性名
+     *
+     * @param propertyName
+     * @return
+     * @author lixavier
+     * @version 1.0.0
+     */
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
+    public Long createPropertyName(PropertyName propertyName) {
+        propertyName.setSortNumber(propertyExtMapper.getPropertyNameMaxSortNumberByCategoryId(propertyName.getCategoryId()) + 1);
+        propertyName.setIsDeleted(false);
+        propertyNameMapper.insertSelective(propertyName);
         return propertyName.getId();
     }
 
     /**
-    *
-    * 批量创建
-    *
-    * @author lixavier
-    * @version 1.0.0
-    * @param propertyNameList
-    * @return
-    */
+     * 批量创建
+     *
+     * @param propertyNameList
+     * @return
+     * @author lixavier
+     * @version 1.0.0
+     */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
-    public int batchCreatePropertyName(List<PropertyName> propertyNameList){
+    public int batchCreatePropertyName(List<PropertyName> propertyNameList) {
         // TODO: Describe business logic and implement it
-        return propertyNameMapper.insertBatch( propertyNameList );
+        return propertyNameMapper.insertBatch(propertyNameList);
     }
 
     /**
-     * 
      * 更新属性名
-     * 
-     * @author lixavier
-     * @version 1.0.0
+     *
      * @param propertyName
      * @return
+     * @author lixavier
+     * @version 1.0.0
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
-    public Integer updatePropertyName(PropertyName propertyName){
+    public Integer updatePropertyName(PropertyName propertyName) {
         Integer result = null;
-        PropertyName propertyNameLast = propertyNameMapper.selectByPrimaryKeyForUpdate( propertyName.getId() );
-        if( propertyNameLast == null){
+        PropertyName propertyNameLast = propertyNameMapper.selectByPrimaryKeyForUpdate(propertyName.getId());
+        if (propertyNameLast == null) {
             // TODO：这里请写清楚
         }
         // TODO: Describe business logic and implement it
-        result = propertyNameMapper.updateByPrimaryKeySelective( propertyName );
-        return result;    
+        result = propertyNameMapper.updateByPrimaryKeySelective(propertyName);
+        return result;
     }
-    
+
     /**
-     * 
      * 根据ID获取属性名信息
-     * 
-     * @author lixavier
-     * @version 1.0.0
+     *
      * @param id
      * @return
+     * @author lixavier
+     * @version 1.0.0
      */
     @Transactional(readOnly = true)
-    public PropertyName getPropertyName( Long id ){
+    public PropertyName getPropertyName(Long id) {
         // TODO: Describe business logic and implement it
-        PropertyName propertyName = propertyNameMapper.selectByPrimaryKey( id );
+        PropertyName propertyName = propertyNameMapper.selectByPrimaryKey(id);
         return propertyName;
     }
 
     /**
-     * 
      * 分页查询属性名信息
-     * 
-     * @author lixavier
-     * @version 1.0.0
+     *
      * @param propertyNameQuery
      * @return
+     * @author lixavier
+     * @version 1.0.0
      */
     @Transactional(readOnly = true)
     public QueryResultODTO<PropertyName> queryPropertyName(PropertyNameQueryDTO propertyNameQuery) {
@@ -143,6 +141,17 @@ public class PropertyNameBiz {
         queryResult.setTotalRecords(pageInfo.getTotal());
         queryResult.setRecords(propertyNameList);
         return queryResult;
+    }
+
+
+    /**
+     * 根据类目查询属性
+     * @param categoryId
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public List<PropertyName> getPropertysByCategoryId(Long categoryId) {
+        return propertyExtMapper.getPropertysByCategoryId(categoryId);
     }
 
 }

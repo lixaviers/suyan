@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.suyan.goods.dao.ColorSeriesMapper">
+    <resultMap id="BaseResultMap" type="com.suyan.goods.model.ColorSeries">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="color_name" jdbcType="VARCHAR" property="colorName"/>
+        <result column="color_desc" jdbcType="VARCHAR" property="colorDesc"/>
+        <result column="color_value" jdbcType="VARCHAR" property="colorValue"/>
+        <result column="parent_id" jdbcType="INTEGER" property="parentId"/>
+        <result column="sort_number" jdbcType="INTEGER" property="sortNumber"/>
+        <association property="subColors"  resultMap="colorSubMap">
+        </association>
+    </resultMap>
+
+
+    <resultMap id="colorSubMap"  type="com.suyan.goods.model.ColorSeries">
+        <id column="id_1" jdbcType="INTEGER" property="id" />
+        <result column="color_name_1" jdbcType="VARCHAR" property="colorName" />
+        <result column="color_desc_1" jdbcType="VARCHAR" property="colorDesc" />
+        <result column="color_value_1" jdbcType="VARCHAR" property="colorValue" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+      id, color_name, color_desc, color_value, parent_id, sort_number
+    </sql>
+
+    <select id="selectAll"  resultMap="BaseResultMap">
+        SELECT
+            cs1.id,
+            cs1.color_name,
+            cs1.color_desc,
+            cs1.color_value,
+            cs2.id AS id_1,
+            cs2.color_name AS color_name_1,
+            cs2.color_desc AS color_desc_1,
+            cs2.color_value AS color_value_1
+        FROM
+            tb_color_series cs1,
+            tb_color_series cs2
+        WHERE
+            cs1.id = cs2.parent_id
+        ORDER BY
+            cs1.sort_number,
+            cs1.id,
+            cs2.sort_number,
+            cs2.id
+    </select>
+
+</mapper>

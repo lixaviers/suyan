@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.suyan.goods.dao.ext.PropertyExtMapper">
+
+    <select id="getPropertyNameMaxSortNumberByCategoryId" resultType="int">
+        SELECT
+            IFNULL(max( sort_number ),0)
+        FROM
+            tb_property_name
+        WHERE
+            category_id = #{categoryId, jdbcType=BIGINT}
+    </select>
+
+    <select id="getPropertyNameMaxSortNumberByPropertyNameId" resultType="int">
+        SELECT
+            IFNULL(max( sort_number ),0)
+        FROM
+            tb_property_values
+        WHERE
+            category_id = #{categoryId, jdbcType=BIGINT}
+        AND property_name_id = #{propertyNameId, jdbcType=BIGINT}
+    </select>
+
+    <resultMap id="BaseResultMap" type="com.suyan.goods.model.PropertyName">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="category_id" jdbcType="BIGINT" property="categoryId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="is_allow_alias" jdbcType="BIT" property="isAllowAlias"/>
+        <result column="is_color_attribute" jdbcType="BIT" property="isColorAttribute"/>
+        <result column="is_enum_attribute" jdbcType="BIT" property="isEnumAttribute"/>
+        <result column="is_input_attribute" jdbcType="BIT" property="isInputAttribute"/>
+        <result column="is_sales_property" jdbcType="BIT" property="isSalesProperty"/>
+        <result column="is_search_field" jdbcType="BIT" property="isSearchField"/>
+        <result column="is_will_choose" jdbcType="BIT" property="isWillChoose"/>
+        <result column="is_multi_select" jdbcType="BIT" property="isMultiSelect"/>
+        <result column="common_status" jdbcType="TINYINT" property="commonStatus"/>
+        <result column="sort_number" jdbcType="INTEGER" property="sortNumber"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="create_user_name" jdbcType="VARCHAR" property="createUserName"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
+        <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="is_deleted" jdbcType="BIT" property="isDeleted"/>
+        <association property="propertyValuesList" resultMap="subMap">
+        </association>
+    </resultMap>
+    <resultMap id="subMap" type="com.suyan.goods.model.PropertyValues">
+        <id column="id1" jdbcType="BIGINT" property="id"/>
+        <result column="name1" jdbcType="VARCHAR" property="name"/>
+    </resultMap>
+
+    <select id="getPropertysByCategoryId" resultMap="BaseResultMap">
+        SELECT
+            property_name.id,
+            property_name.category_id,
+            property_name.NAME,
+            property_name.is_allow_alias,
+            property_name.is_color_attribute,
+            property_name.is_enum_attribute,
+            property_name.is_input_attribute,
+            property_name.is_sales_property,
+            property_name.is_search_field,
+            property_name.is_will_choose,
+            property_name.is_multi_select,
+            property_values.id id1,
+            property_values.NAME AS name1
+        FROM
+            tb_property_name property_name
+            LEFT JOIN tb_property_values property_values ON property_name.id = property_values.property_name_id
+            AND property_values.is_deleted = 0
+        WHERE
+            property_name.is_deleted = 0
+            AND property_name.category_id = #{categoryId, jdbcType=BIGINT}
+        ORDER BY
+            property_name.sort_number ASC,
+            property_name.id ASC,
+            property_values.sort_number ASC,
+            property_values.id ASC
+    </select>
+
+
+</mapper>

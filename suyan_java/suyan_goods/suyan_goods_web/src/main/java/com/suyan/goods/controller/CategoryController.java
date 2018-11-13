@@ -157,4 +157,17 @@ public class CategoryController extends BaseController {
         return result;
     }
 
+    @ApiOperation(value = "getCategoryNames/{id}", notes = "根据类目ID获取类目信息")
+    @RequestMapping(value = "getCategoryNames/{id}", method = {RequestMethod.GET})
+    public Result<String> getCategoryNames(@PathVariable Long id) {
+        Result<String> result = Result.newSuccess();
+        try {
+            result = categoryService.getCategoryNames(id);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            result.setErrorCode(ResultCode.SYS_ERROR);
+        }
+        return result;
+    }
+
 }

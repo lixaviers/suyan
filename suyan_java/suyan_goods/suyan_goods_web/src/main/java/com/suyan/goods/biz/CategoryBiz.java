@@ -138,6 +138,22 @@ public class CategoryBiz {
         return category;
     }
 
+    @Transactional(readOnly = true)
+    public String getCategoryNames(Long id) {
+        Category category = categoryMapper.selectByPrimaryKey(id);
+        if (category == null || category.getIsDeleted()) {
+            throw new CommonBizException(ResultCode.DATA_NOT_EXIST, "类目");
+        }
+        if (category.getParentId().equals(0l)) {
+            return category.getName();
+        }
+        Category categoryParent = getCategory(category.getParentId());
+        if (categoryParent.getLevelType().equals(1)) {
+            return category.getName();
+        }
+        return categoryParent.getName() + ">>" + category.getName();
+    }
+
     /**
      * 分页查询类目信息
      *

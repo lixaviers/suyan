@@ -1,6 +1,7 @@
 package com.suyan.goods.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class PropertyName {
 
@@ -125,170 +126,179 @@ public class PropertyName {
      * 是否删除：0.未删除，1.已删除
      */
     private Boolean isDeleted;
-    
 
-    public Long getId(){
+
+    public Long getId() {
         return id;
     }
-    
-    public void setId(Long id){
+
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getCategoryId(){
+    public Long getCategoryId() {
         return categoryId;
     }
-    
-    public void setCategoryId(Long categoryId){
+
+    public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
-    
-    public void setName(String name){
+
+    public void setName(String name) {
         this.name = name;
     }
 
-    public Boolean getIsAllowAlias(){
+    public Boolean getIsAllowAlias() {
         return isAllowAlias;
     }
-    
-    public void setIsAllowAlias(Boolean isAllowAlias){
+
+    public void setIsAllowAlias(Boolean isAllowAlias) {
         this.isAllowAlias = isAllowAlias;
     }
 
-    public Boolean getIsColorAttribute(){
+    public Boolean getIsColorAttribute() {
         return isColorAttribute;
     }
-    
-    public void setIsColorAttribute(Boolean isColorAttribute){
+
+    public void setIsColorAttribute(Boolean isColorAttribute) {
         this.isColorAttribute = isColorAttribute;
     }
 
-    public Boolean getIsEnumAttribute(){
+    public Boolean getIsEnumAttribute() {
         return isEnumAttribute;
     }
-    
-    public void setIsEnumAttribute(Boolean isEnumAttribute){
+
+    public void setIsEnumAttribute(Boolean isEnumAttribute) {
         this.isEnumAttribute = isEnumAttribute;
     }
 
-    public Boolean getIsInputAttribute(){
+    public Boolean getIsInputAttribute() {
         return isInputAttribute;
     }
-    
-    public void setIsInputAttribute(Boolean isInputAttribute){
+
+    public void setIsInputAttribute(Boolean isInputAttribute) {
         this.isInputAttribute = isInputAttribute;
     }
 
-    public Boolean getIsSalesProperty(){
+    public Boolean getIsSalesProperty() {
         return isSalesProperty;
     }
-    
-    public void setIsSalesProperty(Boolean isSalesProperty){
+
+    public void setIsSalesProperty(Boolean isSalesProperty) {
         this.isSalesProperty = isSalesProperty;
     }
 
-    public Boolean getIsSearchField(){
+    public Boolean getIsSearchField() {
         return isSearchField;
     }
-    
-    public void setIsSearchField(Boolean isSearchField){
+
+    public void setIsSearchField(Boolean isSearchField) {
         this.isSearchField = isSearchField;
     }
 
-    public Boolean getIsWillChoose(){
+    public Boolean getIsWillChoose() {
         return isWillChoose;
     }
-    
-    public void setIsWillChoose(Boolean isWillChoose){
+
+    public void setIsWillChoose(Boolean isWillChoose) {
         this.isWillChoose = isWillChoose;
     }
 
-    public Boolean getIsMultiSelect(){
+    public Boolean getIsMultiSelect() {
         return isMultiSelect;
     }
-    
-    public void setIsMultiSelect(Boolean isMultiSelect){
+
+    public void setIsMultiSelect(Boolean isMultiSelect) {
         this.isMultiSelect = isMultiSelect;
     }
 
-    public Byte getCommonStatus(){
+    public Byte getCommonStatus() {
         return commonStatus;
     }
-    
-    public void setCommonStatus(Byte commonStatus){
+
+    public void setCommonStatus(Byte commonStatus) {
         this.commonStatus = commonStatus;
     }
 
-    public Integer getSortNumber(){
+    public Integer getSortNumber() {
         return sortNumber;
     }
-    
-    public void setSortNumber(Integer sortNumber){
+
+    public void setSortNumber(Integer sortNumber) {
         this.sortNumber = sortNumber;
     }
 
-    public String getCreateUser(){
+    public String getCreateUser() {
         return createUser;
     }
-    
-    public void setCreateUser(String createUser){
+
+    public void setCreateUser(String createUser) {
         this.createUser = createUser;
     }
 
-    public String getCreateUserName(){
+    public String getCreateUserName() {
         return createUserName;
     }
-    
-    public void setCreateUserName(String createUserName){
+
+    public void setCreateUserName(String createUserName) {
         this.createUserName = createUserName;
     }
 
-    public Date getCreateTime(){
+    public Date getCreateTime() {
         return createTime;
     }
-    
-    public void setCreateTime(Date createTime){
+
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
-    public String getUpdateUser(){
+    public String getUpdateUser() {
         return updateUser;
     }
-    
-    public void setUpdateUser(String updateUser){
+
+    public void setUpdateUser(String updateUser) {
         this.updateUser = updateUser;
     }
 
-    public String getUpdateUserName(){
+    public String getUpdateUserName() {
         return updateUserName;
     }
-    
-    public void setUpdateUserName(String updateUserName){
+
+    public void setUpdateUserName(String updateUserName) {
         this.updateUserName = updateUserName;
     }
 
-    public Date getUpdateTime(){
+    public Date getUpdateTime() {
         return updateTime;
     }
-    
-    public void setUpdateTime(Date updateTime){
+
+    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
 
-    public Boolean getIsDeleted(){
+    public Boolean getIsDeleted() {
         return isDeleted;
     }
-    
-    public void setIsDeleted(Boolean isDeleted){
+
+    public void setIsDeleted(Boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
 
     /**
-    * The following custom property definition
-    */
+     * The following custom property definition
+     */
 
+    private List<PropertyValues> propertyValuesList;
+
+    public List<PropertyValues> getPropertyValuesList() {
+        return propertyValuesList;
+    }
+
+    public void setPropertyValuesList(List<PropertyValues> propertyValuesList) {
+        this.propertyValuesList = propertyValuesList;
+    }
 }

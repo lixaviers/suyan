@@ -38,106 +38,107 @@ public class PropertyNameServiceImpl implements IPropertyNameService {
     private PropertyNameBiz propertyNameBiz;
 
     /**
-     * 
      * 删除属性名
-     * 
+     *
+     * @param id
+     * @param updateUser
+     * @param updateUserName
+     * @return
      * @Author: <lixavier@163.com>
      * @Version: <1.0>
-     * @param id
-    * @param updateUser
-    * @param updateUserName
-     * @return
      */
     @Override
-    public Result<Integer> deletePropertyName(Long id , String updateUser, String updateUserName ){
+    public Result<Integer> deletePropertyName(Long id, String updateUser, String updateUserName) {
         Result<Integer> result = Result.newSuccess();
-        result.setDataMap(propertyNameBiz.deletePropertyName(id , updateUser, updateUserName ));
+        result.setDataMap(propertyNameBiz.deletePropertyName(id, updateUser, updateUserName));
         return result;
     }
-    
+
     /**
-     * 
      * 创建属性名
-     * 
-     * @Author: <lixavier@163.com>
-     * @Version: <1.0>
+     *
      * @param propertyNameDTO
      * @return
+     * @Author: <lixavier@163.com>
+     * @Version: <1.0>
      */
     @Override
-    public Result<Long> createPropertyName(PropertyNameDTO propertyNameDTO){
+    public Result<Long> createPropertyName(PropertyNameDTO propertyNameDTO) {
         Result<Long> result = Result.newSuccess();
         PropertyName propertyName = PropertyNameConvertor.toPropertyName(propertyNameDTO);
         if (!validateForCreate(propertyName, result)) {
             return result;
         }
-        result.setDataMap(propertyNameBiz.createPropertyName( propertyName ));
-        return  result;
+        result.setDataMap(propertyNameBiz.createPropertyName(propertyName));
+        return result;
     }
 
     @Override
-    public Result<Integer> batchCreate(List<PropertyNameDTO> propertyNameDTOs ) {
-            Result<Integer> result = Result.newSuccess();
+    public Result<Integer> batchCreate(List<PropertyNameDTO> propertyNameDTOs) {
+        Result<Integer> result = Result.newSuccess();
         List<PropertyName> items = PropertyNameConvertor.toPropertyNameList(propertyNameDTOs);
         result.setDataMap(propertyNameBiz.batchCreatePropertyName(items));
         return result;
     }
 
     /**
-     * 
      * 更新属性名
-     * 
-     * @Author: <lixavier@163.com>
-     * @Version: <1.0>
+     *
      * @param propertyNameDTO
      * @return
+     * @Author: <lixavier@163.com>
+     * @Version: <1.0>
      */
     @Override
-    public Result<Integer> updatePropertyName(PropertyNameDTO propertyNameDTO){
+    public Result<Integer> updatePropertyName(PropertyNameDTO propertyNameDTO) {
         Result<Integer> result = Result.newSuccess();
         PropertyName propertyName = null;
         propertyName = PropertyNameConvertor.toPropertyName(propertyNameDTO);
         if (!validateForUpdate(propertyName, result)) {
             return result;
         }
-        result.setDataMap(propertyNameBiz.updatePropertyName( propertyName ));
+        result.setDataMap(propertyNameBiz.updatePropertyName(propertyName));
         return result;
     }
-    
+
     /**
-     * 
      * 根据ID获取属性名信息
-     * 
-     * @Author: <lixavier@163.com>
-     * @Version: <1.0>
+     *
      * @param id
      * @return
+     * @Author: <lixavier@163.com>
+     * @Version: <1.0>
      */
     @Override
-    public Result<PropertyNameODTO> getPropertyName( Long id ){
-        Result<PropertyNameODTO> result  = Result.newSuccess();
-        PropertyName propertyName = propertyNameBiz.getPropertyName( id );
+    public Result<PropertyNameODTO> getPropertyName(Long id) {
+        Result<PropertyNameODTO> result = Result.newSuccess();
+        PropertyName propertyName = propertyNameBiz.getPropertyName(id);
         PropertyNameODTO propertyNameODTO = PropertyNameConvertor.toPropertyNameODTO(propertyName);
         result.setDataMap(propertyNameODTO);
         return result;
     }
 
     /**
-     * 
      * 分页查询属性名信息
-     * 
-     * @Author: <lixavier@163.com>
-     * @Version: <1.0>
+     *
      * @param propertyNameQueryDTO
      * @return
+     * @Author: <lixavier@163.com>
+     * @Version: <1.0>
      */
     @Override
     public Result<QueryResultODTO<PropertyNameODTO>> queryPropertyName(PropertyNameQueryDTO propertyNameQueryDTO) {
         Result<QueryResultODTO<PropertyNameODTO>> result = Result.newSuccess();
-
         QueryResultODTO<PropertyName> resultInfo = propertyNameBiz.queryPropertyName(propertyNameQueryDTO);
         result.setDataMap(PropertyNameConvertor.toQueryResult(resultInfo));
-
         return result;
     }
+
+    @Override
+    public Result<List<PropertyNameODTO>> getPropertysByCategoryId(Long categoryId) {
+        Result<List<PropertyNameODTO>> result = Result.newSuccess();
+        result.setDataMap(PropertyNameConvertor.toPropertyNameODTOList(propertyNameBiz.getPropertysByCategoryId(categoryId)));
+        return result;
+    }
+
 }

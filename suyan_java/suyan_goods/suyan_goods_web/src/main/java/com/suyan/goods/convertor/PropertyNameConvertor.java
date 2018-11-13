@@ -31,6 +31,7 @@ public abstract class PropertyNameConvertor {
         }
         PropertyNameODTO propertyNameODTO = new PropertyNameODTO();
         beanCopierForPropertyNameODTO.copy(propertyName, propertyNameODTO, null);
+        propertyNameODTO.setPropertyValuesList(PropertyValuesConvertor.toPropertyValuesODTOList(propertyName.getPropertyValuesList()));
         return propertyNameODTO;
     }
 
@@ -70,5 +71,5 @@ public abstract class PropertyNameConvertor {
         queryResultInfo.setTotalRecords(queryResult.getTotalRecords());
         queryResultInfo.setRecords(toPropertyNameODTOList(queryResult.getRecords()));
         return queryResultInfo;
-        }
+    }
 }

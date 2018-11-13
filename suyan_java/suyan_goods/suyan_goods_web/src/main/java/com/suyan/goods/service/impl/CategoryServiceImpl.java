@@ -119,6 +119,13 @@ public class CategoryServiceImpl implements ICategoryService {
         return result;
     }
 
+    @Override
+    public Result<String> getCategoryNames(Long id) {
+        Result<String> result = Result.newSuccess();
+        result.setDataMap(categoryBiz.getCategoryNames(id));
+        return result;
+    }
+
     /**
      * 分页查询类目信息
      *
