@@ -22,5 +22,13 @@ module.exports = {
     pathRewrite: {
       '^/apiUrms': ''   //需要rewrite重写的,
     }
+  },
+  '/apiUpload': {
+    // 测试环境
+    target: 'https://www.lidongxian.com/',  // 接口域名
+    changeOrigin: true,  //是否跨域
+    pathRewrite: {
+      '^/apiUpload': ''   //需要rewrite重写的,
+    }
   }
 }

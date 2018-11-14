@@ -9,3 +9,7 @@ eureka:
   client:
     service-url:
       defaultZone: http://192.168.226.111:8761/eureka/
+
+url:
+  file:
+    path: http://192.168.226.111:10000/goods/static/

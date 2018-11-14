@@ -75,7 +75,6 @@
 <script>
   import draggable from 'vuedraggable';
   export default {
-    name: 'drag_list_page',
     components: {
       draggable,
     },

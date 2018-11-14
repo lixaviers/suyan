@@ -22,9 +22,9 @@ public class ColorSeriesController extends BaseController {
     @Autowired
     private IColorSeriesService colorSeriesService;
 
-    @ApiOperation(value = "getAll", notes = "获取所有颜色信息")
+    @ApiOperation(value = "getA1ll", notes = "获取所有颜色信息")
     @RequestMapping(value = "getAll", method = {RequestMethod.GET})
-    Result<List<ColorSeriesODTO>> queryColorSeries() {
+    Result<List<ColorSeriesODTO>> getAll() {
         Result<List<ColorSeriesODTO>> result = Result.newSuccess();
         try {
             result = colorSeriesService.getAll();

@@ -396,7 +396,7 @@
             method: 'get',
           }).then(({data}) => {
             if (data && data.code === 200 && data.dataMap) {
-              this.dataList = data.dataMap.records;
+              this.property = data.dataMap;
             }
           });
         }
