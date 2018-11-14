@@ -8,11 +8,11 @@ eureka:
 server:
   port: 10000
 
-feign:
-  hystrix:
-    enabled: false
 
 zuul:
+  host:
+    socket-timeout-millis: 3000
+    connect-timeout-millis: 4000
   routes:
     user:
       path: /user/**
