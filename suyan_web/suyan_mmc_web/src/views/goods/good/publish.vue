@@ -29,54 +29,92 @@
           </FormItem>
         </Card>
       </Row>
+
       <Row style="margin-top: 20px;">
         <Card>
           <p slot="title">销售信息</p>
-          <Row v-for="(item,index) in formGood.saleList" :key="item.id">
-            <FormItem v-if="item.isColorAttribute" :label="item.name"
-                      :prop="'saleList.' + index + '.value'"
+          <Row v-if="formGood.colorList && formGood.colorList.length > 0" v-for="(item,index) in formGood.colorList"
+               :key="item.id">
+            <FormItem :label="item.name" :prop="'colorList.' + index + '.value'"
                       :rules="{required: item.isWillChoose, message: item.name + '不能为空', trigger: 'blur'}">
               <AutoComplete
                 v-model="item.value"
                 placeholder="选择主色"
+                @on-change="colorChange(index)"
                 style="width:320px">
-                  <Col style="float: left;border-right: 1px solid #e5e5e5;padding-right: 20px;">
-                  <Row v-for="(item, index) in colorList" :key="item.id">
-                    <a @mouseover="select(index)" href="#" class="color-dropdown-wrapper">
-                      <div class="color-block" :style="'background:' + item.colorValue"></div>
-                      <span>{{ item.colorName }}</span></a>
-                  </Row>
-                  </Col>
-                  <Col class="color-t" v-show="flag">
-                  <p style="margin: 10px 0;">常用标准颜色</p>
-                  <Option v-for="option in subColors" :value="option.colorName" :key="option.colorName">
-                    <a class="color-dropdown-wrapper" href="#">
-                      <div class="color-block" :style="'background:' + option.colorValue"></div>
-                      <span>{{ option.colorName }}</span>
-                    </a>
-                  </Option>
-                  </Col>
+                <Col style="float: left;border-right: 1px solid #e5e5e5;padding-right: 20px;">
+                <Row v-for="(item, index) in colorList" :key="item.id">
+                  <a @mouseover="select(index)" href="javascript:;" class="color-dropdown-wrapper">
+                    <div class="color-block" :style="'background:' + item.colorValue"></div>
+                    <span>{{ item.colorName }}</span></a>
+                </Row>
+                </Col>
+                <Col class="color-t" v-show="flag">
+                <p style="margin: 10px 0;">常用标准颜色</p>
+                <Option v-for="option in subColors" :value="option.colorName" :key="option.colorName">
+                  <a class="color-dropdown-wrapper" href="javascript:;">
+                    <div class="color-block" :style="'background:' + option.colorValue"></div>
+                    <span>{{ option.colorName }}</span>
+                  </a>
+                </Option>
+                </Col>
               </AutoComplete>
-
-              <Upload :headers="'Content-Type:application/json; charset=utf-8'" action="/apiUpload/common/fileUpload" style="float: right;margin-left: 20px;">
+              <!--<Upload action="/apiUpload/common/fileUpload" style="float: right;margin-left: 20px;">
                 <Button icon="ios-cloud-upload-outline">上传图片</Button>
-              </Upload>
+              </Upload>-->
+              <Input placeholder="图片" v-model="formGood.name" style="margin-left: 20px;width: 300px"/>
+              <label style="color:#f90">这里请不要动，因为没有图片服务器~</label>
             </FormItem>
+          </Row>
 
-            <FormItem v-else-if="item.isEnumAttribute" :label="item.name"
+          <Row v-for="(item,index) in formGood.saleList" :key="item.id">
+            <FormItem v-if="item.isEnumAttribute" :label="item.name"
                       :prop="'saleList.' + index + '.value'"
                       :rules="{ required: true, type: 'array', min: 1, message: '请选择' + item.name, trigger: 'change' }">
-              <CheckboxGroup v-model="item.value">
+              <CheckboxGroup v-model="item.value" @on-change="saleChange">
                 <Checkbox v-for="valueItem in item.propertyValuesList" :label="valueItem.id + ''" :key="valueItem.id">
                   {{valueItem.name}}
                 </Checkbox>
               </CheckboxGroup>
             </FormItem>
           </Row>
+
+          <Row>
+            <FormItem label="销售规格" style="width: 100%;">
+              <Table :data="salesSpecificationsData"
+                     :columns="salesSpecificationsColumns">
+              </Table>
+            </FormItem>
+          </Row>
           <FormItem label="列表价" prop="listPrice"
                     :rules="{required: true, type: 'number', message: '列表价不能为空', trigger: 'blur'}">
             <InputNumber :max="100000000" :precision="2" :min="0.01" :step="1" v-model="formGood.listPrice"
                          style="width: 320px"/>
+          </FormItem>
+        </Card>
+      </Row>
+
+      <Row style="margin-top: 20px;">
+        <Card>
+          <p slot="title">图文描述</p>
+          <FormItem label="商品图片" prop="name" style="width: 100%;">
+            <Input v-model="formGood.name" style="width: 500px"/>
+            <label style="color:#f90">这里请不要动，因为没有图片服务器~</label>
+          </FormItem>
+          <FormItem label="">
+            <Input v-model="formGood.name" style="width: 500px"/>
+            <label style="color:#f90">这里请不要动，因为没有图片服务器~</label>
+          </FormItem>
+          <FormItem label="">
+            <Input v-model="formGood.name" style="width: 500px"/>
+            <label style="color:#f90">这里请不要动，因为没有图片服务器~</label>
+          </FormItem>
+          <FormItem label="">
+            <Input v-model="formGood.name" style="width: 500px"/>
+            <label style="color:#f90">这里请不要动，因为没有图片服务器~</label>
+          </FormItem>
+          <FormItem label="商品描述" style="width: 100%;">
+            <editor ref="editor" :value="content" @on-change="handleChange"/>
           </FormItem>
         </Card>
       </Row>
@@ -91,9 +129,18 @@
 
 
 <script>
+  import Editor from '@/components/editor'
   export default {
+    components: {
+      Editor
+    },
     data () {
       return {
+        salesSpecificationsColumns: [],
+        salesSpecificationsData: [
+          {name: 1, age: 1, price: 1, number: 1}
+        ],
+        content: '',
         flag: false,
         loading: false,
         categoryId: null,
@@ -107,10 +154,118 @@
           brandId: null,
           propertyList: [],
           saleList: [],
+          colorList: [],
         },
+        identify: {
+          colorAttribute: false,
+          enumAttribute: 0,
+        },
+        colorSelect: false,
       }
     },
     methods: {
+      saleChange(obj) {
+        let t = this;
+        if (obj && obj.length > 0 && t.identify.colorAttribute && t.colorSelect) {
+          t.showSalesSpecifications();
+        }
+
+      },
+      colorChange(index){
+        let t = this, value = t.formGood.colorList[index].value;
+        console.log(t.identify.colorAttribute)
+        if (value) {
+          t.colorSelect = true;
+          if (index == t.formGood.colorList.length - 1) {
+            t.formGood.colorList.push({isWillChoose: false});
+          }
+        }
+        for (var i = 0; i < this.formGood.saleList.length; i++) {
+          var sale = this.formGood.saleList[i];
+          if (sale.isWillChoose && !sale.value) {
+            return;
+          }
+        }
+        this.showSalesSpecifications();
+      },
+      // 显示销售规格
+      showSalesSpecifications(){
+        let t = this, salesSpecificationsData = [];// salesSpecificationsData
+        t.salesSpecificationsColumns = [];
+
+        for (var i = 0; i < this.formGood.colorList.length; i++) {
+          let color = this.formGood.colorList[i];
+          if (!color.value) {
+            continue;
+          }
+          for (var j = 0; j < t.formGood.saleList.length; j++) {
+            var sale = t.formGood.saleList[j];
+            if (sale.value) {
+              salesSpecificationsData.push({color: color.value, ['sale'+ j] :1});
+            }
+          }
+        }
+        t.salesSpecificationsData = salesSpecificationsData;
+
+        if (t.identify.colorAttribute) {
+          t.salesSpecificationsColumns.push({
+            title: '颜色分类',
+            key: 'color'
+          });
+        }
+        if (t.identify.enumAttribute > 0) {
+          for (var j = 0; j < t.formGood.saleList.length; j++) {
+            var sale = t.formGood.saleList[j];
+            t.salesSpecificationsColumns.push({
+              title: sale.name,
+              key: 'sale' + j
+            });
+          }
+        }
+
+        t.salesSpecificationsColumns.push(
+          {
+            title: '价格',
+            key: 'price',
+            render: (h, params) => {
+              return h('Input', {
+                style: {
+                  width: '80px'
+                },
+                props: {
+                  value: params.row.price
+                },
+                on: {
+                  'on-change' (event) {
+                    this.salesSpecificationsData[params.index].number = event.target.value;
+                  }
+                }
+              });
+            }
+          });
+        t.salesSpecificationsColumns.push({
+          title: '数量',
+          key: 'number',
+          render: (h, params) => {
+            return h('Input', {
+              style: {
+                width: '80px'
+              },
+              props: {
+                value: params.row.number
+              },
+              on: {
+                'on-change' (event) {
+                  this.salesSpecificationsData[params.index].number = event.target.value;
+                }
+              }
+            });
+          }
+        });
+      },
+      handleChange (html, text) {
+        console.log(html)
+      },
       select(index){
         this.subColors = this.colorList[index].subColors;
         this.flag = true;
@@ -161,13 +316,15 @@
           method: 'get',
         }).then(({data}) => {
           if (data && data.code === 200 && data.dataMap) {
-            var saleList = [], propertyList = [], loadColorAttribute = false;
+            var saleList = [], propertyList = [], colorList = [], loadColorAttribute = false;
             for (var i = 0; i < data.dataMap.length; i++) {
               var obj = data.dataMap[i];
-              if (obj.isColorAttribute || obj.isEnumAttribute) {
-                if (obj.isColorAttribute) {
-                  loadColorAttribute = true;
-                }
+              if (obj.isColorAttribute) {
+                loadColorAttribute = true;
+                t.identify.colorAttribute = true;
+                colorList.push(obj);
+              } else if (obj.isEnumAttribute) {
+                t.identify.enumAttribute = t.identify.enumAttribute + 1;
                 saleList.push(obj);
               } else {
                 propertyList.push(obj);
@@ -175,6 +332,7 @@
             }
             t.formGood.propertyList = propertyList;
             t.formGood.saleList = saleList;
+            t.formGood.colorList = colorList;
             if (loadColorAttribute) {
               // 加载颜色
               t.$http({
@@ -183,6 +341,7 @@
               }).then(({data}) => {
                 if (data && data.code === 200 && data.dataMap) {
                   t.colorList = data.dataMap;
+
                 }
               });
             }
